@@ -7,12 +7,17 @@ Runs each benchmark question through both agents and measures:
   3. Response length (characters — proxy for conciseness)
 
 Usage:
-    python run_experiment.py                        # All 20 questions
-    python run_experiment.py --tier 1               # Tier 1 only
-    python run_experiment.py --ids T1-01 T2-03      # Specific questions
-    python run_experiment.py --dry-run              # Skip API calls, show plan
-    python run_experiment.py --verbose              # Show agent progress
-    python run_experiment.py --model composer-2.5   # Override Cursor model
+    python run_experiment.py                                       # All 20 questions
+    python run_experiment.py --tier 1                              # Tier 1 only
+    python run_experiment.py --ids T1-01 T2-03                     # Specific questions
+    python run_experiment.py --dry-run                             # Skip API calls, show plan
+    python run_experiment.py --verbose                             # Show agent progress
+    python run_experiment.py --model composer-2.5                  # Override Cursor model (raw agent)
+    python run_experiment.py --mintlify-model claude-haiku-4-5-20251001  # Override Claude model (mintlify agent)
+
+Environment variables:
+    CURSOR_API_KEY      — required for the raw monorepo agent (Cursor SDK)
+    ANTHROPIC_API_KEY   — required for the Mintlify MCP agent (Anthropic SDK)
 """
 
 import argparse
@@ -46,6 +51,7 @@ def load_questions(tier=None, ids=None):
 def run_experiment(
     questions,
     model: str,
+    mintlify_model: str = "claude-haiku-4-5-20251001",
     verbose: bool = False,
     dry_run: bool = False,
 ) -> dict:
@@ -54,7 +60,8 @@ def run_experiment(
 
     print(f"\n{'='*60}")
     print(f"RingCentral Docs Quality Experiment")
-    print(f"Model: {model}")
+    print(f"Raw agent model:      {model} (Cursor SDK)")
+    print(f"Mintlify agent model: {mintlify_model} (Anthropic SDK + Mintlify MCP)")
     print(f"Questions: {len(questions)}")
     print(f"{'='*60}\n")
 
@@ -81,9 +88,9 @@ def run_experiment(
             print(f"  [ERROR] raw_agent: {e}")
             raw_result = {"answer": f"ERROR: {e}", "elapsed_s": 0, "response_length": 0}
 
-        # Run Mintlify agent
+        # Run Mintlify agent (uses live Mintlify MCP server + Anthropic SDK)
         try:
-            mintlify_result = mintlify_agent.run(q["question"], model=model, verbose=verbose)
+            mintlify_result = mintlify_agent.run(q["question"], model=mintlify_model, verbose=verbose)
         except Exception as e:
             print(f"  [ERROR] mintlify_agent: {e}")
             mintlify_result = {"answer": f"ERROR: {e}", "elapsed_s": 0, "response_length": 0}
@@ -195,14 +202,26 @@ def main():
     parser = argparse.ArgumentParser(description="RingCentral docs quality benchmark")
     parser.add_argument("--tier", type=int, choices=[1, 2, 3])
     parser.add_argument("--ids", nargs="+")
-    parser.add_argument("--model", default="composer-2.5")
+    parser.add_argument("--model", default="composer-2.5", help="Cursor model for raw agent")
+    parser.add_argument(
+        "--mintlify-model",
+        default="claude-haiku-4-5-20251001",
+        help="Claude model for Mintlify MCP agent",
+    )
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    if not os.environ.get("CURSOR_API_KEY") and not args.dry_run:
-        print("Error: CURSOR_API_KEY environment variable not set")
-        sys.exit(1)
+    if not args.dry_run:
+        missing = []
+        if not os.environ.get("CURSOR_API_KEY"):
+            missing.append("CURSOR_API_KEY (required for raw monorepo agent)")
+        if not os.environ.get("ANTHROPIC_API_KEY"):
+            missing.append("ANTHROPIC_API_KEY (required for Mintlify MCP agent)")
+        if missing:
+            for m in missing:
+                print(f"Error: {m} not set")
+            sys.exit(1)
 
     questions = load_questions(tier=args.tier, ids=args.ids)
     if not questions:
@@ -212,6 +231,7 @@ def main():
     run_experiment(
         questions=questions,
         model=args.model,
+        mintlify_model=args.mintlify_model,
         verbose=args.verbose,
         dry_run=args.dry_run,
     )
