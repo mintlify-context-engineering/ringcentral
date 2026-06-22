@@ -7,3 +7,9 @@
 # Caches
 __pycache__/
 *.pyc
+
+# Benchmark outputs. Keep committed historical outputs only when intentionally
+# curating them; normal runs should not be picked up by git.
+results/*.json
+results/*.html
+!results/.gitkeep

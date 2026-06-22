@@ -12,7 +12,7 @@ Two phases — both require zero API keys:
            topic area and fact that's missing.
 
   Phase 2  BENCHMARK COVERAGE CHECK
-           For the 20 benchmark questions, measure how many chars the
+           For the benchmark questions, measure how many chars the
            structured search needs to surface all key facts, vs raw files.
            Shows whether adding missing content closes the efficiency gap.
 
@@ -411,7 +411,7 @@ def run_coverage_check(questions: list[dict]) -> None:
     print(f"\n  {'─'*64}")
     print(f"  Avg structured  : {avg_s:>8,.0f} chars")
     print(f"  Avg raw         : {avg_r:>8,.0f} chars")
-    print(f"  Token reduction : {reduction:>7.1f}%  (structured vs raw)")
+    print(f"  Context reduction : {reduction:>5.1f}%  (structured vs raw)")
     print(f"  Full coverage   : {complete}/{len(questions)} questions answered from structured docs")
 
     if gaps_by_question:

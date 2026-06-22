@@ -2,6 +2,79 @@
 
 SMS messages in RingCentral can only be sent from phone numbers that are owned by the authenticated user extension. Ownership means the phone number is directly assigned to the user's extension—either as a direct number or as part of a digital line (i.e., a number associated with a physical or softphone device).
 
+## Send SMS with the REST API
+
+To send a person-to-person SMS, call:
+
+```http
+POST /restapi/v1.0/account/~/extension/~/sms
+```
+
+The request body must include:
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `from.phoneNumber` | Yes | An SMS-enabled phone number owned by the authenticated user extension. |
+| `to[].phoneNumber` | Yes | One or more recipient phone numbers. |
+| `text` | Yes | The SMS body text. |
+
+### JavaScript / Node.js
+
+Install:
+
+```bash
+npm install @ringcentral/sdk dotenv --save
+```
+
+Send:
+
+```js
+const SDK = require('@ringcentral/sdk').SDK
+
+const rcsdk = new SDK({
+  server: process.env.RC_SERVER_URL,
+  clientId: process.env.RC_APP_CLIENT_ID,
+  clientSecret: process.env.RC_APP_CLIENT_SECRET,
+})
+
+const platform = rcsdk.platform()
+await platform.login({ jwt: process.env.RC_USER_JWT })
+
+await platform.post('/restapi/v1.0/account/~/extension/~/sms', {
+  from: { phoneNumber: process.env.SMS_SENDER },
+  to: [{ phoneNumber: process.env.SMS_RECIPIENT }],
+  text: 'Hello from RingCentral SMS',
+})
+```
+
+### Ruby
+
+Install:
+
+```bash
+gem install ringcentral-sdk dotenv
+```
+
+Send:
+
+```ruby
+require 'ringcentral'
+require 'dotenv/load'
+
+rc = RingCentral.new(
+  ENV['RC_APP_CLIENT_ID'],
+  ENV['RC_APP_CLIENT_SECRET'],
+  ENV['RC_SERVER_URL']
+)
+rc.authorize(jwt: ENV['RC_USER_JWT'])
+
+rc.post('/restapi/v1.0/account/~/extension/~/sms', payload: {
+  from: { phoneNumber: ENV['SMS_SENDER'] },
+  to: [{ phoneNumber: ENV['SMS_RECIPIENT'] }],
+  text: 'Hello from RingCentral SMS'
+})
+```
+
 When using the RingCentral `/restapi/v1.0/account/~/extension/~/sms` endpoint to send messages, your application must:
 
   1. Authenticate a user extension.

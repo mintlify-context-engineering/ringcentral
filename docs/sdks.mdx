@@ -7,7 +7,7 @@
 | **Python** | `ringcentral` | `pip3 install ringcentral` |
 | **JavaScript/Node** | `@ringcentral/sdk` | `npm install @ringcentral/sdk` |
 | **PHP** | `ringcentral/ringcentral-php` | `composer require ringcentral/ringcentral-php` |
-| **Ruby** | `ringcentral_sdk` | `gem install ringcentral_sdk` |
+| **Ruby** | `ringcentral-sdk` | `gem install ringcentral-sdk` |
 | **Java** | `com.ringcentral:ringcentral` | Maven: `com.ringcentral:ringcentral` |
 | **Go** | `github.com/ringcentral/ringcentral-go` | `go get github.com/ringcentral/ringcentral-go` |
 | **.NET/C#** | `RingCentral.Net` | `dotnet add package RingCentral.Net` |
@@ -22,6 +22,17 @@ For WebSocket/real-time needs, use a dedicated library — the standard REST SDK
 | `ringcentral-softphone-js` | JavaScript | SIP/WebRTC softphone (JS variant) | GitHub: ringcentral/ringcentral-softphone-js |
 | `ringcentral-softphone-go` | Go | SIP/WebRTC softphone for Go | GitHub: ringcentral/ringcentral-softphone-go |
 | `ringcentral-web-phone` | JavaScript | Full WebRTC browser phone SDK | `npm install ringcentral-web-phone` |
+
+## Embeddable vs. Web Phone SDK
+
+Use **RingCentral Embeddable** (`ringcentral-embeddable`) when you want a ready-made phone UI that can be dropped into a web app with minimal custom telephony code. It is best for CRM-style integrations, admin portals, helpdesk apps, or internal tools where users need calling, SMS, call controls, and RingCentral sign-in inside an iframe/widget experience.
+
+Use **Web Phone SDK** (`ringcentral-web-phone`) when you are building your own browser phone experience from lower-level WebRTC/SIP primitives. It is best when you need to design the entire call UI, control call state yourself, or integrate voice directly into a custom application flow.
+
+| Choice | Package | What you get | Use when |
+|--------|---------|--------------|----------|
+| Embeddable widget | `ringcentral-embeddable` | Complete hosted phone widget and integration surface | You want a working phone UI fast |
+| Web Phone SDK | `ringcentral-web-phone` | JavaScript WebRTC/SIP client library | You want to build the phone UI and call behavior yourself |
 
 The following SDKs provide developers with libraries that make interfacing with RingCentral APIs easier in your language of choice. RingCentral currently provides the following official SDKs:
 

@@ -2,6 +2,32 @@
 
 **Required app permissions**: `EditWebinars` and `ReadWebinars`. Grant both when creating your app in the Developer Console — without them, webinar API calls return `HTTP 403 Forbidden`.
 
+To create a marketing webinar with registrants:
+
+1. Create the webinar: `POST /webinar/v1/accounts/{accountId}/webinars`.
+2. Create a session for the webinar: `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions`.
+3. Add registrants to that session: `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants`.
+
+For marketing webinars, set `registrationEnabled` to `true` so each attendee gets a unique registration and join URL. Common webinar settings include `recordingEnabled`, `autoRecord`, `panelistWaitingRoom`, `attendeeAuthentication`, `password`, `qnaEnabled`, `pollsEnabled`, `registrationEnabled`, and `postWebinarRedirectUri`.
+
+```http
+POST /webinar/v1/accounts/{accountId}/webinars
+Content-Type: application/json
+Authorization: Bearer {access_token}
+
+{
+  "title": "Quarterly Product Launch",
+  "description": "Customer-facing product launch webinar",
+  "settings": {
+    "registrationEnabled": true,
+    "qnaEnabled": true,
+    "pollsEnabled": true,
+    "recordingEnabled": true,
+    "postWebinarRedirectUri": "https://example.com/thank-you"
+  }
+}
+```
+
 Webinars can be created using the REST API, which can be helpful when integrating RingCentral Webinar with third-party systems like CRMs, and marketing tools in which campaigns are created an managed. For example, your company may have a standardized go-to-market process for introducing new products in which when a campaign is created in your CRM for a quarterly customer communication, you want to automatically create a webinar to correspond with that campaign.
 
 When creating a webinar via the API, you will need to specify the webinar's title and description, along with any number of settings you wish the webinar to obey.

@@ -270,6 +270,60 @@
       "ground_truth": "Beyond the standard REST SDKs, RingCentral provides: (1) @ringcentral/subscriptions — Node.js npm package for WebSocket push subscriptions (install: npm install @ringcentral/subscriptions); (2) ringcentral-websocket-java — Java WebSocket client library; (3) ringcentral-softphone-ts / ringcentral-softphone-js / ringcentral-softphone-go — SIP/WebRTC softphone SDKs for audio streaming in TypeScript, JavaScript, and Go respectively; (4) ringcentral-web-phone — full WebRTC-based browser phone SDK. The standard REST SDKs (Python, PHP, Ruby, .NET, Java) handle REST calls only; WebSocket/real-time needs a separate library.",
       "key_facts": ["@ringcentral/subscriptions", "npm install @ringcentral/subscriptions", "ringcentral-websocket-java", "ringcentral-softphone", "ringcentral-web-phone", "WebRTC", "SIP"],
       "expected_source": "sdks.mdx + sdks/ WebSocket and softphone READMEs"
+    },
+    {
+      "id": "T4-01",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Across ringcentral-chatbot-js, ringcentral-chatbot-core, and rc-assistant, which packages depend on @rc-ex/core versus the published ringcentral-chatbot package, and what command runs tests in each repo?",
+      "ground_truth": "ringcentral-chatbot-js publishes package ringcentral-chatbot v2.1.5, depends on @rc-ex/core ^0.13.1, and tests with RINGCENTRAL_CHATBOT_DATABASE_CONNECTION_URI=sqlite:// jest -c test/jest.config.ts. ringcentral-chatbot-core publishes ringcentral-chatbot-core v1.6.1, depends on @rc-ex/core ^1.3.7, and tests with jest -c tests/jest.config.ts. rc-assistant is a consuming demo/app: it depends on ringcentral-chatbot ^1.8.12 and runs tests with jest. The package manifests do not list @ringcentral/sdk directly for these chatbot framework packages.",
+      "key_facts": ["ringcentral-chatbot v2.1.5", "@rc-ex/core ^0.13.1", "ringcentral-chatbot-core v1.6.1", "@rc-ex/core ^1.3.7", "ringcentral-chatbot ^1.8.12", "jest.config.ts"],
+      "expected_source": "source-only: chatbots/*/package.json"
+    },
+    {
+      "id": "T4-02",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "For the web calling and softphone packages, how do ringcentral-web-phone, ringcentral-softphone-ts, and ringcentral-softphone-js differ in build and test tooling?",
+      "ground_truth": "ringcentral-web-phone v2.4.4 builds with tsdown and tests with NODE_OPTIONS=--require=dotenv-override-true/config playwright test --workers=1. ringcentral-softphone-ts v1.3.9 builds with tsdown and tests with vitest run. ringcentral-softphone-js v0.5.1 tests with jest, uses webpack-dev-server for the browser script, and its prepublishOnly step runs tsc. The TypeScript versions also differ: web-phone and softphone-ts use TypeScript ^6.0.3, while softphone-js uses TypeScript ^4.7.4.",
+      "key_facts": ["ringcentral-web-phone v2.4.4", "playwright test", "ringcentral-softphone-ts v1.3.9", "vitest run", "ringcentral-softphone-js v0.5.1", "jest", "tsdown"],
+      "expected_source": "source-only: embeddable/ringcentral-web-phone/package.json + sdks/ringcentral-softphone-*/package.json"
+    },
+    {
+      "id": "T4-03",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Between ringcentral-call-js and ringcentral-call-control-js, what package versions and @ringcentral/sdk dependency versions are declared, and what build/test pattern do they share?",
+      "ground_truth": "ringcentral-call-js is version 0.2.19 and depends on @ringcentral/sdk ^4.7.3. ringcentral-call-control-js is version 0.2.9 and depends on @ringcentral/sdk ^5.0.6. Both packages use a TypeScript plus webpack build pattern: prepublish runs tsc && webpack, build runs webpack, and test runs jest.",
+      "key_facts": ["ringcentral-call 0.2.19", "@ringcentral/sdk ^4.7.3", "ringcentral-call-control 0.2.9", "@ringcentral/sdk ^5.0.6", "tsc && webpack", "jest"],
+      "expected_source": "source-only: sdks/ringcentral-call-js/package.json + sdks/ringcentral-call-control-js/package.json"
+    },
+    {
+      "id": "T4-04",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Which native CRM embeddable packages share the same React/Webpack frontend stack pins, and what packaging workflow do their package scripts use?",
+      "ground_truth": "hubspot-embeddable-ringcentral-phone v7.10.4, pipedrive-embeddable-ringcentral-phone-spa v3.6.10, and redtail-embeddable-ringcentral-phone v3.5.4 all pin react 17.0.2, react-dom 17.0.2, and webpack 5.64.4. They use package scripts that build with webpack against build/webpack.config.js, run node bin/post-install after install, download the adapter with node bin/download-adapter.js via npm run down, and package by building production assets, running npm run down, then node bin/pack.",
+      "key_facts": ["HubSpot", "Pipedrive", "Redtail", "react 17.0.2", "react-dom 17.0.2", "webpack 5.64.4", "node bin/download-adapter.js", "node bin/pack"],
+      "expected_source": "source-only: crm/*-embeddable-ringcentral-phone/package.json"
+    },
+    {
+      "id": "T4-05",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "How do ringcentral-embeddable and engage-voice-embeddable differ in RingCentral client dependencies and build/start commands?",
+      "ground_truth": "ringcentral-embeddable v2.3.1 depends on @ringcentral/sdk ^4.7.2, @rc-ex/core ^1.2.1, @rc-ex/ws ^1.0.10, redux ^4.2.0, and react-redux ^5.1.1; start runs npm run dev-server and build runs cross-env NODE_ENV=production webpack --config webpack-production.config.js. engage-voice-embeddable publishes ringcx-embeddable v1.0.0-beta and depends on @ringcentral/sdk ^5.0.6, @rc-ex/core 1.7.4, @rc-ex/ws 1.4.2, sip.js 0.13.5, and react-redux ^7.2.8; start runs npm run gulp -- devServer --build-env local and build runs npm run gulp -- build --build-env prod.",
+      "key_facts": ["ringcentral-embeddable v2.3.1", "@ringcentral/sdk ^4.7.2", "@rc-ex/ws ^1.0.10", "ringcx-embeddable v1.0.0-beta", "@ringcentral/sdk ^5.0.6", "@rc-ex/ws 1.4.2", "sip.js 0.13.5", "gulp -- build --build-env prod"],
+      "expected_source": "source-only: embeddable/ringcentral-embeddable/package.json + voice/engage-voice-embeddable/package.json"
+    },
+    {
+      "id": "T4-06",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Compare notification-app-js and engage-digital-chatbot-js as Express webhook scaffolds: what ports/proxy scripts, routes, and test stacks do their source and package files define?",
+      "ground_truth": "notification-app-js publishes glip-integration-js v0.2.1, uses express 4.17.3 and jest 27.5.1, proxies with ngrok http 6066, starts through npm run dev, and its app source defines a /test health route. engage-digital-chatbot-js publishes ringcentral-engage-chatbot v1.2.0, uses express ^4.17.1 and jest ^26.6.3, proxies with ngrok http 3000, defines /test plus GET /rc/webhook for verification and POST /rc/webhook for initWebhook(conf), and run-bot listens using RINGCENTRAL_ENGAGE_CHATBOT_EXPRESS_PORT and RINGCENTRAL_ENGAGE_CHATBOT_EXPRESS_HOST.",
+      "key_facts": ["glip-integration-js v0.2.1", "ngrok http 6066", "express 4.17.3", "jest 27.5.1", "ringcentral-engage-chatbot v1.2.0", "ngrok http 3000", "GET /rc/webhook", "POST /rc/webhook"],
+      "expected_source": "source-only: integrations/notification-app-js/package.json + src/app.js, voice/engage-digital-chatbot-js/package.json + src/app.js + src/run-bot.js"
     }
   ]
 }

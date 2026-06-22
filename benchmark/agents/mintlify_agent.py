@@ -19,6 +19,8 @@ import tempfile
 import time
 from pathlib import Path
 
+from agents import context_metrics
+
 DOCS_ROOT = Path(__file__).parent.parent / "structured_docs"
 MCP_URL = os.environ.get("MINTLIFY_MCP_URL", "https://ringcentral.mintlify.app/mcp")
 MAX_TOOL_CALLS = 8
@@ -139,20 +141,22 @@ def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> di
     tools — the treatment condition for the benchmark.
 
     Returns:
-        {answer: str, elapsed_s: float, response_length: int}
+        {answer: str, elapsed_s: float, response_length: int, ok: bool, error: str | None}
     """
-    from cursor_sdk import (
-        Agent,
-        AgentOptions,
-        HttpMcpServerConfig,
-        LocalAgentOptions,
-    )
-
     api_key = os.environ.get("CURSOR_API_KEY", "")
 
     t0 = time.time()
     answer = ""
+    error = None
+    metrics = context_metrics.empty_metrics()
     try:
+        from cursor_sdk import (
+            Agent,
+            AgentOptions,
+            HttpMcpServerConfig,
+            LocalAgentOptions,
+        )
+
         # Empty temp cwd: no local files to fall back on, forcing the agent to
         # rely on the Mintlify docs MCP. setting_sources=[] keeps it from
         # picking up the user's ambient MCP / project config.
@@ -171,8 +175,10 @@ def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> di
                     print(f"  [mintlify] agent created, MCP={MCP_URL}, sending question...")
                 run_result = agent.send(QUESTION_PREFIX + question)
                 answer = run_result.text()
+                metrics = context_metrics.metrics_from_run(run_result, answer)
     except Exception as e:
-        answer = f"ERROR: {e}"
+        error = str(e)
+        answer = f"ERROR: {error}"
 
     elapsed = time.time() - t0
     if verbose:
@@ -182,4 +188,7 @@ def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> di
         "answer": answer.strip(),
         "elapsed_s": round(elapsed, 2),
         "response_length": len(answer),
+        "ok": error is None,
+        "error": error,
+        **metrics,
     }

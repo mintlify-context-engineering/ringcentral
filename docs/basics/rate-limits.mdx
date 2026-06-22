@@ -1,5 +1,11 @@
 # RingCentral API Rate Limits
 
+## OAuth token endpoint rate limit
+
+The OAuth token endpoint, `POST /restapi/oauth/token`, belongs to the **Auth** usage plan group. The default Auth limit is **5 requests per user per minute** with a default **60 second** penalty interval.
+
+Reuse cached access tokens instead of calling the token endpoint before every API request. Access tokens usually last **1 hour**, so authenticate once, cache the token, and refresh only when it is near expiration.
+
 ## What is a rate limit?
 
 A "rate limit" is a policy that affects the frequency an API can be called. They are put in place to protect server infrastructure from abuse or misuse. RingCentral employs rate limits to enable consistent load allocation across our platform.
@@ -123,4 +129,3 @@ If your app sends API requests within a single thread (e.g. downloads message at
 * If you encounter an HTTP 429 error, wait for the number of seconds specified in the `Retry-After` response header.
 
 If your logic that relies on `X-Rate-Limit-Remaining` works properly, your app should never encounter 429 errors due to violating user-level rate limits. In other words, if you build your app to be aware of this HTTP header and respond accordingly, you can prevent your app from being impacted, or at least alert personnel about the issue. 
-

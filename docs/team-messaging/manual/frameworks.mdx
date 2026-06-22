@@ -8,7 +8,13 @@ To speed up development, in addition to the core REST APIs, a number of RingCent
 
 ### Official RingCentral Frameworks
 
-* [RingCentral Bot Framework for Javascript](https://ringcentral.github.io/ringcentral-chatbot-js/)
+| Framework | Language | Primary purpose |
+|-----------|----------|-----------------|
+| [`ringcentral-chatbot-js`](https://ringcentral.github.io/ringcentral-chatbot-js/) | JavaScript/Node.js | Full-featured Team Messaging bot framework with skill routing, webhook handling, auth token management, and persistence. |
+| [`ringcentral-chatbot-python`](https://github.com/ringcentral/ringcentral-chatbot-python) | Python | Python bot framework for Team Messaging bots, including event handling and deployment-friendly bot structure. |
+| [`ringcentral-chatbot-core`](https://github.com/ringcentral/ringcentral-chatbot-core) | TypeScript | Core abstractions for bot events, routing, and messaging when you want reusable bot primitives without the full JS framework. |
+
+The chatbot frameworks sit above the core RingCentral REST SDKs. For example, `ringcentral-chatbot-js` uses the same RingCentral platform APIs as `@ringcentral/sdk`, but it adds bot-specific routing, state, installation, webhook, and message-handling structure so you do not have to build that layer from scratch.
 
 ### Other Bot Frameworks
 
@@ -26,4 +32,3 @@ You may notice in some projects reference to the name "Glip," the former name of
 
 * [Hubot SMS Adapter](https://github.com/bdeanindy/hubot-ringcentral-sms)
 * [Lita SMS Adapter](https://github.com/ringcentral-ruby/lita-ringcentral)
-

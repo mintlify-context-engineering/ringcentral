@@ -21,6 +21,20 @@ Business Analytics is a historical call performance analytics offering for RingE
 * Call handling patterns
 * Call volume distribution by multiple time intervals
 
+## Analytics API vs. Call Log API
+
+Use the **Analytics API** when you need historical aggregate reporting: call counts, timers, grouped performance metrics, trends, call queue/user group analysis, and summaries over time. Analytics is designed for reporting questions such as "How many calls did this team answer by day?" or "Which queues have the longest hold time?"
+
+Use the **Call Log API** when you need individual call records and call metadata: one record per call, caller/callee details, direction, result, duration, recordings metadata, or synchronization into a CRM/data warehouse. Call Log is designed for operational questions such as "What calls happened for this user?" or "Which call record has the recording URL?"
+
+| Need | Use | Why |
+|------|-----|-----|
+| Aggregate counts and durations | Analytics API | Returns grouped counters/timers for reporting. |
+| Trends by hour, day, week, or month | Analytics API | Timeline reports are built for time-series reporting. |
+| Individual call records | Call Log API | Returns detailed per-call records. |
+| CRM call history sync | Call Log API | CRMs usually need one activity per call. |
+| Recording metadata/content links | Call Log API | Recording data is attached to call log records. |
+| Real-time call state | Neither | Use telephony session events via subscriptions instead. |
 
 ## What can the Analytics API be used for?
 

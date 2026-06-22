@@ -9,7 +9,15 @@ Access tokens and refresh tokens usually expire according to the following sched
 | Access token | 1 hour |
 | Refresh token | 7 days |
 
-**Auth rate limit**: The token endpoint allows a maximum of **5 requests per user per minute**. Re-authenticating too frequently (e.g., fetching a new token on every API call instead of reusing the cached token) will trigger this limit. Always cache and reuse access tokens for their full 1-hour lifetime.
+## Refresh token behavior
+
+To keep a user signed in without forcing another login, cache the access token and refresh token returned by the OAuth flow. Use the access token until it is near expiration, then call `POST /restapi/oauth/token` with `grant_type=refresh_token` and the current `refresh_token`.
+
+Refreshing usually returns both a new access token and a new refresh token. Store the new refresh token immediately, because refresh tokens are single-use after the new access token is used. If the refresh token also expires or is invalidated, the user must complete the authorization flow again to issue a new authorization session.
+
+Do not request a new token for every API call. The token endpoint is in the Auth rate-limit group and allows **5 requests per user per minute** by default.
+
+For more details on token endpoint throttling, see [API rate limits](../basics/rate-limits.md#oauth-token-endpoint-rate-limit).
 
 ??? hint "Make sure your app is configured to issue refresh tokens"
     Before you proceed, make sure your application's settings have the "Issue refresh tokens" option enabled. By default, refresh tokens are not issued, so if you observe that a refresh token was not returned along with access token, edit your app's settings and look for the following:
