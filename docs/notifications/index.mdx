@@ -1,8 +1,16 @@
 # Introduction to event notifications and subscriptions
 
-**WebSockets require no public server** — ideal for mobile apps and serverless environments. Use the `@ringcentral/subscriptions` npm package (`npm install @ringcentral/subscriptions`) for WebSocket-based push notifications with no inbound firewall rules needed.
+**For mobile apps: use WebSockets.** WebSockets deliver low-latency push notifications directly to clients with no public server required — no inbound firewall rules, no always-on HTTP endpoint. Use the `@ringcentral/subscriptions` npm package (`npm install @ringcentral/subscriptions`).
 
-**Webhooks require a public HTTPS server** to receive inbound POST callbacks from RingCentral.
+**For server-side always-on processing: use Webhooks.** Webhooks require a publicly accessible HTTPS server to receive inbound POST callbacks from RingCentral.
+
+| | WebSocket | Webhook |
+|--|-----------|---------|
+| Public server required | **No** | **Yes** |
+| Low-latency push | **Yes** | No (polling needed) |
+| Mobile / client-side | **Ideal** | Not suitable |
+| Always-on server | Not required | Required |
+| Package | `@ringcentral/subscriptions` | — |
 
 Create all subscriptions via `POST /restapi/v1.0/subscription`.
 
