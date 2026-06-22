@@ -1,0 +1,36 @@
+/* ============================================================
+   RingCentral Developers — homepage layout overrides
+   Scoped to the custom landing page ("/") only.
+   The Mintlify navbar is intentionally kept (search +
+   theme toggle + logo); we only reset the content offsets
+   that the layout system reserves for the hidden sidebar.
+   ============================================================ */
+
+html[data-current-path="/"] #content-container {
+  margin-left: 0 !important;
+  padding-top: 0 !important;
+  gap: 0 !important;
+  min-height: 0 !important;
+}
+
+html[data-current-path="/"] #content-area {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+}
+
+html[data-current-path="/"] #content {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Remove the default top/bottom padding the content well applies so the
+   hero sits flush under the navbar. */
+html[data-current-path="/"] #page-context-menu,
+html[data-current-path="/"] #table-of-contents {
+  display: none !important;
+}

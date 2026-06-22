@@ -7,13 +7,34 @@
     "light": "#FF8C30",
     "dark": "#E55A00"
   },
-  "favicon": "/favicon.ico",
-  "topbarLinks": [
-    {
-      "name": "API Reference",
-      "url": "https://developers.ringcentral.com/api-reference"
+  "favicon": "/favicon.png",
+  "api": {
+    "playground": {
+      "display": "interactive"
+    },
+    "examples": {
+      "languages": ["curl", "javascript", "python", "php", "ruby", "java", "csharp"]
     }
-  ],
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "assistant",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "grok",
+      "aistudio",
+      "devin",
+      "windsurf",
+      "mcp",
+      "add-mcp",
+      "cursor",
+      "vscode",
+      "devin-mcp"
+    ]
+  },
   "exclude": [
     "engage-digital-api-docs/**",
     "engage-voice-api-docs/**",
@@ -24,7 +45,10 @@
     "mintlify-deploy/**"
   ],
   "navigation": {
-    "groups": [
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
       {
         "group": "Getting Started",
         "pages": [
@@ -422,18 +446,30 @@
           "sdks"
         ]
       }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "openapi": "openapi/rc-platform.yml"
+      }
     ]
   },
   "logo": {
-    "light": "/logo/light.png",
-    "dark": "/logo/dark.png"
+    "light": "/logo/ringcentral.png",
+    "dark": "/logo/ringcentral.png",
+    "href": "/"
   },
   "navbar": {
     "links": [
       {
-        "label": "API Reference",
-        "href": "https://developers.ringcentral.com/api-reference"
+        "label": "Support",
+        "href": "https://developers.ringcentral.com/support"
       }
-    ]
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Developer Console",
+      "href": "https://developers.ringcentral.com/login.html"
+    }
   }
 }
