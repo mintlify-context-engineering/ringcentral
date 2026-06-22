@@ -1,0 +1,64 @@
+{
+  "questions": 6,
+  "total_raw_bytes": 996606,
+  "total_mint_bytes": 673221,
+  "avg_raw_bytes": 166101,
+  "avg_mint_bytes": 112203,
+  "context_reduction_pct": 32.4,
+  "per_question": [
+    {
+      "id": "T3-01",
+      "tier": 3,
+      "raw_bytes": 215433,
+      "mint_bytes": 73010,
+      "raw_calls": 26,
+      "mint_calls": 14,
+      "reduction_pct": 66.1
+    },
+    {
+      "id": "T3-02",
+      "tier": 3,
+      "raw_bytes": 27080,
+      "mint_bytes": 118081,
+      "raw_calls": 12,
+      "mint_calls": 14,
+      "reduction_pct": -336.0
+    },
+    {
+      "id": "T3-03",
+      "tier": 3,
+      "raw_bytes": 62950,
+      "mint_bytes": 99133,
+      "raw_calls": 20,
+      "mint_calls": 18,
+      "reduction_pct": -57.5
+    },
+    {
+      "id": "T3-04",
+      "tier": 3,
+      "raw_bytes": 18843,
+      "mint_bytes": 35339,
+      "raw_calls": 6,
+      "mint_calls": 4,
+      "reduction_pct": -87.5
+    },
+    {
+      "id": "T3-05",
+      "tier": 3,
+      "raw_bytes": 61165,
+      "mint_bytes": 176558,
+      "raw_calls": 25,
+      "mint_calls": 34,
+      "reduction_pct": -188.7
+    },
+    {
+      "id": "T3-06",
+      "tier": 3,
+      "raw_bytes": 611135,
+      "mint_bytes": 171100,
+      "raw_calls": 8,
+      "mint_calls": 19,
+      "reduction_pct": 72.0
+    }
+  ]
+}

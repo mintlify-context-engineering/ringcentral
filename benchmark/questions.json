@@ -180,6 +180,96 @@
       "ground_truth": "Use Auth Code + PKCE flow so each user can independently authorize the app with their own RingCentral account. After each user authorizes, store their access/refresh tokens. To access each user's call log: GET /restapi/v1.0/account/~/extension/~/call-log (where ~ resolves to the authenticated user's account/extension). Use refresh tokens to maintain sessions. JWT would not scale to multiple users.",
       "key_facts": ["Auth Code + PKCE", "multiple users", "per-user tokens", "refresh tokens", "~/extension/~/call-log", "not JWT"],
       "expected_source": "authentication.md + api-basics.md"
+    },
+    {
+      "id": "T3-07",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What chatbot frameworks does RingCentral provide for building Team Messaging bots? List all available frameworks, their language, and primary purpose.",
+      "ground_truth": "RingCentral provides three official chatbot frameworks: (1) ringcentral-chatbot-js — JavaScript/Node.js, higher-level wrapper with skill routing, state management, and webhook handling; (2) ringcentral-chatbot-python — Python equivalent; (3) ringcentral-chatbot-core — shared core abstractions used by both. All use the same platform APIs as @ringcentral/sdk underneath but remove bot-specific boilerplate. The JS framework is recommended for getting started.",
+      "key_facts": ["ringcentral-chatbot-js", "ringcentral-chatbot-python", "ringcentral-chatbot-core", "skill routing", "state management", "@ringcentral/sdk"],
+      "expected_source": "team-messaging/index.mdx + sdks.mdx + chatbots/ READMEs"
+    },
+    {
+      "id": "T3-08",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What is the difference between the RingCentral Embeddable widget (ringcentral-embeddable) and the Web Phone SDK (ringcentral-web-phone)? When should I use each?",
+      "ground_truth": "ringcentral-embeddable is a ready-made, drop-in phone UI widget you embed into any web page — it handles all UI, auth, and call controls out of the box. ringcentral-web-phone is the lower-level WebRTC/SIP library that Embeddable is built on top of; use it when you need to build a fully custom phone client with custom UI and call flow. Use Embeddable for fast integration, Web Phone SDK when you need granular control over the calling experience.",
+      "key_facts": ["ringcentral-embeddable", "ringcentral-web-phone", "WebRTC", "SIP", "drop-in", "Embeddable is built on", "custom"],
+      "expected_source": "sdks.mdx + embeddable/ READMEs"
+    },
+    {
+      "id": "T3-09",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What AI-powered insights does the RingCentral AI Conversation Expert (ACE) API provide after a recorded call, and what license is required?",
+      "ground_truth": "The ACE API provides: Transcript (speaker-identified utterances with timestamps), Summary (AI-generated paragraphs), HighLights (key speaker utterances), NextSteps (AI action items), AIScore (confidence score), Sentiment (Positive/Negative/Neutral), and BulletedSummary. Requires an AI Conversation Expert license assigned to the user extension plus the 'AI Conversation Expert - Access Insights' (ReadRingSenseInsights) permission. Note: the older /ai/audio/v1/async/speech-to-text API is deprecated; use ACE instead.",
+      "key_facts": ["Transcript", "Summary", "HighLights", "NextSteps", "Sentiment", "AI Conversation Expert license", "ReadRingSenseInsights", "deprecated"],
+      "expected_source": "docs/ai/ace.mdx + docs/ai/index.mdx"
+    },
+    {
+      "id": "T3-10",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What is the difference between the RingCentral Analytics API and the Call Log API? When should I use each?",
+      "ground_truth": "Analytics API: aggregated business metrics for managers — supports aggregate (POST /analytics/calls/v1/accounts/~/aggregation/fetch) and timeline endpoints. Groups data by Queue, Users, IVRs, Departments etc. Shows call counts, abandonment rates, handle time, agent performance. Covers up to 184 days of history. Call Log API: individual call records with full per-call detail (duration, direction, recording links). Use Analytics for team performance dashboards and trends; use Call Log when you need per-call data like recordings or timestamps.",
+      "key_facts": ["Analytics API", "aggregate", "timeline", "groupBy", "Queues", "184 days", "Call Log", "per-call", "/analytics/calls/v1/accounts/~/aggregation/fetch"],
+      "expected_source": "docs/analytics/index.mdx + docs/voice/call-log/"
+    },
+    {
+      "id": "T3-11",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "How do I create a RingCentral Webinar using the API? What key settings are available, and how do I add registrants for a marketing webinar?",
+      "ground_truth": "Create a webinar via the REST API specifying settings including: registrationEnabled (true for marketing webinars — gives each attendee a unique join URL), recordingEnabled, autoRecord, qnaEnabled, pollsEnabled, password, attendeeAuthentication. After creating the webinar, create a session. To add registrants for a marketing webinar, call the create registrant endpoint. Requires EditWebinars and ReadWebinars permissions. Set registrationEnabled=false for internal all-hands webinars (single shared join URL).",
+      "key_facts": ["registrationEnabled", "EditWebinars", "registrants", "unique join URL", "recordingEnabled", "session", "marketing webinar"],
+      "expected_source": "docs/webinar/creation.mdx + docs/webinar/registrants.mdx"
+    },
+    {
+      "id": "T3-12",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What types of events can I subscribe to using the RingCentral push notification service? Name at least 5 distinct event categories.",
+      "ground_truth": "RingCentral subscriptions support: (1) Telephony/call events — active call sessions and state changes; (2) Message events — incoming SMS, voicemail, fax via /message-store; (3) Presence events — user presence/availability changes; (4) Extension/account events — extension updates; (5) Call queue events — queue member activity; (6) AI Conversation Expert events — ACE analysis complete; (7) Meeting/video events. All subscriptions are created via POST /restapi/v1.0/subscription with an eventFilters array. WebSocket or webhook delivery.",
+      "key_facts": ["telephony", "message-store", "presence", "/restapi/v1.0/subscription", "eventFilters", "WebSocket", "webhook"],
+      "expected_source": "docs/notifications/index.mdx + docs/ai/ace.mdx"
+    },
+    {
+      "id": "T3-13",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Show me how to send an SMS using the RingCentral REST API in both JavaScript/Node.js and Ruby. What is the endpoint and key request fields?",
+      "ground_truth": "Endpoint: POST /restapi/v1.0/account/~/extension/~/sms. Required fields: from.phoneNumber, to[].phoneNumber, text. JavaScript: platform.post('/restapi/v1.0/account/~/extension/~/sms', {from: {phoneNumber: '...'}, to: [{phoneNumber: '...'}], text: 'Hello'}) using @ringcentral/sdk. Ruby: platform.post('/restapi/v1.0/account/~/extension/~/sms', payload: {from: {phoneNumber: '...'}, to: [{phoneNumber: '...'}], text: 'Hello'}) using ringcentral_sdk gem.",
+      "key_facts": ["/restapi/v1.0/account/~/extension/~/sms", "from", "to", "text", "phoneNumber", "platform.post", "@ringcentral/sdk", "ringcentral_sdk"],
+      "expected_source": "sdks/ ringcentral-js README + ringcentral-ruby README"
+    },
+    {
+      "id": "T3-14",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What CRM platforms does RingCentral have native phone integration support for, and what does the rc-unified-crm-extension framework provide?",
+      "ground_truth": "RingCentral has native phone integrations for: HubSpot (hubspot-embeddable-ringcentral-phone), Pipedrive (pipedrive-embeddable-ringcentral-phone), and Redtail (redtail-embeddable-ringcentral-phone). The rc-unified-crm-extension (App Connect) is a developer SDK/framework for building custom CRM adapters — it provides standardized call logging, contact lookup, and click-to-dial capabilities. Developers use it to connect any CRM to the RingCentral embeddable phone widget.",
+      "key_facts": ["HubSpot", "Pipedrive", "Redtail", "rc-unified-crm-extension", "App Connect", "call logging", "click-to-dial", "contact lookup"],
+      "expected_source": "sdks.mdx + crm/ READMEs"
+    },
+    {
+      "id": "T3-15",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "How long does a RingCentral OAuth access token last, and how do I get a new one without forcing the user to log in again? What happens when the refresh token also expires?",
+      "ground_truth": "Access tokens last approximately 3600 seconds (1 hour). Use the refresh_token grant type (grant_type=refresh_token) to get a new access token silently before or after expiry — no user interaction needed. Refresh tokens for Auth Code flow last 7 days. If the refresh token expires, the user must re-authenticate from scratch (full OAuth flow). For JWT (server-to-server) flows there is no refresh token — simply request a new access token using the JWT grant at any time. Always cache and reuse tokens; calling the token endpoint too frequently triggers the Auth rate limit (5 requests/user/minute).",
+      "key_facts": ["3600", "refresh_token", "grant_type=refresh_token", "7 days", "re-authenticate", "JWT", "5 requests/user/minute"],
+      "expected_source": "docs/authentication/index.mdx + docs/basics/rate-limits.mdx"
+    },
+    {
+      "id": "T3-16",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Which RingCentral SDKs have a dedicated WebSocket or real-time communication library beyond the standard REST SDK, and what is each called?",
+      "ground_truth": "Beyond the standard REST SDKs, RingCentral provides: (1) @ringcentral/subscriptions — Node.js npm package for WebSocket push subscriptions (install: npm install @ringcentral/subscriptions); (2) ringcentral-websocket-java — Java WebSocket client library; (3) ringcentral-softphone-ts / ringcentral-softphone-js / ringcentral-softphone-go — SIP/WebRTC softphone SDKs for audio streaming in TypeScript, JavaScript, and Go respectively; (4) ringcentral-web-phone — full WebRTC-based browser phone SDK. The standard REST SDKs (Python, PHP, Ruby, .NET, Java) handle REST calls only; WebSocket/real-time needs a separate library.",
+      "key_facts": ["@ringcentral/subscriptions", "npm install @ringcentral/subscriptions", "ringcentral-websocket-java", "ringcentral-softphone", "ringcentral-web-phone", "WebRTC", "SIP"],
+      "expected_source": "sdks.mdx + sdks/ WebSocket and softphone READMEs"
     }
   ]
 }

@@ -1,0 +1,395 @@
+{
+  "summary": {
+    "experiment_date": "2026-06-22T05:08:00.752895",
+    "model": "composer-2.5",
+    "n_questions": 16,
+    "total_elapsed_s": 0.0,
+    "raw": {
+      "avg_elapsed_s": 0,
+      "avg_response_length": 0,
+      "accuracy": {
+        "avg_score": 0.0,
+        "pct_correct": 0.0
+      }
+    },
+    "mintlify": {
+      "avg_elapsed_s": 0,
+      "avg_response_length": 0,
+      "accuracy": {
+        "avg_score": 0.0,
+        "pct_correct": 0.0
+      }
+    },
+    "score_improvement": 0.0
+  },
+  "results": [
+    {
+      "id": "T3-01",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Which RingCentral SDKs support JWT authentication, and what is the install command for each?",
+      "ground_truth": "All major SDKs support JWT: Python (pip3 install ringcentral), JavaScript (npm install @ringcentral/sdk), PHP (composer require ringcentral/ringcentral-php), Ruby (gem install ringcentral_sdk), Java (Maven: com.ringcentral:ringcentral), Go (go get github.com/ringcentral/ringcentral-go), .NET (dotnet add package RingCentral.Net).",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-02",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "When building a real-time call notification feature for a mobile app, should I use webhooks or WebSockets? Why?",
+      "ground_truth": "Use WebSockets. They deliver low-latency push notifications directly to clients without requiring a publicly accessible server. Webhooks require a public HTTPS endpoint and are better suited for always-on server-side event processing. For mobile, WebSocket via the @ringcentral/subscriptions package is ideal.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-03",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "How does the RingCentral chatbot framework (ringcentral-chatbot-js) relate to the core JS SDK (@ringcentral/sdk)?",
+      "ground_truth": "ringcentral-chatbot-js is a separate higher-level framework built on top of the RingCentral platform. It handles bot-specific concerns: webhook routing, skill system, conversation state management. Under the hood it uses the same platform APIs as @ringcentral/sdk for authentication and API calls, but abstracts them behind a bot-friendly interface.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-04",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What rate limit applies to the authentication (token) endpoint, and what is the default limit?",
+      "ground_truth": "The Auth usage plan group applies to authentication/token endpoints. Default limit: 5 requests per user per minute, with a 60-second penalty window. This means you should cache and reuse access tokens rather than re-authenticating on every request.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-05",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Write a complete Python script outline for a server-side job that downloads all call logs daily, covering authentication, pagination, rate limit handling, and error recovery.",
+      "ground_truth": "1) JWT auth: SDK('id','secret','https://platform.ringcentral.com'), platform.login(jwt='...'). 2) Paginate: GET /restapi/v1.0/account/~/extension/~/call-log with dateFrom/dateTo/page/perPage, loop on navigation.nextPage. 3) Rate limits: check X-Rate-Limit-Remaining after each call, sleep X-Rate-Limit-Window if 0. 4) On 429: sleep Retry-After seconds before retrying \u2014 don't retry early or the window resets. 5) On 401: re-authenticate with JWT (token expired).",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-06",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "A developer wants to build a CRM integration that logs all incoming calls for multiple users in an organization. What auth flow should they use, and how does the API path structure work for accessing each user's call log?",
+      "ground_truth": "Use Auth Code + PKCE flow so each user can independently authorize the app with their own RingCentral account. After each user authorizes, store their access/refresh tokens. To access each user's call log: GET /restapi/v1.0/account/~/extension/~/call-log (where ~ resolves to the authenticated user's account/extension). Use refresh tokens to maintain sessions. JWT would not scale to multiple users.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-07",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What chatbot frameworks does RingCentral provide for building Team Messaging bots? List all available frameworks, their language, and primary purpose.",
+      "ground_truth": "RingCentral provides three official chatbot frameworks: (1) ringcentral-chatbot-js \u2014 JavaScript/Node.js, higher-level wrapper with skill routing, state management, and webhook handling; (2) ringcentral-chatbot-python \u2014 Python equivalent; (3) ringcentral-chatbot-core \u2014 shared core abstractions used by both. All use the same platform APIs as @ringcentral/sdk underneath but remove bot-specific boilerplate. The JS framework is recommended for getting started.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-08",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What is the difference between the RingCentral Embeddable widget (ringcentral-embeddable) and the Web Phone SDK (ringcentral-web-phone)? When should I use each?",
+      "ground_truth": "ringcentral-embeddable is a ready-made, drop-in phone UI widget you embed into any web page \u2014 it handles all UI, auth, and call controls out of the box. ringcentral-web-phone is the lower-level WebRTC/SIP library that Embeddable is built on top of; use it when you need to build a fully custom phone client with custom UI and call flow. Use Embeddable for fast integration, Web Phone SDK when you need granular control over the calling experience.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-09",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What AI-powered insights does the RingCentral AI Conversation Expert (ACE) API provide after a recorded call, and what license is required?",
+      "ground_truth": "The ACE API provides: Transcript (speaker-identified utterances with timestamps), Summary (AI-generated paragraphs), HighLights (key speaker utterances), NextSteps (AI action items), AIScore (confidence score), Sentiment (Positive/Negative/Neutral), and BulletedSummary. Requires an AI Conversation Expert license assigned to the user extension plus the 'AI Conversation Expert - Access Insights' (ReadRingSenseInsights) permission. Note: the older /ai/audio/v1/async/speech-to-text API is deprecated; use ACE instead.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-10",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What is the difference between the RingCentral Analytics API and the Call Log API? When should I use each?",
+      "ground_truth": "Analytics API: aggregated business metrics for managers \u2014 supports aggregate (POST /analytics/calls/v1/accounts/~/aggregation/fetch) and timeline endpoints. Groups data by Queue, Users, IVRs, Departments etc. Shows call counts, abandonment rates, handle time, agent performance. Covers up to 184 days of history. Call Log API: individual call records with full per-call detail (duration, direction, recording links). Use Analytics for team performance dashboards and trends; use Call Log when you need per-call data like recordings or timestamps.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-11",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "How do I create a RingCentral Webinar using the API? What key settings are available, and how do I add registrants for a marketing webinar?",
+      "ground_truth": "Create a webinar via the REST API specifying settings including: registrationEnabled (true for marketing webinars \u2014 gives each attendee a unique join URL), recordingEnabled, autoRecord, qnaEnabled, pollsEnabled, password, attendeeAuthentication. After creating the webinar, create a session. To add registrants for a marketing webinar, call the create registrant endpoint. Requires EditWebinars and ReadWebinars permissions. Set registrationEnabled=false for internal all-hands webinars (single shared join URL).",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-12",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What types of events can I subscribe to using the RingCentral push notification service? Name at least 5 distinct event categories.",
+      "ground_truth": "RingCentral subscriptions support: (1) Telephony/call events \u2014 active call sessions and state changes; (2) Message events \u2014 incoming SMS, voicemail, fax via /message-store; (3) Presence events \u2014 user presence/availability changes; (4) Extension/account events \u2014 extension updates; (5) Call queue events \u2014 queue member activity; (6) AI Conversation Expert events \u2014 ACE analysis complete; (7) Meeting/video events. All subscriptions are created via POST /restapi/v1.0/subscription with an eventFilters array. WebSocket or webhook delivery.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-13",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Show me how to send an SMS using the RingCentral REST API in both JavaScript/Node.js and Ruby. What is the endpoint and key request fields?",
+      "ground_truth": "Endpoint: POST /restapi/v1.0/account/~/extension/~/sms. Required fields: from.phoneNumber, to[].phoneNumber, text. JavaScript: platform.post('/restapi/v1.0/account/~/extension/~/sms', {from: {phoneNumber: '...'}, to: [{phoneNumber: '...'}], text: 'Hello'}) using @ringcentral/sdk. Ruby: platform.post('/restapi/v1.0/account/~/extension/~/sms', payload: {from: {phoneNumber: '...'}, to: [{phoneNumber: '...'}], text: 'Hello'}) using ringcentral_sdk gem.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-14",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What CRM platforms does RingCentral have native phone integration support for, and what does the rc-unified-crm-extension framework provide?",
+      "ground_truth": "RingCentral has native phone integrations for: HubSpot (hubspot-embeddable-ringcentral-phone), Pipedrive (pipedrive-embeddable-ringcentral-phone), and Redtail (redtail-embeddable-ringcentral-phone). The rc-unified-crm-extension (App Connect) is a developer SDK/framework for building custom CRM adapters \u2014 it provides standardized call logging, contact lookup, and click-to-dial capabilities. Developers use it to connect any CRM to the RingCentral embeddable phone widget.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-15",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "How long does a RingCentral OAuth access token last, and how do I get a new one without forcing the user to log in again? What happens when the refresh token also expires?",
+      "ground_truth": "Access tokens last approximately 3600 seconds (1 hour). Use the refresh_token grant type (grant_type=refresh_token) to get a new access token silently before or after expiry \u2014 no user interaction needed. Refresh tokens for Auth Code flow last 7 days. If the refresh token expires, the user must re-authenticate from scratch (full OAuth flow). For JWT (server-to-server) flows there is no refresh token \u2014 simply request a new access token using the JWT grant at any time. Always cache and reuse tokens; calling the token endpoint too frequently triggers the Auth rate limit (5 requests/user/minute).",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    },
+    {
+      "id": "T3-16",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Which RingCentral SDKs have a dedicated WebSocket or real-time communication library beyond the standard REST SDK, and what is each called?",
+      "ground_truth": "Beyond the standard REST SDKs, RingCentral provides: (1) @ringcentral/subscriptions \u2014 Node.js npm package for WebSocket push subscriptions (install: npm install @ringcentral/subscriptions); (2) ringcentral-websocket-java \u2014 Java WebSocket client library; (3) ringcentral-softphone-ts / ringcentral-softphone-js / ringcentral-softphone-go \u2014 SIP/WebRTC softphone SDKs for audio streaming in TypeScript, JavaScript, and Go respectively; (4) ringcentral-web-phone \u2014 full WebRTC-based browser phone SDK. The standard REST SDKs (Python, PHP, Ruby, .NET, Java) handle REST calls only; WebSocket/real-time needs a separate library.",
+      "raw": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "ERROR: No module named 'cursor_sdk'",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0,
+        "raw_reasoning": "No module named 'cursor_sdk'",
+        "mintlify_reasoning": "No module named 'cursor_sdk'"
+      }
+    }
+  ]
+}

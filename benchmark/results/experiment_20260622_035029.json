@@ -1,0 +1,51 @@
+{
+  "summary": {
+    "experiment_date": "2026-06-22T03:50:29.210645",
+    "model": "composer-2.5",
+    "n_questions": 1,
+    "total_elapsed_s": 33.4,
+    "raw": {
+      "avg_elapsed_s": 12.45,
+      "avg_response_length": 2669.0,
+      "accuracy": {
+        "avg_score": 2.0,
+        "pct_correct": 100.0
+      }
+    },
+    "mintlify": {
+      "avg_elapsed_s": 15.21,
+      "avg_response_length": 1978.0,
+      "accuracy": {
+        "avg_score": 1.0,
+        "pct_correct": 0.0
+      }
+    },
+    "time_reduction_pct": -22.2,
+    "score_improvement": -1.0
+  },
+  "results": [
+    {
+      "id": "T3-02",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "When building a real-time call notification feature for a mobile app, should I use webhooks or WebSockets? Why?",
+      "ground_truth": "Use WebSockets. They deliver low-latency push notifications directly to clients without requiring a publicly accessible server. Webhooks require a public HTTPS endpoint and are better suited for always-on server-side event processing. For mobile, WebSocket via the @ringcentral/subscriptions package is ideal.",
+      "raw": {
+        "answer": "**Use WebSockets** for real-time call notifications in a mobile app. RingCentral\u2019s docs treat that as the right fit for client-side, low-latency delivery; webhooks are for server-side processing.\n\n## Recommendation: WebSockets\n\nFrom the notifications guide:\n\n```3:13:docs/notifications/index.mdx\n**For mobile apps: use WebSockets.** WebSockets deliver low-latency push notifications directly to clients with no public server required \u2014 no inbound firewall rules, no always-on HTTP endpoint. Use the `@ringcentral/subscriptions` npm package (`npm install @ringcentral/subscriptions`).\n\n**For server-side always-on processing: use Webhooks.** Webhooks require a publicly accessible HTTPS server to receive inbound POST callbacks from RingCentral.\n\n| | WebSocket | Webhook |\n|--|-----------|---------|\n| Public server required | **No** | **Yes** |\n| Low-latency push | **Yes** | No (polling needed) |\n| Mobile / client-side | **Ideal** | Not suitable |\n| Always-on server | Not required | Required |\n| Package | `@ringcentral/subscriptions` | \u2014 |\n```\n\n## Why WebSockets fit mobile\n\n1. **No backend required** \u2014 Webhooks need a public HTTPS endpoint (with validation, TLS 1.2+, and a response within 3 seconds). A mobile client can open a WebSocket directly to RingCentral without hosting that infrastructure.\n\n2. **Low-latency, client-direct delivery** \u2014 WebSockets use a persistent connection for near real-time events, which suits live call state updates on the device.\n\n3. **Call events are supported** \u2014 For real-time call tracking, subscribe to telephony session events such as:\n   - `/restapi/v1.0/account/~/extension/~/telephony/sessions`\n   - Call started, call ended, and missed call filters (see the [event notifications overview](docs/notifications/index.mdx))\n\n   The Call Log API is not a substitute; it can lag 15\u201330 seconds. RingCentral points developers to event subscriptions (Webhooks or push notifications) for real-time call reporting instead.\n\n## When webhooks make sense\n\nUse webhooks if you run an **always-on backend** that must receive events even when mobile clients are offline \u2014 for example, logging every call to a database or CRM sync. In that case, the typical pattern is: webhook \u2192 your server \u2192 optional native push (APNs/FCM) to the device.\n\nFor direct real-time notifications on the mobile client itself, WebSockets are the documented choice.\n\n## Implementation note\n\nFor JavaScript/Node (including React Native), use `@ringcentral/subscriptions`. For native iOS/Android, implement a WebSocket subscription via the Subscriptions API and the `WebSocketsSubscription` app scope, or use a platform SDK that supports WebSocket subscriptions.",
+        "elapsed_s": 12.45,
+        "response_length": 2669
+      },
+      "mintlify": {
+        "answer": "**Use WebSockets**, not webhooks, for real-time call notifications in a mobile app.\n\nRingCentral\u2019s [event notifications guide](https://ringcentral.mintlify.app/notifications/index) is explicit on this:\n\n### Why WebSockets\n\n- **Built for client-side, real-time delivery** \u2014 WebSockets are \u201cideal for delivering low-latency notifications that must be sent directly to clients, e.g. push notifications for mobile applications.\u201d\n- **No public server required** \u2014 WebSockets \u201crequire no public server,\u201d which makes them \u201cideal for mobile apps and serverless environments.\u201d The app opens an outbound connection to RingCentral; no inbound firewall rules or HTTPS endpoint needed.\n- **Better fit for live call events** \u2014 For call state changes (start, end, missed call), subscribe to telephony session events such as the [Extension Telephony Sessions event](https://developers.ringcentral.com/api-reference/Extension-Telephony-Sessions-Event) using the filter `/restapi/v1.0/account/~/extension/~/telephony/sessions`. These fire when call state changes, unlike the call log API, which can lag 15\u201330 seconds.\n\n### Why not webhooks (for this use case)\n\n- **Webhooks need a public HTTPS server** \u2014 RingCentral POSTs callbacks to your server, which is a poor fit for a mobile client running on a device.\n- **Webhooks suit always-on backends** \u2014 They\u2019re \u201cgreat if your service is \u2018always on\u2019 and needs to receive notifications even if clients are offline.\u201d That\u2019s a server-side pattern: webhook \u2192 your backend \u2192 push to the device, not webhook \u2192 phone directly.\n\n### Practical note\n\nWebSocket subscriptions only last while the connection is active; reconnect and resubscribe when the app comes back online. If you also need notifications when the app is fully offline, a common hybrid is **WebSockets while the app is open** plus a **backend webhook** that forwards to APNs/FCM \u2014 but for direct real-time call alerts on mobile, WebSockets are the right primary choice per RingCentral\u2019s docs.",
+        "elapsed_s": 15.21,
+        "response_length": 1978
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Correctly recommends WebSockets for mobile with all key facts\u2014low latency, no public server, webhooks for server-side use, and @ringcentral/subscriptions\u2014with no significant errors.",
+        "mintlify_score": 1,
+        "mintlify_reasoning": "Correctly recommends WebSockets and covers low latency, no public server, and mobile fit, but omits the @ringcentral/subscriptions package called out in the ground truth."
+      }
+    }
+  ]
+}

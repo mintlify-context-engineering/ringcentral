@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "experiment_date": "2026-06-22T03:48:45.906237",
+    "model": "composer-2.5",
+    "n_questions": 3,
+    "total_elapsed_s": 126.7,
+    "raw": {
+      "avg_elapsed_s": 17.92,
+      "avg_response_length": 1948.33,
+      "accuracy": {
+        "avg_score": 1.67,
+        "pct_correct": 66.7
+      }
+    },
+    "mintlify": {
+      "avg_elapsed_s": 17.14,
+      "avg_response_length": 1081.0,
+      "accuracy": {
+        "avg_score": 1.67,
+        "pct_correct": 66.7
+      }
+    },
+    "time_reduction_pct": 4.4,
+    "score_improvement": 0.0
+  },
+  "results": [
+    {
+      "id": "T1-05",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the sandbox base URL for RingCentral API testing?",
+      "ground_truth": "https://platform.devtest.ringcentral.com",
+      "raw": {
+        "answer": "The sandbox base URL for RingCentral API testing is:\n\n**`https://platform.devtest.ringcentral.com/restapi/v1.0/`**\n\nThat is the sandbox counterpart to production\u2019s `https://platform.ringcentral.com/restapi/v1.0/`. The sandbox hostname is `platform.devtest.ringcentral.com`.\n\nThis is documented in `docs/basics/uris.mdx`:\n\n| Environment | Base URL |\n|-------------|----------|\n| Production  | `https://platform.ringcentral.com/restapi/v1.0/` |\n| Sandbox     | `https://platform.devtest.ringcentral.com/restapi/v1.0/` |\n\nWhen using an SDK, you typically set the server to the host (`https://platform.devtest.ringcentral.com`) via `RC_SERVER_URL` or similar; the SDK adds paths like `/restapi/v1.0/` itself.",
+        "elapsed_s": 14.01,
+        "response_length": 704
+      },
+      "mintlify": {
+        "answer": "The **sandbox base URL** for RingCentral API testing is:\n\n**`https://platform.devtest.ringcentral.com/restapi/v1.0/`**\n\nFor comparison, the production base URL is `https://platform.ringcentral.com/restapi/v1.0/`. All REST API paths start with `/restapi/v1.0/`.\n\nSource: [Methods, endpoints and parameters of the RingCentral API](https://ringcentral.mintlify.app/basics/uris#methods-endpoints-and-parameters-of-the-ringcentral-api)",
+        "elapsed_s": 9.4,
+        "response_length": 430
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Correctly identifies the sandbox hostname platform.devtest.ringcentral.com and provides accurate API base URL, production comparison, and SDK context with no significant errors.",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Correctly states the sandbox URL with platform.devtest.ringcentral.com, includes accurate production comparison and documentation reference with no significant errors."
+      }
+    },
+    {
+      "id": "T3-01",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Which RingCentral SDKs support JWT authentication, and what is the install command for each?",
+      "ground_truth": "All major SDKs support JWT: Python (pip3 install ringcentral), JavaScript (npm install @ringcentral/sdk), PHP (composer require ringcentral/ringcentral-php), Ruby (gem install ringcentral_sdk), Java (Maven: com.ringcentral:ringcentral), Go (go get github.com/ringcentral/ringcentral-go), .NET (dotnet add package RingCentral.Net).",
+      "raw": {
+        "answer": "**All 7 major REST API SDKs support JWT authentication.** That is documented in `docs/sdks.mdx`:\n\n| Language | Package | Install command |\n|----------|---------|-----------------|\n| **Python** | `ringcentral` | `pip3 install ringcentral` |\n| **JavaScript/Node** | `@ringcentral/sdk` | `npm install @ringcentral/sdk` |\n| **PHP** | `ringcentral/ringcentral-php` | `composer require ringcentral/ringcentral-php` |\n| **Ruby** | `ringcentral-sdk` | `gem install ringcentral-sdk` |\n| **Java** | `com.ringcentral:ringcentral` | Gradle: `implementation 'com.ringcentral:ringcentral:[version]'` \u2014 or add the Maven dependency `com.ringcentral:ringcentral` |\n| **Go** | `github.com/ringcentral/ringcentral-go` | `go get github.com/ringcentral/ringcentral-go` |\n| **.NET/C#** | `RingCentral.Net` | `dotnet add package RingCentral.Net` |\n\n### JWT usage (by SDK)\n\n- **Python:** `platform.login(jwt='JWT_TOKEN')`\n- **JavaScript:** `platform.login({ jwt: process.env.RC_JWT })`\n- **PHP:** `$sdk->login(['jwt' => 'your_jwt_token'])`\n- **Ruby:** `rc.authorize(jwt: 'jwt-token')`\n- **Java:** `rc.authorize(jwtToken)`\n- **Go:** pass `GrantType: \"urn:ietf:params:oauth:grant-type:jwt-bearer\"` and `Assertion: \"<jwt>\"` to `Authorize()`\n- **.NET:** `await rc.Authorize(\"jwtToken\")`\n\n### Notable exceptions\n\n- **Swift** (`ringcentral-swift`) is an official REST SDK but does **not** support JWT \u2014 it only documents username/password auth via `authorize(username:ext:password:)`.\n- **RingCentral Extensible** (TypeScript, `@rc-ex/core`) also supports JWT via `await rc.authorize({ jwt })`. Install: `pnpm add @rc-ex/core`.",
+        "elapsed_s": 26.8,
+        "response_length": 1597
+      },
+      "mintlify": {
+        "answer": "According to the [RingCentral SDKs documentation](https://ringcentral.mintlify.app/sdks), **all 7 major REST API SDKs support JWT authentication**. Install commands:\n\n| Language | Package | Install command |\n|---|---|---|\n| **Python** | `ringcentral` | `pip3 install ringcentral` |\n| **JavaScript/Node** | `@ringcentral/sdk` | `npm install @ringcentral/sdk` |\n| **PHP** | `ringcentral/ringcentral-php` | `composer require ringcentral/ringcentral-php` |\n| **Ruby** | `ringcentral_sdk` | `gem install ringcentral_sdk` |\n| **Java** | `com.ringcentral:ringcentral` | Add Maven dependency: `com.ringcentral:ringcentral` |\n| **Go** | `github.com/ringcentral/ringcentral-go` | `go get github.com/ringcentral/ringcentral-go` |\n| **.NET/C#** | `RingCentral.Net` | `dotnet add package RingCentral.Net` |\n\n**Note:** Specialized SDKs (Web Phone, Embeddable, App Connect, etc.) are not listed as JWT-capable \u2014 JWT is supported by the 7 main REST API SDKs above. For Node.js WebSocket subscriptions, the docs also mention `npm install @ringcentral/subscriptions` separately.",
+        "elapsed_s": 16.13,
+        "response_length": 1060
+      },
+      "scores": {
+        "raw_score": 1,
+        "raw_reasoning": "Lists all seven major SDKs with correct JWT support and install commands for Python, JavaScript, PHP, Java, Go, and .NET, but gives the wrong Ruby package/install command (ringcentral-sdk instead of ringcentral_sdk).",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Correctly states that all seven major REST API SDKs support JWT and provides accurate install commands for every language, matching all key facts in the ground truth."
+      }
+    },
+    {
+      "id": "T3-02",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "When building a real-time call notification feature for a mobile app, should I use webhooks or WebSockets? Why?",
+      "ground_truth": "Use WebSockets. They deliver low-latency push notifications directly to clients without requiring a publicly accessible server. Webhooks require a public HTTPS endpoint and are better suited for always-on server-side event processing. For mobile, WebSocket via the @ringcentral/subscriptions package is ideal.",
+      "raw": {
+        "answer": "**Use WebSockets** for real-time call notifications in a mobile app. RingCentral\u2019s docs treat WebSockets as the right fit for low-latency, client-side delivery; webhooks are for server-side processing.\n\n## Recommendation: WebSockets\n\nFrom the notifications guide:\n\n```33:39:docs/notifications/index.mdx\n## When should I use a webhook vs a WebSocket?\n\nRingCentral supports two primary means for delivering events/notifications: via a webhook and via WebSockets. Here are considerations to make when deciding which to support in your application:\n\n* WebSockets can be relatively easy to setup, and can be a great way to experiment with events, especially if you do not have a web server that is needed for webhooks.\n* WebSockets is ideal for delivering low-latency notifications that must be sent directly to clients, e.g. push notifications for mobile applications.\n* Webhooks are great if your service is \"always on\" and needs to receive notifications even if clients are offline. \n```\n\nThe structured docs spell out the tradeoff:\n\n| | Webhook | WebSocket |\n|--|---------|-----------|\n| **Best for** | Always-on server apps | Mobile/browser clients, low-latency push |\n| **Requires** | Public HTTPS server | No public server needed |\n| **Offline handling** | Events queue and deliver when server returns | Lost if connection drops |\n\n**Why WebSockets fit a mobile app**\n\n1. **No public backend required** \u2014 The app opens an outbound WebSocket to RingCentral; no inbound HTTPS endpoint or firewall rules.\n2. **Low latency, direct delivery** \u2014 Events arrive over a persistent connection, which suits incoming-call alerts while the app is active or in the foreground.\n3. **Same subscription model** \u2014 You still use `POST /restapi/v1.0/subscription`, but with WebSocket transport instead of HTTP callbacks.\n\n**Call events to subscribe to**\n\n- Call started / ended: `/restapi/v1.0/account/~/telephony/sessions`\n- Missed call: `/restapi/v1.0/account/~/extension/~/missed-calls`\n- Per-extension call state: [Extension Telephony Sessions event](https://developers.ringcentral.com/api-reference/Extension-Telephony-Sessions-Event)\n\nThe Call Log API is not for real-time use (15\u201330s delay); the docs point to webhooks or push notifications for event-driven call reporting instead.\n\n## When webhooks make sense instead\n\nUse webhooks if you have an **always-on backend** that must receive call events when **mobile clients are offline** \u2014 for example, logging calls to a CRM or relaying to APNs/FCM when the app is backgrounded or killed. That is a **webhook \u2192 your server \u2192 native push** pattern, not webhooks straight to the phone.\n\nWebhooks also require a public HTTPS URL, validation handling (`Validation-Token` echo, response within 3000ms), and ongoing subscription renewal.\n\n## Implementation\n\n- **JavaScript/Node:** `@ringcentral/subscriptions` (`npm install @ringcentral/subscriptions`)\n- **Other languages:** Official SDKs support WebSocket subscriptions (see [WebSockets Quick Start](docs/notifications/websockets/quick-start.mdx)); your app needs the `WebSocketsSubscription` scope\n- **Manual:** Connect to `wss://platform.ringcentral.com/restapi/ws/net/v1.0/` after obtaining a WebSocket token via `POST /restapi/oauth/wstoken`\n\n**Bottom line:** For real-time call notifications **inside the mobile app**, use **WebSockets**. Use **webhooks on a backend** when you need server-side processing or to reach users when the app is not connected. Many production apps use both: WebSockets while foregrounded, webhooks + APNs/FCM when backgrounded.",
+        "elapsed_s": 12.95,
+        "response_length": 3544
+      },
+      "mintlify": {
+        "answer": "**Use WebSockets** for real-time call notifications in a mobile app.\n\nRingCentral\u2019s docs recommend WebSockets when notifications must go **directly to the client** with **low latency** \u2014 for example, mobile push-style call alerts. Webhooks are aimed at **always-on backend servers** that can receive events even when clients are offline.\n\n### Why WebSockets fit mobile\n\n1. **No public server required** \u2014 WebSockets are described as ideal for mobile apps and serverless setups. Webhooks need a **public HTTPS endpoint** to receive RingCentral POST callbacks, which a mobile client typically cannot provide.\n2. **Low-latency, client-direct delivery** \u2014 WebSockets use a persistent connection for near real-time events, which suits live call state updates on the device.\n3. **Call events are supported** \u2014 For real-time call tracking, subscribe to telephony session events such as:\n   - `/restapi/v1.0/account/~/extension/~/telephony/sessions`\n   \n   The **Extension Telephony Sessions event** fires whenever call state changes and is the recommended real-time way to detect when calls start and end (more reliable than polling the call log, which can lag 15\u201330 seconds).\n\n### When webhooks make sense instead\n\nUse webhooks if you run a **backend service** that must receive call events **while mobile clients are offline**, then forward them (e.g., via APNs/FCM). Webhooks are server-to-server, not client-to-server.\n\n### WebSocket caveat\n\nA WebSocket subscription is active only while the connection is up. If the app disconnects, you must reconnect and resubscribe.\n\n**Summary:** For a mobile app showing real-time call notifications, use **WebSockets**. Use **webhooks** only if you also need a backend to capture events when the app is not connected.",
+        "elapsed_s": 25.88,
+        "response_length": 1753
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Correctly recommends WebSockets and covers all key facts: low-latency client delivery, no public server, mobile use case, and the @ringcentral/subscriptions package.",
+        "mintlify_score": 1,
+        "mintlify_reasoning": "Correctly recommends WebSockets with low-latency, no-public-server, and mobile rationale, but omits the @ringcentral/subscriptions package called out in the ground truth."
+      }
+    }
+  ]
+}
