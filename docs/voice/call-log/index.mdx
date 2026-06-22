@@ -31,3 +31,40 @@ There are various API Permissions your application will be required to use depen
 
 * Active Calls, Account level Call Log Records, and Extension level Call Log Records require the `ReadCallLog` API permission.
 * Call Recording Metadata and Call Recording Content require the `ReadCallRecording` API Permission
+
+## Paginating Call Log Results
+
+The Call Log API uses `page` and `perPage` query parameters. The response includes a `navigation` object — when a `nextPage` key is present, more pages exist.
+
+**Python pagination example:**
+
+```python
+page = 1
+all_records = []
+while True:
+    res = platform.get('/restapi/v1.0/account/~/extension/~/call-log',
+                       {'page': page, 'perPage': 100, 'dateFrom': '2024-01-01T00:00:00Z'})
+    data = res.json()
+    all_records.extend(data['records'])
+    # navigation object contains nextPage when more pages exist
+    if 'nextPage' not in data.get('navigation', {}):
+        break
+    page += 1
+```
+
+**JavaScript pagination example:**
+
+```js
+let page = 1
+let allRecords = []
+while (true) {
+  const res = await platform.get('/restapi/v1.0/account/~/extension/~/call-log',
+    { page, perPage: 100, dateFrom: '2024-01-01T00:00:00Z' })
+  const data = await res.json()
+  allRecords = allRecords.concat(data.records)
+  if (!data.navigation || !data.navigation.nextPage) break
+  page++
+}
+```
+
+The `navigation.nextPage` property contains the URL for the next page; its absence signals the last page.

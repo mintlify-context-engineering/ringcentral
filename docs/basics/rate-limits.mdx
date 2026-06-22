@@ -42,6 +42,8 @@ The four basic usage plan groups are described below. Please note that the rate 
 | Heavy            | 10 requests/user/minute | 60 seconds                 |
 | Auth             | 5 requests/user/minute  | 60 seconds                 |
 
+**Auth group tip: reuse access tokens.** Do not re-authenticate on every request. Call the token endpoint only when the current token has expired (~7200 seconds). Re-authenticating too often triggers the Auth rate limit (5 requests/user/minute). Every new request during the penalty interval restarts the penalty clock — allowing the penalty window to fully elapse before retrying is essential to avoid getting stuck.
+
 ### What do I do if my app receives the "429 Too Many Requests" error?
 
 If you exceed these limitations then the server will return the `429 Too Many Requests` HTTP error code. This means that the client has been throttled by the server due to high request rate. 

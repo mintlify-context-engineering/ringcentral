@@ -1,13 +1,23 @@
 # Choosing the best auth method for your app
 
+**Quick guide:**
+
+| Scenario | Use |
+|----------|-----|
+| Server script / automation / single service account | **JWT** |
+| Multiple users log in individually / per-user tokens needed | **Auth Code + PKCE** |
+| JWT is **not** recommended when multiple users need individual authentication — use Auth Code for per-user tokens |
+
+**Reuse access tokens** — cache and reuse tokens (~7200s lifetime). Do not re-authenticate on every request.
+
 Every app needs to first authenticate itself and the user it will be acting on behalf of before calling the API. This process ensures that the application and the user have been authorized to perform the given action via the API. RingCentral supports multiple authentication/authorization methods to support a number of different scenarios and use cases. 
 
 ## What auth flow is right for my app?
 
 There are two primary authorization flows a developer can use to obtain an access token to call the RingCentral API. Choosing the right one will help ensure the security of your customer's data and credentials. These two methods are:
 
-1. **Authorization Code**. Best for authorizing frontend apps acting on behalf of individual users where users are prompted for credentials interactively
-2. **JWT**. Best for authenticating server apps connecting to the API on behalf of the pre-determined user
+1. **Authorization Code**. Best for authorizing frontend apps acting on behalf of individual users where users are prompted for credentials interactively. Required for per-user tokens.
+2. **JWT**. Best for authenticating server apps connecting to the API on behalf of the pre-determined user. Not JWT when you need multiple users to authenticate independently.
 
 Still unsure which method is right for your app? Here are some questions you can ask yourself.
 
