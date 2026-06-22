@@ -1,7 +1,10 @@
 # How to analyze media files using the AI API
 
-!!! important "`Deprecated`"
+<Note>
+**`Deprecated`**
 
+
+</Note>
 Most of RingCentral AI APIs such as the `/speech-to-text` and the `/analyze-interaction` endpoints take the input media content `contentUri` as a URI link to a media file resides at a remote server. These APIs all work in an [asynchronous manner](asynchronous-responses.md) and follow this basic flow:
 
 1. Developer calls an API endpoint passing a URI in the `contentUri` parameter
@@ -27,9 +30,11 @@ Here is an excerpt from a call to the [Call Log API](../voice/call-log/index.md)
 
 The following example code shows how to obtain the access token using a RingCentral platform SDK and attach the access token to the media file's content URL.
 
-!!! note "Running the code"
-    * Edit the variables in ALL CAPS with your app and user credentials before running the code.
+<Note>
+**Running the code**
 
+* Edit the variables in ALL CAPS with your app and user credentials before running the code.
+</Note>
 === "JavaScript"
 
     ```javascript
@@ -70,9 +75,9 @@ The following example code shows how to obtain the access token using a RingCent
     {!> code-samples/ai/code-snippets/access-token.java !}
     ```
 
-!!! Important
-    To retrieve the recording and use the AI API to process the recording, you need to have the following app permissions:
-
+<Note>
+To retrieve the recording and use the AI API to process the recording, you need to have the following app permissions:
+</Note>
     For Call Recordings: **AI**, **Read Call Log**, **Read Call Recording**
 
     For Video Meeting Recordings: **AI**, **Video**

@@ -29,8 +29,8 @@ An object containing a `records` array. Each record is a complete RingCentral ca
 | `type` | `string` | `"Voice"`, `"Fax"`, etc. |
 | `direction` | `string` | `"Inbound"` or `"Outbound"` |
 | `result` | `string` | `"Accepted"`, `"Missed"`, `"Voicemail"`, etc. |
-| `from` | `object` | Caller info: `{ phoneNumber, name, extensionNumber }` |
-| `to` | `object` | Callee info: `{ phoneNumber, name, extensionNumber }` |
+| `from` | `object` | Caller info: `` |
+| `to` | `object` | Callee info: `` |
 | `recording` | `object \| null` | Recording metadata if available |
 
 ---
@@ -40,16 +40,7 @@ An object containing a `records` array. Each record is a complete RingCentral ca
 === "MCP JSON-RPC"
 
     ```json
-    {
-      "jsonrpc": "2.0",
-      "id": 1,
-      "method": "tools/call",
-      "params": {
-        "name": "rcGetCallLogs",
-        "arguments": {
-          "timeFrom": "2025-05-01T00:00:00Z",
-          "timeTo":   "2025-05-06T23:59:59Z"
-        }
+    
       }
     }
     ```
@@ -63,18 +54,8 @@ An object containing a `records` array. Each record is a complete RingCentral ca
 === "Sample response"
 
     ```json
-    {
-      "records": [
-        {
-          "id": "RCLogABC123",
-          "sessionId": "sess_001",
-          "startTime": "2025-05-06T14:32:00Z",
-          "duration": 312,
-          "type": "Voice",
-          "direction": "Inbound",
-          "result": "Accepted",
-          "from": { "phoneNumber": "+14155550123", "name": "Jane Smith" },
-          "to":   { "phoneNumber": "+16505551000", "extensionNumber": "1042" },
+    ,
+          "to":   ,
           "recording": null
         }
       ]
@@ -89,10 +70,7 @@ Each item in `records[]` can be passed **directly** as `incomingData.logInfo` to
 
 ```json
 // Use records[0] directly
-{
-  "name": "createCallLog",
-  "arguments": {
-    "incomingData": { "logInfo": <records[0]> },
+,
     "contactId": "0031g00000XxYyZAAZ",
     "note": "Call summary here"
   }
@@ -109,9 +87,14 @@ Each item in `records[]` can be passed **directly** as `incomingData.logInfo` to
 
 ---
 
-!!! warning "CRM connection required"
-    This tool requires an active RingCentral session. The user must be authenticated via RingCentral OAuth.
+<Warning>
+**CRM connection required**
 
-!!! tip "Related tools"
-    - [`createCallLog`](create-call-log.md) — write fetched records to your CRM
-    - [`findContactByPhone`](find-contact-by-phone.md) — resolve caller identity from `from.phoneNumber`
+This tool requires an active RingCentral session. The user must be authenticated via RingCentral OAuth.
+</Warning>
+<Tip>
+**Related tools**
+
+- [`createCallLog`](create-call-log.md) — write fetched records to your CRM
+- [`findContactByPhone`](find-contact-by-phone.md) — resolve caller identity from `from.phoneNumber`
+</Tip>

@@ -7,9 +7,11 @@ description: Connect RingCentral MCP servers to ChatGPT using Connectors.
 
 ChatGPT supports remote MCP servers through its **Connectors** feature. Once connected, you can invoke RingCentral tools directly in your conversations.
 
-!!! info "Subscription required"
-    ChatGPT Connectors require a **Pro, Team, Enterprise, or Edu** subscription. The feature is not available on the free tier.
+<Info>
+**Subscription required**
 
+ChatGPT Connectors require a **Pro, Team, Enterprise, or Edu** subscription. The feature is not available on the free tier.
+</Info>
 ---
 
 ## Server URLs
@@ -116,5 +118,8 @@ Show me my call logs from today and log the most recent one to Salesforce.
 
 - Ask: *"What is my session status?"* — if `crmConnected` is `false`, re-link your CRM by asking *"What CRM platforms can I connect?"*
 
-!!! warning "Connector scope per conversation"
-    Connectors are enabled per-conversation, not globally. You need to activate the connector each time you start a new chat where you want to use RingCentral tools.
+<Warning>
+**Connector scope per conversation**
+
+Connectors are enabled per-conversation, not globally. You need to activate the connector each time you start a new chat where you want to use RingCentral tools.
+</Warning>

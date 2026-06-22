@@ -1,31 +1,23 @@
 # Artificial Intelligence API Quick Start Guide
 
-!!! important
-    AI APIs are deprecated. The instructions below apply only to existing apps that have already been granted the AI app scope!
-
+<Note>
+AI APIs are deprecated. The instructions below apply only to existing apps that have already been granted the AI app scope!
+</Note>
 In this quick start, we are going to help you create your first "Speech to Text" application on the RingCentral platform in just a few minutes. Let's get started.
 
 ## Create an App
 
 The first thing we need to do is create an app in the RingCentral Developer Portal. This can be done quickly by clicking the "Create AI App" button below. Just click the button, enter a name and description if you choose, and click the "Create" button. If you do not yet have a RingCentral account, you will be prompted to create one.
 
-[Create AI App](https://developer.ringcentral.com/new-app?name=AI+Quick+Start+App&desc=A+simple+app+to+demo+using+AI+APIs+on+RingCentral&grantType=PersonalJWT&public=false&type=ServerOther&carriers=7710,7310,3420&permissions=AI&redirectUri=&utm_source=devguide&utm_medium=button&utm_campaign=quickstart){class="btn btn-primary" target="_new"}
-[Show detailed instructions](#create-app-instructions){class="btn-link btn-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="create-app-instructions"}
+[Create AI App](https://developer.ringcentral.com/new-app?name=AI+Quick+Start+App&desc=A+simple+app+to+demo+using+AI+APIs+on+RingCentral&grantType=PersonalJWT&public=false&type=ServerOther&carriers=7710,7310,3420&permissions=AI&redirectUri=&utm_source=devguide&utm_medium=button&utm_campaign=quickstart)
+[Show detailed instructions](#create-app-instructions)
 
-<div class="collapse" id="create-app-instructions" markdown>
-<ol>
-<li><a href="https://developer.ringcentral.com/login.html">Login or create an account</a> if you have not done so already.</li>
-<li>Go to Console/Apps and click 'Create App' button.</li>
-<li>Select "REST API App" under "What type of app are you creating?" Click "Next."</li>
-<li>Under "Auth" select "JWT auth flow."
-<li>Under "Security" add the following app scopes:
-  <ul>
-    <li>AI</li>
-  </ul>
-</li>
-<li>Under "Security" select "This app is private and will only be callable using credentials from the same RingCentral account."</li>
-</ol>
-</div>
+1. [Login or create an account](https://developer.ringcentral.com/login.html) if you have not done so already.
+2. Go to Console/Apps and click 'Create App' button.
+3. Select "REST API App" under "What type of app are you creating?" Click "Next."
+4. Under "Auth" select "JWT auth flow."
+5. Under "Security" add the following app scope: **AI**
+6. Under "Security" select "This app is private and will only be callable using credentials from the same RingCentral account."
 
 ## Download and edit a `.env` file
 
@@ -162,11 +154,7 @@ $ ngrok http 3000
     * Enter project name "AIServer"
     * Open the <tt>build.gradle</tt> file and add the dependencies to the project as shown below:
     ```json
-    dependencies {
-        // ...
-        implementation 'org.eclipse.jetty.aggregate:jetty-all:9.4.51.v20230217'
-        implementation: 'javax.servlet:javax.servlet-api:4.0.1'
-    }
+    dependencies 
     ```
     * Right-click the project in the Package Explorer and choose "Refresh Gradle Project" under the "Gradle" sub-menu
 
@@ -314,10 +302,7 @@ $ ngrok http 3000
     * Enter project name "SpeechToTextQuickStart"
     * Open the <tt>build.gradle</tt> file and add the RingCentral Java SDK to the project as shown below:
     ```json
-    dependencies {
-        // ...
-        implementation 'com.ringcentral:ringcentral:3.1.1'
-    }
+    dependencies 
     ```
     * Right-click the project in the Package Explorer and choose "Refresh Gradle Project" under the "Gradle" sub-menu
     * On Eclipse menu, select "Run" and choose the "Run Configurations" and in the dialog, select your project and select the "Environments" tab then enter the following variables:

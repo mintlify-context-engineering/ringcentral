@@ -1,7 +1,10 @@
 # Extract interaction analytics from a media file
 
-!!! important "`Deprecated`"
+<Note>
+**`Deprecated`**
 
+
+</Note>
 Interaction analytics is used to understand a conversation happening in a meeting between two or more people and extract from them more meaningful insights at scale. This API is a comprehensive in that in addition to its unique capabilities, it also bundles functionality found in our other APIs. In processing a media file, this API will provide multiple levels of insights, including:
 
 * Conversation insights
@@ -49,11 +52,13 @@ The following code sample shows how to extract insights of a conversations from 
 
 Follow the instructions on the [quick start](quick-start.md) section to setup and run your server code before running the sample code below.
 
-!!! note "Running the code"
-    * Edit the variables in ALL CAPS with your app and user credentials before running the code.
-    * You can only run on your production account, this means that you have to use app credentials for production.
-    * Also make sure that you have recorded several voice recordings of your own voice.
+<Note>
+**Running the code**
 
+* Edit the variables in ALL CAPS with your app and user credentials before running the code.
+* You can only run on your production account, this means that you have to use app credentials for production.
+* Also make sure that you have recorded several voice recordings of your own voice.
+</Note>
 === "JavaScript"
 
     ```javascript
@@ -232,6 +237,7 @@ The `speakerInsights` object contain the number of speakers which was detected
     | `end`        | Number | End time of the audio segment in seconds.                 |
     | `confidence` | Number | The confidence score for the computed insight.            |
 
-!!! notes
-    * In case of `ExtractiveSummary`, the start and end times refer to the exact time of the segment.
-    * In case of `AbstractiveSummaryLong` and `AbstractiveSummaryShort` the start and end time refer to the time of text blob which is abstracted.
+<Note>
+* In case of `ExtractiveSummary`, the start and end times refer to the exact time of the segment.
+* In case of `AbstractiveSummaryLong` and `AbstractiveSummaryShort` the start and end time refer to the time of text blob which is abstracted.
+</Note>

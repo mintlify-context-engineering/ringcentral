@@ -23,7 +23,7 @@ $ ngrok http 3000
 
 If every thing goes well you should see the following output to your terminal.
 
-<img src="../../../img/ngrok-running.png" class="img-fluid" style="max-width: 400px" />
+<img src="../../../img/ngrok-running.png" className="img-fluid" style="max-width: 400px" />
 
 Make note of your https forwarding URL, we will use that shortly when creating your config file.
 
@@ -106,7 +106,7 @@ In the repository you cloned above, you will find two different server apps: one
 
 Return to the Developer Console and navigate to the dashboard for the app you recently created. Click on the "Install" found under the Credentials section.
 
-<img class="img-fluid" src="../../manual/add-to-ringcentral.png" style="max-width: 600px" />
+<img className="img-fluid" src="../../manual/add-to-ringcentral.png" style="max-width: 600px" />
 
 This will install the bot into your account. The RingCentral bot installation process first creates a special virtual user within your account, a.k.a. a "bot extension." Then RingCentral will attempt to generate an access token for this bot extension.
 
@@ -116,7 +116,7 @@ This will install the bot into your account. The RingCentral bot installation pr
 
 Both private and public bots will need the access token to subscribe to Team Messaging event notifications, and also to call the Team Messaging API to post messages.
 
-<img src="../../manual/bot-authorization.png" class="img-fluid" style="max-width: 400px" />
+<img src="../../manual/bot-authorization.png" className="img-fluid" style="max-width: 400px" />
 
 The access token ultimately obtained through the above process is a *permanent* access token. This means you do not need to worry about refreshing the token after it has been issued. It is the developer's responsibility to manage and persist the access token.
 
@@ -196,11 +196,11 @@ After getting an access token, the bot must subscribe to Team Messaging event no
 
 Now, login to the [RingCentral app](https://app.ringcentral.com/) using your user credentials and start a chat with the bot you installed.
 
-<img src="../../manual/bot-start-chat.png" class="img-fluid" />
+<img src="../../manual/bot-start-chat.png" className="img-fluid" />
 
 Then, within the chat you just created, type 'ping' and send it to the bot.
 
-<img src="../../manual/bot-devtest.png" class="img-fluid" />
+<img src="../../manual/bot-devtest.png" className="img-fluid" />
 
 You will notice that the bot responds 'pong' to your message.
 

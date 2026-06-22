@@ -40,20 +40,9 @@ Accept-Language: en-US
 HTTP/1.1 200 OK
 Content-Type: application/json
 Content-Language: en-US
-{
-  "records": [  
-        {
-          "id": "FaxReceiving",
-          "available": true
-        },        
-        {
-          "id": "FaxSending",
-          "available": true
-        },        
-        {
-          "id": "EditFaxSettings",
-          "available": true
-        }, ...
+,        
+        ,        
+        , ...
   ]
 }
 ```
@@ -66,8 +55,11 @@ It is also important to understand anti-patterns of Feature Availability, these 
 
 * **Session Permission Caching** - Never store or cache permissions for a given principal for use during an entire session, as permissions may be revoked at any time
 
-!!! info "Keep in Mind"
+<Info>
+**Keep in Mind**
 
+
+</Info>
     * Feature sets (fully or partially) are built every time RingCentral verifies if a certain permission is granted to the authenticated user.
     * Feature set data is part of the Extension API resource. Each extension in your RingCentral account will have a feature set associate with it. 
     * Feature set data is only accessible at the Extension Level and not at the Account Level. For Account data, please see view the [RingCentral API Account Resource Reference](https://developer.ringcentral.com/api-reference/account).

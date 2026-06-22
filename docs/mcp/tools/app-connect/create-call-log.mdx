@@ -16,9 +16,11 @@ Creates a single call activity log in the connected CRM platform. Can accept a r
 | `contactType` | `string` | — | Type of the CRM contact object (e.g. `"Contact"`, `"Lead"`). Required by some CRMs when `contactId` is set. |
 | `note` | `string` | — | Free-text note or call summary to attach to the log entry. |
 
-!!! info "At least one parameter recommended"
-    All parameters are technically optional, but a useful log entry typically needs at least `incomingData` or `contactId` + `note`.
+<Info>
+**At least one parameter recommended**
 
+All parameters are technically optional, but a useful log entry typically needs at least `incomingData` or `contactId` + `note`.
+</Info>
 ---
 
 ## Returns
@@ -35,15 +37,7 @@ Creates a single call activity log in the connected CRM platform. Can accept a r
 === "Passing rcGetCallLogs data directly"
 
     ```json
-    {
-      "jsonrpc": "2.0",
-      "id": 1,
-      "method": "tools/call",
-      "params": {
-        "name": "createCallLog",
-        "arguments": {
-          "incomingData": {
-            "logInfo": { /* single record from rcGetCallLogs.records[] */ }
+    
           },
           "contactId": "0031g00000XxYyZAAZ",
           "contactType": "Contact",
@@ -56,17 +50,7 @@ Creates a single call activity log in the connected CRM platform. Can accept a r
 === "Manual log with note only"
 
     ```json
-    {
-      "jsonrpc": "2.0",
-      "id": 1,
-      "method": "tools/call",
-      "params": {
-        "name": "createCallLog",
-        "arguments": {
-          "contactId": "0031g00000XxYyZAAZ",
-          "contactType": "Contact",
-          "note": "Left voicemail. Will follow up next Tuesday."
-        }
+    
       }
     }
     ```
@@ -80,10 +64,7 @@ Creates a single call activity log in the connected CRM platform. Can accept a r
 === "Sample response"
 
     ```json
-    {
-      "logId": "00T1g00000AbCdEAAZ",
-      "crmUrl": "https://acme.salesforce.com/00T1g00000AbCdEAAZ"
-    }
+    
     ```
 
 ---
@@ -101,8 +82,13 @@ The most complete log entry combines data from `rcGetCallLogs` with a contact lo
 
 ---
 
-!!! warning "One log per call"
-    This tool creates **one** log entry per invocation. To log multiple calls, call it once per record from `rcGetCallLogs`.
+<Warning>
+**One log per call**
 
-!!! warning "CRM connection required"
-    This tool will return an authentication error if no CRM is connected.
+This tool creates **one** log entry per invocation. To log multiple calls, call it once per record from `rcGetCallLogs`.
+</Warning>
+<Warning>
+**CRM connection required**
+
+This tool will return an authentication error if no CRM is connected.
+</Warning>

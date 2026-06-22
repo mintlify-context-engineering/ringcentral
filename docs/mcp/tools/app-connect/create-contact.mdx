@@ -34,16 +34,7 @@ The created contact object:
 === "MCP JSON-RPC"
 
     ```json
-    {
-      "jsonrpc": "2.0",
-      "id": 1,
-      "method": "tools/call",
-      "params": {
-        "name": "createContact",
-        "arguments": {
-          "phoneNumber": "+14155551234",
-          "newContactName": "Alex Johnson"
-        }
+    
       }
     }
     ```
@@ -57,12 +48,7 @@ The created contact object:
 === "Sample response"
 
     ```json
-    {
-      "id": "0031g00000NewIdAAA",
-      "name": "Alex Johnson",
-      "phone": "+14155551234",
-      "crmUrl": "https://acme.salesforce.com/0031g00000NewIdAAA"
-    }
+    
     ```
 
 ---
@@ -75,9 +61,14 @@ The created contact object:
 
 ---
 
-!!! warning "CRM connection required"
-    This tool will return an authentication error if no CRM is connected.
+<Warning>
+**CRM connection required**
 
-!!! tip "Related tools"
-    - [`findContactByPhone`](find-contact-by-phone.md) — check for existing contacts before creating
-    - [`createCallLog`](create-call-log.md) — immediately log a call against the new contact
+This tool will return an authentication error if no CRM is connected.
+</Warning>
+<Tip>
+**Related tools**
+
+- [`findContactByPhone`](find-contact-by-phone.md) — check for existing contacts before creating
+- [`createCallLog`](create-call-log.md) — immediately log a call against the new contact
+</Tip>

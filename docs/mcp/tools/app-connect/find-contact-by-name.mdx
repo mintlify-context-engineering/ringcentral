@@ -37,15 +37,7 @@ Returns an empty array `[]` if no matches are found.
 === "MCP JSON-RPC"
 
     ```json
-    {
-      "jsonrpc": "2.0",
-      "id": 1,
-      "method": "tools/call",
-      "params": {
-        "name": "findContactByName",
-        "arguments": {
-          "name": "Jane Smith"
-        }
+    
       }
     }
     ```
@@ -60,14 +52,7 @@ Returns an empty array `[]` if no matches are found.
 
     ```json
     [
-      {
-        "id": "0031g00000XxYyZAAZ",
-        "name": "Jane Smith",
-        "phone": "+14155550123",
-        "email": "jane.smith@acme.com",
-        "company": "Acme Corp",
-        "crmUrl": "https://acme.salesforce.com/0031g00000XxYyZAAZ"
-      }
+      
     ]
     ```
 
@@ -81,10 +66,15 @@ Returns an empty array `[]` if no matches are found.
 
 ---
 
-!!! warning "CRM connection required"
-    This tool will return an authentication error if no CRM is connected. Call [`getSessionInfo`](get-session-info.md) first to verify.
+<Warning>
+**CRM connection required**
 
-!!! tip "Related tools"
-    - [`findContactByPhone`](find-contact-by-phone.md) — search by phone number instead
-    - [`createContact`](create-contact.md) — create a contact if none is found
-    - [`createCallLog`](create-call-log.md) — log a call against the found contact
+This tool will return an authentication error if no CRM is connected. Call [`getSessionInfo`](get-session-info.md) first to verify.
+</Warning>
+<Tip>
+**Related tools**
+
+- [`findContactByPhone`](find-contact-by-phone.md) — search by phone number instead
+- [`createContact`](create-contact.md) — create a contact if none is found
+- [`createCallLog`](create-call-log.md) — log a call against the found contact
+</Tip>

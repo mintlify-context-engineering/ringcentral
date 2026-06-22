@@ -12,9 +12,11 @@ The RingCentral MCP server gives your AI assistant direct access to the RingCent
 
 Run [`platform_get_capabilities`](../tools/ringcentral/platform-get-capabilities.md) to see a full summary of supported API endpoints and tools.
 
-!!! warning "Labs status"
-    This server is part of RingCentral Labs and is not covered by RingCentral's standard SLA. Tools may be renamed, modified, or removed without prior notice. Use in production environments with caution.
+<Warning>
+**Labs status**
 
+This server is part of RingCentral Labs and is not covered by RingCentral's standard SLA. Tools may be renamed, modified, or removed without prior notice. Use in production environments with caution.
+</Warning>
 ---
 
 ## Connecting
@@ -39,12 +41,7 @@ Run [`platform_get_capabilities`](../tools/ringcentral/platform-get-capabilities
     Add to `.cursor/mcp.json` in your project root:
 
     ```json
-    {
-      "mcpServers": {
-        "ringcentral": {
-          "url": "https://mcp.labs.ringcentral.com/ringex",
-          "type": "http"
-        }
+    
       }
     }
     ```

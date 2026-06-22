@@ -10,11 +10,13 @@ RingCentral AI Conversation Expert transcribes your voice calls or video meeting
 * `Sentiment` - The overall sentiment of the entire conversation, classified as "Positive", "Negative", or "Neutral".
 * `BulletedSummary` - A list of AI-generated sentences summarizing the conversations in bullet points.
 
-!!! important "Requirements"
-    * An AI Conversation Expert license must be purchased and assigned to a user extension.
-    * The license is transferable from one user extension to another user extension.
-    * ACE data retention is defined in your AI Conversation Expert settings. By default the data is retained for 1 year.
+<Note>
+**Requirements**
 
+* An AI Conversation Expert license must be purchased and assigned to a user extension.
+* The license is transferable from one user extension to another user extension.
+* ACE data retention is defined in your AI Conversation Expert settings. By default the data is retained for 1 year.
+</Note>
 To learn more about AI Conversation Expert, please refer to this [online article](https://www.ringcentral.com/ringsense.html).
 
 - For instructions on enabling AI Conversation Expert for a RingCentral RingCX account, please refer to this [online article](https://support.ringcentral.com/article-v2/Getting-started-with-RingSense-for-RingCX.html?brand=RingCentral&product=RingCX&language=en_US)
@@ -36,7 +38,7 @@ The API operates at the account level and requires the "AI Conversation Expert -
 - Select the role which is assigned to the user extension
 - Scroll to the Artificial Intelligence section and check if the checkbox is checked
 
-<img class="img-fluid" src="../../img/ai-permission.png" style="max-width:300px;">
+<img className="img-fluid" src="../../img/ai-permission.png" style="max-width:300px;" />
 
 **Check from the platform API**
 
@@ -47,26 +49,13 @@ Authenticate the app using the login credentials of the user who is authorized t
 If the user has the permission, the response will contain the info below:
 
 ```json
-{
-  "uri" : "https://platform.ringcentral.com/restapi/v1.0/account/80964XXXX/extension/6228832YYYY/authz-profile/check?permissionId=ReadRingSenseInsights&targetExtensionId=6228832YYYY",
-  "successful" : true,
-  "details" : {
-    "permission" : {
-      "uri" : "https://platform.ringcentral.com/restapi/v1.0/dictionary/permission/ReadRingSenseInsights",
-      "id" : "ReadRingSenseInsights",
-      "assignable" : true,
-      "readOnly" : false,
-      "siteCompatible" : "Independent"
-    },
-    "effectiveRole" : {
-      "uri" : "https://platform.ringcentral.com/restapi/v1.0/dictionary/user-role/1",
-      "id" : "1"
-    },
+,
+    "effectiveRole" : ,
     "scopes" : [ "AllExtensions" ]
   }
 }
 ```
-<br>
+<br />
 There are two methods to access ACE data: through push notifications (recommended method) or via a REST API call.
 
 ### AI Conversation Expert event notification
@@ -81,12 +70,12 @@ Remember, AI Conversation Expert notification events are generated only when a v
 
 You can read the ACE data of a recorded voice call or video meeting if you know the `sourceRecordId` or the `sourceSessionId`. Both `sourceRecordId` and `sourceSessionId` values are included in the ACE event payload.
 
-!!! notes
-    * The `sourceRecordId` of a voice call recording is the recording ID of a recorded call. You can get the recording ID of a call from the [call log data](../voice/call-log/details.md).
-    * The `sourceSessionId` of a voice call recording is the telephony session ID of a recorded call. You can get the telephony session ID of a call from the [call log data](../voice/call-log/details.md).
-    * The `sourceRecordId` and the `sourceSessionId` of a video call recording are identical. You can get the ID of a video call by using the [List User Video Meeting](https://developers.ringcentral.com/api-reference/Meetings-History/listVideoMeetings) API. However, you should check if the video call was recorded or not to decide whether you can read the ACE data of that video call.
-    * Currently, there is no API available to detect the `sourceRecordId` or `sourceSessionId` for phone calls or video conferences originating from RingCX, NICE CXone, or Microsoft Teams domains. Therefore, you must rely on ACE event notifications from those domains to obtain insights for such conversations.
-
+<Note>
+* The `sourceRecordId` of a voice call recording is the recording ID of a recorded call. You can get the recording ID of a call from the [call log data](../voice/call-log/details.md).
+* The `sourceSessionId` of a voice call recording is the telephony session ID of a recorded call. You can get the telephony session ID of a call from the [call log data](../voice/call-log/details.md).
+* The `sourceRecordId` and the `sourceSessionId` of a video call recording are identical. You can get the ID of a video call by using the [List User Video Meeting](https://developers.ringcentral.com/api-reference/Meetings-History/listVideoMeetings) API. However, you should check if the video call was recorded or not to decide whether you can read the ACE data of that video call.
+* Currently, there is no API available to detect the `sourceRecordId` or `sourceSessionId` for phone calls or video conferences originating from RingCX, NICE CXone, or Microsoft Teams domains. Therefore, you must rely on ACE event notifications from those domains to obtain insights for such conversations.
+</Note>
 Read ACE data using a recording Id:
 
 GET `/ai/ringsense/v1/public/accounts/~/domains/[Domain-Name]/records/[sourceRecordId]/insights`
@@ -157,13 +146,13 @@ The `insights` is an object that may contain the following objects:
 
 When processing the insights objects—such as reconstructing conversations using the utterances in the `Transcript` objects, you can match the speaker ID from a transcript object with the corresponding speaker ID in the `speakerInfo` object. This allows you to display the speaker's name (if available) alongside the utterance text.
 
-!!! Notes
-    The `CallNotes` data object is available only for RingEX voice calls. It requires the "AI Notes" is turned on during the call and also the AI Conversation Expert admin setting is set to allow AI Conversation Expert to import the AI notes.
-
+<Note>
+The `CallNotes` data object is available only for RingEX voice calls. It requires the "AI Notes" is turned on during the call and also the AI Conversation Expert admin setting is set to allow AI Conversation Expert to import the AI notes.
+</Note>
     - **AI notes are turned on during a call**: You can start and stop the "AI Notes" during a call.
 
-    <img class="img-fluid" src="../../img/ai-notes.png">
-    <br><br>
+    <img className="img-fluid" src="../../img/ai-notes.png" />
+    <br /><br />
 
     - **AI Conversation Expert admin setting options**: You can access the AI Conversation Expert admin option via the [AI Conversation Expert app](https://ringsense.ringcentral.com/adminsettings/integrations)
-    <img class="img-fluid" src="../../img/ringsense-admin.png">
+    <img className="img-fluid" src="../../img/ringsense-admin.png" />

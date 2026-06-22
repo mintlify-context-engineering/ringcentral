@@ -16,9 +16,11 @@ Because this workflow is designed to forward **ALL** incoming messages, users sh
 * **Time-Based Logic:** For a true "Out-of-Office" scenario, it is recommended to modify the imported workflow by adding a **Time Condition** step to ensure it only executes between specific start and end times.
 
 
-!!! info "Important Limitations"
-    It is vital to understand the technical behavior of SMS forwarding versus traditional call forwarding:
+<Info>
+**Important Limitations**
 
+It is vital to understand the technical behavior of SMS forwarding versus traditional call forwarding:
+</Info>
        * **Sender Identity:** Unlike a forwarded phone call, a forwarded SMS does not "spoof" the original sender's number. The recipient will see the message as coming **from your phone number**, not the original sender.
        * **Replying:** If the person receiving the forwarded message wishes to reply to the original sender, they cannot simply hit "Reply." They must manually compose a new message to the original sender's phone number.
        * **Loop Prevention:** Ensure you do not forward messages to a number that is also configured to forward back to you, as this can create an infinite loop of messages.
@@ -29,4 +31,4 @@ If your goal is to have multiple people monitor and respond to the same set of i
 
 For team-based collaboration, consider **RingCentral’s SMS Call Queue** feature (available as part of the [Customer Engagement Bundle](https://www.ringcentral.com/us/en/blog/unify-conversations-elevate-customer-engagement/)). This allows a group of users to share a common SMS identity, see conversation history, and reply collectively without the limitations of individual message forwarding.
 
-[:fontawesome-solid-download: Download workflow](forward-sms.json){: download .md-button }
+[Download workflow](forward-sms.json)

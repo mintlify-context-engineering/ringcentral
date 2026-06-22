@@ -37,15 +37,7 @@ Returns an empty array `[]` if no match is found.
 === "MCP JSON-RPC"
 
     ```json
-    {
-      "jsonrpc": "2.0",
-      "id": 1,
-      "method": "tools/call",
-      "params": {
-        "name": "findContactByPhone",
-        "arguments": {
-          "phoneNumber": "+14155550123"
-        }
+    
       }
     }
     ```
@@ -60,14 +52,7 @@ Returns an empty array `[]` if no match is found.
 
     ```json
     [
-      {
-        "id": "0031g00000XxYyZAAZ",
-        "name": "Jane Smith",
-        "phone": "+14155550123",
-        "email": "jane.smith@acme.com",
-        "company": "Acme Corp",
-        "crmUrl": "https://acme.salesforce.com/0031g00000XxYyZAAZ"
-      }
+      
     ]
     ```
 
@@ -80,8 +65,13 @@ Returns an empty array `[]` if no match is found.
 
 ---
 
-!!! warning "CRM connection required"
-    This tool will return an authentication error if no CRM is connected.
+<Warning>
+**CRM connection required**
 
-!!! tip "Common workflow"
-    Inbound call → `findContactByPhone` → display contact info → after call ends → [`createCallLog`](create-call-log.md)
+This tool will return an authentication error if no CRM is connected.
+</Warning>
+<Tip>
+**Common workflow**
+
+Inbound call → `findContactByPhone` → display contact info → after call ends → [`createCallLog`](create-call-log.md)
+</Tip>

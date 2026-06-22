@@ -1,7 +1,10 @@
 # Speaker diarization
 
-!!! important "`Deprecated`"
+<Note>
+**`Deprecated`**
 
+
+</Note>
 Speaker diarization is the process that partitions audio stream into homogenous segments according to the speaker identity. It solves the problem of "Who Speaks When". This API splits audio clip into speech segments and tags them with speakers ids accordingly.
 
 ## Using the diarization API
@@ -34,10 +37,12 @@ The following example code shows how to detect speakers from a conversation in a
 
 Follow the instructions on the [quick start](quick-start.md) section to setup and run your server code before running the sample code below.
 
-!!! note "Running the code"
-    * Edit the variables in ALL CAPS with your app and user credentials before running the code.
-    * You can only run on your production account, this means that you have to use app credentials for production.
+<Note>
+**Running the code**
 
+* Edit the variables in ALL CAPS with your app and user credentials before running the code.
+* You can only run on your production account, this means that you have to use app credentials for production.
+</Note>
 === "JavaScript"
 
     ```javascript
@@ -82,17 +87,7 @@ Follow the instructions on the [quick start](quick-start.md) section to setup an
 ### Sample response
 
 ```json
-{
-    "status": "Success",
-    "response": {
-      "speakerCount": 2,
-      "utterances": [
-        {
-          "speakerId": "JohnDoe",
-          "start": 0.3,
-          "end": 5.1,
-          "confidence": 0.97
-        },
+,
         ...
       ]
     }

@@ -8,11 +8,13 @@ The **On-Demand trigger** is designed for workflows that require manual initiati
 * **Human-initiated automation:** Tasks that require a human to decide exactly when the logic should execute.
 * **Ad-hoc maintenance:** One-off data updates, specialized reporting, or system syncs that aren't tied to a specific external event.
 
-!!! tip "The future of on-demand variables"
-    Currently, on-demand workflows can only be executed manually from within Workflow Builder. In the future however, these workflows will be exposed through a REST API, invocable over MCP, and will be embeddable within other workflows. 
-    
-    In addition, today inputs and outputs are provided as raw JSON. In the future inputs and outputs will be collected and displayed in a more human-friendly and structured manner. 
+<Tip>
+**The future of on-demand variables**
 
+Currently, on-demand workflows can only be executed manually from within Workflow Builder. In the future however, these workflows will be exposed through a REST API, invocable over MCP, and will be embeddable within other workflows. 
+
+In addition, today inputs and outputs are provided as raw JSON. In the future inputs and outputs will be collected and displayed in a more human-friendly and structured manner.
+</Tip>
 ## Inputs
 
 When a user executes an On-Demand workflow, WFB prompts them to provide data based on the inputs defined by the workflow creator. This data is provided via a **JSON data structure**.
@@ -55,62 +57,21 @@ Executing an on-demand workflow is done from the workflow listing screen. One ca
 **Sample execution output**
 
 ```js hl_lines="6-8"
-{
-    "flowStatus": "Success",
-    "startTime": "2026-02-10T20:18:27.934528058Z",
-    "endTime": "2026-02-10T20:18:27.939644824Z",
-    "response":
-    {
-        "FullName": "Byrne Reese"
-    },
+,
     "rcEvent":
-    {
-        "uuid": "b81dec03-c55b-4465-a366-f12f1f66ccdd",
-        "event": "ManualTrigger",
-        "timestamp": "2026-02-10T20:18:27.932927262Z",
-        "body":
-        {
-            "CustomerID": "82828282"
-        }
+    
     },
     "triggerById": "1589010021",
     "nodeResults": [
-    {
-        "id": "trigger",
-        "type": "trigger",
-        "subType": "inputVariable",
-        "detail":
-        {
-            "canHandle": true,
-            "rulesPassed": true
-        },
+    ,
         "duration": 0
     },
-    {
-        "id": "action-1770751293728",
-        "type": "action",
-        "subType": "setVariable",
-        "detail":
-        {
-            "success": true,
-            "parameter":
-            {
-                "variables":
-                {
-                    "custom.variable1770751285304": "Byrne Reese"
-                }
+    
             }
         },
         "duration": 4
     },
-    {
-        "id": "action-exit-1770751124589",
-        "type": "action",
-        "subType": "exit",
-        "detail":
-        {
-            "success": true
-        },
+    ,
         "duration": 0
     }]
 }
