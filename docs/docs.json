@@ -45,402 +45,339 @@
     "mintlify-deploy/**"
   ],
   "navigation": {
-    "tabs": [
+    "products": [
       {
-        "tab": "Guides",
-        "groups": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "getting-started/index",
-          "getting-started/register-app",
-          "getting-started/create-credential",
-          "getting-started/code-app",
-          "sdk-quick-reference",
-          "getting-started/sms",
-          "getting-started/promote-app"
-        ]
-      },
-      {
-        "group": "Authentication",
-        "pages": [
-          "authentication/index",
+        "product": "Platform",
+        "description": "Voice, SMS, fax, team messaging, video, and account REST APIs",
+        "icon": "phone",
+        "tabs": [
           {
-            "group": "JWT Grant Type",
-            "pages": [
-              "authentication/jwt/quick-start",
-              "authentication/jwt/config-app",
-              "authentication/jwt/jwt-for-public-apps",
-              "authentication/jwt/troubleshooting"
-            ]
-          },
-          {
-            "group": "Auth Code Grant Type",
-            "pages": [
-              "authentication/quick-start",
-              "authentication/oauth-request",
-              "authentication/session-keep-alive"
-            ]
-          },
-          "authentication/tokens",
-          "authentication/token-lifecycle-quick-reference",
-          "authentication/refresh-tokens",
-          "authentication/auth-code-flow",
-          "authentication/auth-code-pkce-flow",
-          "authentication/jwt-flow"
-        ]
-      },
-      {
-        "group": "Using the API",
-        "pages": [
-          "basics/uris",
-          "basics/errors",
-          "basics/rate-limits",
-          "basics/media"
-        ]
-      },
-      {
-        "group": "Voice",
-        "pages": [
-          "voice/index",
-          "voice/quick-start",
-          {
-            "group": "Placing Calls",
-            "pages": [
-              "voice/ringout",
-              "voice/webrtc",
-              "voice/uri-scheme"
-            ]
-          },
-          {
-            "group": "Call Logs",
-            "pages": [
-              "voice/call-log/index",
-              "voice/call-log/quick-start",
-              "voice/call-log/api",
-              "voice/call-log/recordings",
-              "voice/call-log/best-practices"
-            ]
-          }
-        ]
-      },
-      {
-        "group": "SMS and Fax",
-        "pages": [
-          "messaging/index",
-          "messaging/quick-start",
-          "messaging/sms/api-quick-reference",
-          "messaging/sms/sending-sms",
-          "messaging/sms/receiving-sms-mms",
-          {
-            "group": "High Volume SMS",
-            "pages": [
-              "messaging/sms/high-volume/index",
-              "messaging/sms/high-volume/sending-highvolume-sms",
-              "messaging/sms/high-volume/opt-out"
-            ]
-          },
-          {
-            "group": "Fax",
-            "pages": [
-              "messaging/fax/sending-faxes",
-              "messaging/fax/receiving-faxes"
-            ]
-          }
-        ]
-      },
-      {
-        "group": "Team Messaging",
-        "pages": [
-          "team-messaging/index",
-          "team-messaging/quick-start",
-          {
-            "group": "Bots",
-            "pages": [
-              "team-messaging/bots/walkthrough",
-              "team-messaging/bot-frameworks-quick-reference",
-              "team-messaging/manual/frameworks"
-            ]
-          },
-          {
-            "group": "Incoming Webhooks",
-            "pages": [
-              "team-messaging/incoming-webhooks/webhook-creation",
-              "team-messaging/incoming-webhooks/posting"
-            ]
-          }
-        ]
-      },
-      {
-        "group": "Video",
-        "pages": [
-          "video/api/index",
-          "video/api/quick-start",
-          "video/api/create-meetings",
-          "video/api/meeting-history"
-        ]
-      },
-      {
-        "group": "Webinar",
-        "pages": [
-          "webinar/index",
-          "webinar/quick-start",
-          "webinar/api-quick-reference",
-          "webinar/creation",
-          "webinar/registrants",
-          "webinar/events"
-        ]
-      },
-      {
-        "group": "Analytics",
-        "pages": [
-          "analytics/index",
-          "analytics/analytics-vs-call-log",
-          "analytics/aggregate",
-          "analytics/timeline"
-        ]
-      },
-      {
-        "group": "AI APIs",
-        "pages": [
-          "ai/index",
-          "ai/quick-start",
-          "ai/ace",
-          "ai/speech-to-text",
-          "ai/speaker-diarization",
-          "ai/text-summary",
-          "ai/text-punctuation",
-          "ai/interaction-analytics",
-          "ai/media-files",
-          "ai/asynchronous-responses",
-          "ai/sample-files"
-        ]
-      },
-      {
-        "group": "Accounts and Users",
-        "pages": [
-          "account/index",
-          "account/extensions",
-          "account/creating-users",
-          "account/phone-numbers",
-          "account/presence",
-          "account/custom-fields",
-          "account/feature-flags",
-          "account/call-forwarding-flipping",
-          "account/audit-trail"
-        ]
-      },
-      {
-        "group": "Address Book",
-        "pages": [
-          "address-book/index"
-        ]
-      },
-      {
-        "group": "Events and Notifications",
-        "pages": [
-          "notifications/index",
-          "notifications/event-categories-quick-reference",
-          {
-            "group": "Webhooks",
-            "pages": [
-              "notifications/webhooks/quick-start",
-              "notifications/webhooks/creating-webhooks",
-              "notifications/webhooks/receiving",
-              "notifications/webhooks/troubleshooting"
-            ]
-          },
-          {
-            "group": "WebSockets",
-            "pages": [
-              "notifications/websockets/quick-start",
-              "notifications/websockets/subscribing"
-            ]
-          }
-        ]
-      },
-      {
-        "group": "MCP Integration",
-        "pages": [
-          "mcp/index",
-          {
-            "group": "MCP Servers",
-            "pages": [
-              "mcp/servers/index",
-              "mcp/servers/app-connect",
-              "mcp/servers/rc-labs-mcp"
-            ]
-          },
-          {
-            "group": "Setup",
-            "pages": [
-              "mcp/setup/index",
-              "mcp/setup/claude",
-              "mcp/setup/chatgpt",
-              "mcp/setup/codex"
-            ]
-          },
-          {
-            "group": "Solutions",
-            "pages": [
-              "mcp/solutions/index",
-              "mcp/solutions/coaching-insights",
-              "mcp/solutions/communication-analytics",
-              "mcp/solutions/crm-enrichment",
-              "mcp/solutions/customer-engagement",
-              "mcp/solutions/meetings-intelligence",
-              "mcp/solutions/team-collaboration"
-            ]
-          },
-          {
-            "group": "Tools Reference",
-            "pages": [
-              "mcp/tools/ringcentral/index",
-              "mcp/tools/ringcentral/platform-get-capabilities",
-              "mcp/tools/ringcentral/platform-call-get-operation",
-              "mcp/tools/ringcentral/platform-call-post-operation",
-              "mcp/tools/ringcentral/platform-list-get-operations",
-              "mcp/tools/ringcentral/platform-list-post-operations",
-              "mcp/tools/ringcentral/platform-read-extension",
-              "mcp/tools/ringcentral/platform-read-unified-presence",
-              "mcp/tools/ringcentral/platform-list-messages",
-              "mcp/tools/ringcentral/platform-read-message",
-              "mcp/tools/ringcentral/platform-read-message-content",
-              "mcp/tools/ringcentral/platform-read-user-call-log",
-              "mcp/tools/ringcentral/platform-read-ai-notes",
-              "mcp/tools/ringcentral/platform-search-directory-entries",
-              "mcp/tools/ringcentral/platform-list-glip-chats-new",
-              "mcp/tools/ringcentral/platform-list-glip-conversations-new",
-              "mcp/tools/ringcentral/platform-read-glip-conversation-new",
-              "mcp/tools/ringcentral/platform-list-glip-teams-new",
-              "mcp/tools/ringcentral/platform-read-glip-team-new",
-              "mcp/tools/ringcentral/platform-create-glip-conversation-new",
-              "mcp/tools/ringcentral/platform-create-glip-post-new",
-              "mcp/tools/ringcentral/platform-read-glip-posts-new",
-              "mcp/tools/ringcentral/gatekeeper-select-tool",
-              "mcp/tools/ringcentral/profile-get-current-extension",
-              "mcp/tools/app-connect/get-session-info",
-              "mcp/tools/app-connect/get-help",
-              "mcp/tools/app-connect/get-public-connectors",
-              "mcp/tools/app-connect/find-contact-by-name",
-              "mcp/tools/app-connect/find-contact-by-phone",
-              "mcp/tools/app-connect/create-contact",
-              "mcp/tools/app-connect/create-call-log",
-              "mcp/tools/app-connect/rc-get-call-logs",
-              "mcp/tools/app-connect/logout"
-            ]
-          }
-        ]
-      },
-      {
-        "group": "Automator",
-        "pages": [
-          "automator/index",
-          {
-            "group": "Users",
-            "pages": [
-              "automator/users/index",
-              "automator/users/enablement",
-              "automator/users/customization",
-              "automator/users/frequency",
-              "automator/users/history",
-              "automator/users/import-export",
-              "automator/users/simulation",
-              "automator/users/text-substitution"
-            ]
-          },
-          {
-            "group": "Admin",
-            "pages": [
-              "automator/admin/index",
-              "automator/admin/manage",
-              "automator/admin/runners",
-              "automator/admin/non-users",
-              "automator/admin/copying"
-            ]
-          },
-          {
-            "group": "Workflows",
-            "pages": [
-              "automator/workflows/index",
+            "tab": "Guides",
+            "groups": [
               {
-                "group": "Custom Workflows",
+                "group": "Getting Started",
                 "pages": [
-                  "automator/workflows/custom/index",
-                  "automator/workflows/custom/variables",
+                  "getting-started/index",
+                  "getting-started/register-app",
+                  "getting-started/create-credential",
+                  "getting-started/code-app",
+                  "sdk-quick-reference",
+                  "getting-started/sms",
+                  "getting-started/promote-app"
+                ]
+              },
+              {
+                "group": "Authentication",
+                "pages": [
+                  "authentication/index",
                   {
-                    "group": "Triggers",
+                    "group": "JWT Grant Type",
                     "pages": [
-                      "automator/workflows/custom/triggers/index",
-                      "automator/workflows/custom/triggers/call-ended",
-                      "automator/workflows/custom/triggers/call-missed",
-                      "automator/workflows/custom/triggers/call-received",
-                      "automator/workflows/custom/triggers/chat-message-received",
-                      "automator/workflows/custom/triggers/fax-received",
-                      "automator/workflows/custom/triggers/fax-sent",
-                      "automator/workflows/custom/triggers/on-demand",
-                      "automator/workflows/custom/triggers/scheduled",
-                      "automator/workflows/custom/triggers/sms-received",
-                      "automator/workflows/custom/triggers/voicemail-received"
+                      "authentication/jwt/quick-start",
+                      "authentication/jwt/config-app",
+                      "authentication/jwt/jwt-for-public-apps",
+                      "authentication/jwt/troubleshooting"
                     ]
                   },
                   {
-                    "group": "Actions",
+                    "group": "Auth Code Grant Type",
                     "pages": [
-                      "automator/workflows/custom/actions/index",
-                      "automator/workflows/custom/actions/send-sms",
-                      "automator/workflows/custom/actions/send-chat-message",
-                      "automator/workflows/custom/actions/ringout",
-                      "automator/workflows/custom/actions/transcribe",
-                      "automator/workflows/custom/actions/http-request",
-                      "automator/workflows/custom/actions/create-contact",
-                      "automator/workflows/custom/actions/lookup-contact",
-                      "automator/workflows/custom/actions/update-contact",
-                      "automator/workflows/custom/actions/create-meeting",
-                      "automator/workflows/custom/actions/comment",
-                      "automator/workflows/custom/actions/set-variable",
-                      "automator/workflows/custom/actions/parse-json",
-                      "automator/workflows/custom/actions/exit"
+                      "authentication/quick-start",
+                      "authentication/oauth-request",
+                      "authentication/session-keep-alive"
+                    ]
+                  },
+                  "authentication/tokens",
+                  "authentication/token-lifecycle-quick-reference",
+                  "authentication/refresh-tokens",
+                  "authentication/auth-code-flow",
+                  "authentication/auth-code-pkce-flow",
+                  "authentication/jwt-flow"
+                ]
+              },
+              {
+                "group": "Using the API",
+                "pages": [
+                  "basics/uris",
+                  "basics/errors",
+                  "basics/rate-limits",
+                  "basics/media"
+                ]
+              },
+              {
+                "group": "SDKs & Downloads",
+                "pages": [
+                  "sdks"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "APIs",
+            "groups": [
+              {
+                "group": "Voice",
+                "pages": [
+                  "voice/index",
+                  "voice/quick-start",
+                  {
+                    "group": "Placing Calls",
+                    "pages": [
+                      "voice/ringout",
+                      "voice/webrtc",
+                      "voice/uri-scheme"
                     ]
                   },
                   {
-                    "group": "Flow Control",
+                    "group": "Call Logs",
                     "pages": [
-                      "automator/workflows/custom/flow/index",
-                      "automator/workflows/custom/flow/if",
-                      "automator/workflows/custom/flow/switch",
-                      "automator/workflows/custom/flow/foreach",
-                      "automator/workflows/custom/flow/while",
-                      "automator/workflows/custom/flow/exit"
+                      "voice/call-log/index",
+                      "voice/call-log/quick-start",
+                      "voice/call-log/api",
+                      "voice/call-log/recordings",
+                      "voice/call-log/best-practices"
                     ]
                   }
                 ]
               },
               {
-                "group": "Recipes",
+                "group": "SMS and Fax",
                 "pages": [
-                  "automator/workflows/recipes/missed-call",
-                  "automator/workflows/recipes/chat-ooo-autoreply",
-                  "automator/workflows/recipes/forward-sms",
-                  "automator/workflows/recipes/sms-optout-autoreply",
-                  "automator/workflows/recipes/autoreply-only-once",
-                  "automator/workflows/recipes/voicemail-autoresponse",
-                  "automator/workflows/recipes/send-from-call-queue",
-                  "automator/workflows/recipes/ivr-menus",
-                  "automator/workflows/recipes/unavailable",
-                  "automator/workflows/recipes/we-dont-accept-sms",
-                  "automator/workflows/recipes/extensions"
+                  "messaging/index",
+                  "messaging/quick-start",
+                  "messaging/sms/api-quick-reference",
+                  "messaging/sms/sending-sms",
+                  "messaging/sms/receiving-sms-mms",
+                  {
+                    "group": "High Volume SMS",
+                    "pages": [
+                      "messaging/sms/high-volume/index",
+                      "messaging/sms/high-volume/sending-highvolume-sms",
+                      "messaging/sms/high-volume/opt-out"
+                    ]
+                  },
+                  {
+                    "group": "Fax",
+                    "pages": [
+                      "messaging/fax/sending-faxes",
+                      "messaging/fax/receiving-faxes"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "Templates",
+                "group": "Team Messaging",
                 "pages": [
-                  "automator/workflows/templates/ooo-autoreplies",
-                  "automator/workflows/templates/after-hours",
-                  "automator/workflows/templates/voicemail-autoresponse",
-                  "automator/workflows/templates/voicemail-notification",
-                  "automator/workflows/templates/help-request",
-                  "automator/workflows/templates/keywords"
+                  "team-messaging/index",
+                  "team-messaging/quick-start",
+                  {
+                    "group": "Bots",
+                    "pages": [
+                      "team-messaging/bots/walkthrough",
+                      "team-messaging/bot-frameworks-quick-reference",
+                      "team-messaging/manual/frameworks"
+                    ]
+                  },
+                  {
+                    "group": "Incoming Webhooks",
+                    "pages": [
+                      "team-messaging/incoming-webhooks/webhook-creation",
+                      "team-messaging/incoming-webhooks/posting"
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Video",
+                "pages": [
+                  "video/api/index",
+                  "video/api/quick-start",
+                  "video/api/create-meetings",
+                  "video/api/meeting-history"
+                ]
+              },
+              {
+                "group": "Webinar",
+                "pages": [
+                  "webinar/index",
+                  "webinar/quick-start",
+                  "webinar/api-quick-reference",
+                  "webinar/creation",
+                  "webinar/registrants",
+                  "webinar/events"
+                ]
+              },
+              {
+                "group": "Analytics",
+                "pages": [
+                  "analytics/index",
+                  "analytics/analytics-vs-call-log",
+                  "analytics/aggregate",
+                  "analytics/timeline"
+                ]
+              },
+              {
+                "group": "Accounts and Users",
+                "pages": [
+                  "account/index",
+                  "account/extensions",
+                  "account/creating-users",
+                  "account/phone-numbers",
+                  "account/presence",
+                  "account/custom-fields",
+                  "account/feature-flags",
+                  "account/call-forwarding-flipping",
+                  "account/audit-trail"
+                ]
+              },
+              {
+                "group": "Address Book",
+                "pages": [
+                  "address-book/index"
+                ]
+              },
+              {
+                "group": "Events and Notifications",
+                "pages": [
+                  "notifications/index",
+                  "notifications/event-categories-quick-reference",
+                  {
+                    "group": "Webhooks",
+                    "pages": [
+                      "notifications/webhooks/quick-start",
+                      "notifications/webhooks/creating-webhooks",
+                      "notifications/webhooks/receiving",
+                      "notifications/webhooks/troubleshooting"
+                    ]
+                  },
+                  {
+                    "group": "WebSockets",
+                    "pages": [
+                      "notifications/websockets/quick-start",
+                      "notifications/websockets/subscribing"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API Reference",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "api-reference/overview"
+                ]
+              },
+              {
+                "group": "API Endpoints",
+                "openapi": "openapi/rc-platform.yml"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "product": "AI & Agents",
+        "description": "AI APIs and Model Context Protocol servers for agentic apps",
+        "icon": "robot",
+        "tabs": [
+          {
+            "tab": "AI APIs",
+            "groups": [
+              {
+                "group": "AI APIs",
+                "pages": [
+                  "ai/index",
+                  "ai/quick-start",
+                  "ai/ace",
+                  "ai/speech-to-text",
+                  "ai/speaker-diarization",
+                  "ai/text-summary",
+                  "ai/text-punctuation",
+                  "ai/interaction-analytics",
+                  "ai/media-files",
+                  "ai/asynchronous-responses",
+                  "ai/sample-files"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "MCP",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "mcp/index"
+                ]
+              },
+              {
+                "group": "MCP Servers",
+                "pages": [
+                  "mcp/servers/index",
+                  "mcp/servers/app-connect",
+                  "mcp/servers/rc-labs-mcp"
+                ]
+              },
+              {
+                "group": "Setup",
+                "pages": [
+                  "mcp/setup/index",
+                  "mcp/setup/claude",
+                  "mcp/setup/chatgpt",
+                  "mcp/setup/codex"
+                ]
+              },
+              {
+                "group": "Solutions",
+                "pages": [
+                  "mcp/solutions/index",
+                  "mcp/solutions/coaching-insights",
+                  "mcp/solutions/communication-analytics",
+                  "mcp/solutions/crm-enrichment",
+                  "mcp/solutions/customer-engagement",
+                  "mcp/solutions/meetings-intelligence",
+                  "mcp/solutions/team-collaboration"
+                ]
+              },
+              {
+                "group": "Tools Reference",
+                "pages": [
+                  "mcp/tools/ringcentral/index",
+                  "mcp/tools/ringcentral/platform-get-capabilities",
+                  "mcp/tools/ringcentral/platform-call-get-operation",
+                  "mcp/tools/ringcentral/platform-call-post-operation",
+                  "mcp/tools/ringcentral/platform-list-get-operations",
+                  "mcp/tools/ringcentral/platform-list-post-operations",
+                  "mcp/tools/ringcentral/platform-read-extension",
+                  "mcp/tools/ringcentral/platform-read-unified-presence",
+                  "mcp/tools/ringcentral/platform-list-messages",
+                  "mcp/tools/ringcentral/platform-read-message",
+                  "mcp/tools/ringcentral/platform-read-message-content",
+                  "mcp/tools/ringcentral/platform-read-user-call-log",
+                  "mcp/tools/ringcentral/platform-read-ai-notes",
+                  "mcp/tools/ringcentral/platform-search-directory-entries",
+                  "mcp/tools/ringcentral/platform-list-glip-chats-new",
+                  "mcp/tools/ringcentral/platform-list-glip-conversations-new",
+                  "mcp/tools/ringcentral/platform-read-glip-conversation-new",
+                  "mcp/tools/ringcentral/platform-list-glip-teams-new",
+                  "mcp/tools/ringcentral/platform-read-glip-team-new",
+                  "mcp/tools/ringcentral/platform-create-glip-conversation-new",
+                  "mcp/tools/ringcentral/platform-create-glip-post-new",
+                  "mcp/tools/ringcentral/platform-read-glip-posts-new",
+                  "mcp/tools/ringcentral/gatekeeper-select-tool",
+                  "mcp/tools/ringcentral/profile-get-current-extension",
+                  "mcp/tools/app-connect/get-session-info",
+                  "mcp/tools/app-connect/get-help",
+                  "mcp/tools/app-connect/get-public-connectors",
+                  "mcp/tools/app-connect/find-contact-by-name",
+                  "mcp/tools/app-connect/find-contact-by-phone",
+                  "mcp/tools/app-connect/create-contact",
+                  "mcp/tools/app-connect/create-call-log",
+                  "mcp/tools/app-connect/rc-get-call-logs",
+                  "mcp/tools/app-connect/logout"
                 ]
               }
             ]
@@ -448,16 +385,131 @@
         ]
       },
       {
-        "group": "Downloads and SDKs",
-        "pages": [
-          "sdks"
+        "product": "Automator",
+        "description": "No-code communications workflows and automation",
+        "icon": "bolt",
+        "tabs": [
+          {
+            "tab": "Guides",
+            "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "automator/index"
+                ]
+              },
+              {
+                "group": "Users",
+                "pages": [
+                  "automator/users/index",
+                  "automator/users/enablement",
+                  "automator/users/customization",
+                  "automator/users/frequency",
+                  "automator/users/history",
+                  "automator/users/import-export",
+                  "automator/users/simulation",
+                  "automator/users/text-substitution"
+                ]
+              },
+              {
+                "group": "Admin",
+                "pages": [
+                  "automator/admin/index",
+                  "automator/admin/manage",
+                  "automator/admin/runners",
+                  "automator/admin/non-users",
+                  "automator/admin/copying"
+                ]
+              },
+              {
+                "group": "Workflows",
+                "pages": [
+                  "automator/workflows/index",
+                  {
+                    "group": "Custom Workflows",
+                    "pages": [
+                      "automator/workflows/custom/index",
+                      "automator/workflows/custom/variables",
+                      {
+                        "group": "Triggers",
+                        "pages": [
+                          "automator/workflows/custom/triggers/index",
+                          "automator/workflows/custom/triggers/call-ended",
+                          "automator/workflows/custom/triggers/call-missed",
+                          "automator/workflows/custom/triggers/call-received",
+                          "automator/workflows/custom/triggers/chat-message-received",
+                          "automator/workflows/custom/triggers/fax-received",
+                          "automator/workflows/custom/triggers/fax-sent",
+                          "automator/workflows/custom/triggers/on-demand",
+                          "automator/workflows/custom/triggers/scheduled",
+                          "automator/workflows/custom/triggers/sms-received",
+                          "automator/workflows/custom/triggers/voicemail-received"
+                        ]
+                      },
+                      {
+                        "group": "Actions",
+                        "pages": [
+                          "automator/workflows/custom/actions/index",
+                          "automator/workflows/custom/actions/send-sms",
+                          "automator/workflows/custom/actions/send-chat-message",
+                          "automator/workflows/custom/actions/ringout",
+                          "automator/workflows/custom/actions/transcribe",
+                          "automator/workflows/custom/actions/http-request",
+                          "automator/workflows/custom/actions/create-contact",
+                          "automator/workflows/custom/actions/lookup-contact",
+                          "automator/workflows/custom/actions/update-contact",
+                          "automator/workflows/custom/actions/create-meeting",
+                          "automator/workflows/custom/actions/comment",
+                          "automator/workflows/custom/actions/set-variable",
+                          "automator/workflows/custom/actions/parse-json",
+                          "automator/workflows/custom/actions/exit"
+                        ]
+                      },
+                      {
+                        "group": "Flow Control",
+                        "pages": [
+                          "automator/workflows/custom/flow/index",
+                          "automator/workflows/custom/flow/if",
+                          "automator/workflows/custom/flow/switch",
+                          "automator/workflows/custom/flow/foreach",
+                          "automator/workflows/custom/flow/while",
+                          "automator/workflows/custom/flow/exit"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Recipes",
+                    "pages": [
+                      "automator/workflows/recipes/missed-call",
+                      "automator/workflows/recipes/chat-ooo-autoreply",
+                      "automator/workflows/recipes/forward-sms",
+                      "automator/workflows/recipes/sms-optout-autoreply",
+                      "automator/workflows/recipes/autoreply-only-once",
+                      "automator/workflows/recipes/voicemail-autoresponse",
+                      "automator/workflows/recipes/send-from-call-queue",
+                      "automator/workflows/recipes/ivr-menus",
+                      "automator/workflows/recipes/unavailable",
+                      "automator/workflows/recipes/we-dont-accept-sms",
+                      "automator/workflows/recipes/extensions"
+                    ]
+                  },
+                  {
+                    "group": "Templates",
+                    "pages": [
+                      "automator/workflows/templates/ooo-autoreplies",
+                      "automator/workflows/templates/after-hours",
+                      "automator/workflows/templates/voicemail-autoresponse",
+                      "automator/workflows/templates/voicemail-notification",
+                      "automator/workflows/templates/help-request",
+                      "automator/workflows/templates/keywords"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
         ]
-      }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "openapi": "openapi/rc-platform.yml"
       }
     ]
   },

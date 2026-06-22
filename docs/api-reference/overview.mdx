@@ -1,0 +1,70 @@
+---
+title: "API Reference"
+description: "Interactive reference for the RingCentral REST API — every endpoint, parameter, and response, with a built-in playground."
+---
+
+The RingCentral REST API gives you a single, consistent way to add voice, SMS, fax,
+team messaging, video, analytics, and account management to your application. Every
+endpoint below is interactive: authenticate once and send live requests straight from
+the playground.
+
+## Base URLs
+
+| Environment | Base URL |
+|-------------|----------|
+| Production  | `https://platform.ringcentral.com/restapi/v1.0/` |
+| Sandbox     | `https://platform.devtest.ringcentral.com/restapi/v1.0/` |
+
+All REST paths begin with `/restapi/v1.0/`. For example:
+`https://platform.ringcentral.com/restapi/v1.0/account/~/extension/~/call-log`
+
+## Before you start
+
+<Steps>
+  <Step title="Register an app">
+    Create an app in the [Developer Console](/getting-started/register-app) to get your
+    Client ID and Client Secret.
+  </Step>
+  <Step title="Get an access token">
+    Use [OAuth 2.0 or a JWT credential](/authentication) to obtain a bearer token.
+  </Step>
+  <Step title="Call an endpoint">
+    Add `Authorization: Bearer <token>` and send your request — or use the **Try it**
+    playground on any endpoint page.
+  </Step>
+</Steps>
+
+## Explore by capability
+
+<CardGroup cols={2}>
+  <Card title="Voice" icon="phone" href="/voice">
+    RingOut, WebRTC, call control, call logs, and recordings.
+  </Card>
+  <Card title="SMS & Fax" icon="comment-sms" href="/messaging">
+    Send and receive SMS, MMS, high-volume SMS, and fax.
+  </Card>
+  <Card title="Team Messaging" icon="comments" href="/team-messaging">
+    Glip chats, posts, bots, and incoming webhooks.
+  </Card>
+  <Card title="Video & Webinar" icon="video" href="/video/api">
+    Create meetings and webinars and pull session history.
+  </Card>
+  <Card title="Analytics" icon="chart-line" href="/analytics">
+    Aggregate and timeline metrics for calls and messaging.
+  </Card>
+  <Card title="Accounts & Users" icon="users" href="/account">
+    Extensions, phone numbers, presence, and provisioning.
+  </Card>
+</CardGroup>
+
+## Conventions
+
+- **Authentication** — All requests require an OAuth 2.0 bearer token. See [Authentication](/authentication).
+- **Rate limits** — Per-endpoint limits are returned in `X-Rate-Limit-*` response headers. See [Rate limits](/basics/rate-limits).
+- **Pagination** — List endpoints accept `page` and `perPage` query params and return a `navigation` object. See [URIs and parameters](/basics/uris).
+- **Errors** — Errors use standard HTTP status codes with a structured JSON body. See [Errors](/basics/errors).
+
+<Note>
+  Browse the full set of endpoints in the sidebar under **API Endpoints**, grouped by
+  product area. Each page includes request and response schemas plus a live playground.
+</Note>

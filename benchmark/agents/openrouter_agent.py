@@ -532,12 +532,24 @@ def _run_tool_loop(
     error = None
 
     for round_index in range(MAX_TOOL_CALL_ROUNDS + 1):
+        is_final_round = round_index == MAX_TOOL_CALL_ROUNDS
+        if is_final_round:
+            messages.append(
+                {
+                    "role": "user",
+                    "content": (
+                        "You can no longer call tools. Using only the information you have "
+                        "already gathered above, give your best final answer to the original "
+                        "question now. Be concise and concrete."
+                    ),
+                }
+            )
         response = _chat_completion(
             {
                 "model": model,
                 "messages": messages,
                 "tools": tools,
-                "tool_choice": "auto",
+                "tool_choice": "none" if is_final_round else "auto",
                 "temperature": 0,
             }
         )
@@ -546,6 +558,11 @@ def _run_tool_loop(
         calls = message.get("tool_calls") or []
         if not calls:
             answer = (message.get("content") or "").strip()
+            break
+        if is_final_round:
+            ok = False
+            error = "OpenRouter returned tool calls on the final no-tools answer round."
+            answer = f"ERROR: {error}"
             break
 
         messages.append(message)
