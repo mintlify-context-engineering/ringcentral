@@ -310,74 +310,74 @@
               {
                 "group": "Overview",
                 "pages": [
-                  "mcp/index"
+                  "mcp-integration/index"
                 ]
               },
               {
                 "group": "MCP Servers",
                 "pages": [
-                  "mcp/servers/index",
-                  "mcp/servers/app-connect",
-                  "mcp/servers/rc-labs-mcp"
+                  "mcp-integration/servers/index",
+                  "mcp-integration/servers/app-connect",
+                  "mcp-integration/servers/rc-labs-mcp"
                 ]
               },
               {
                 "group": "Setup",
                 "pages": [
-                  "mcp/setup/index",
-                  "mcp/setup/claude",
-                  "mcp/setup/chatgpt",
-                  "mcp/setup/codex"
+                  "mcp-integration/setup/index",
+                  "mcp-integration/setup/claude",
+                  "mcp-integration/setup/chatgpt",
+                  "mcp-integration/setup/codex"
                 ]
               },
               {
                 "group": "Solutions",
                 "pages": [
-                  "mcp/solutions/index",
-                  "mcp/solutions/coaching-insights",
-                  "mcp/solutions/communication-analytics",
-                  "mcp/solutions/crm-enrichment",
-                  "mcp/solutions/customer-engagement",
-                  "mcp/solutions/meetings-intelligence",
-                  "mcp/solutions/team-collaboration"
+                  "mcp-integration/solutions/index",
+                  "mcp-integration/solutions/coaching-insights",
+                  "mcp-integration/solutions/communication-analytics",
+                  "mcp-integration/solutions/crm-enrichment",
+                  "mcp-integration/solutions/customer-engagement",
+                  "mcp-integration/solutions/meetings-intelligence",
+                  "mcp-integration/solutions/team-collaboration"
                 ]
               },
               {
                 "group": "Tools Reference",
                 "pages": [
-                  "mcp/tools/ringcentral/index",
-                  "mcp/tools/ringcentral/platform-get-capabilities",
-                  "mcp/tools/ringcentral/platform-call-get-operation",
-                  "mcp/tools/ringcentral/platform-call-post-operation",
-                  "mcp/tools/ringcentral/platform-list-get-operations",
-                  "mcp/tools/ringcentral/platform-list-post-operations",
-                  "mcp/tools/ringcentral/platform-read-extension",
-                  "mcp/tools/ringcentral/platform-read-unified-presence",
-                  "mcp/tools/ringcentral/platform-list-messages",
-                  "mcp/tools/ringcentral/platform-read-message",
-                  "mcp/tools/ringcentral/platform-read-message-content",
-                  "mcp/tools/ringcentral/platform-read-user-call-log",
-                  "mcp/tools/ringcentral/platform-read-ai-notes",
-                  "mcp/tools/ringcentral/platform-search-directory-entries",
-                  "mcp/tools/ringcentral/platform-list-glip-chats-new",
-                  "mcp/tools/ringcentral/platform-list-glip-conversations-new",
-                  "mcp/tools/ringcentral/platform-read-glip-conversation-new",
-                  "mcp/tools/ringcentral/platform-list-glip-teams-new",
-                  "mcp/tools/ringcentral/platform-read-glip-team-new",
-                  "mcp/tools/ringcentral/platform-create-glip-conversation-new",
-                  "mcp/tools/ringcentral/platform-create-glip-post-new",
-                  "mcp/tools/ringcentral/platform-read-glip-posts-new",
-                  "mcp/tools/ringcentral/gatekeeper-select-tool",
-                  "mcp/tools/ringcentral/profile-get-current-extension",
-                  "mcp/tools/app-connect/get-session-info",
-                  "mcp/tools/app-connect/get-help",
-                  "mcp/tools/app-connect/get-public-connectors",
-                  "mcp/tools/app-connect/find-contact-by-name",
-                  "mcp/tools/app-connect/find-contact-by-phone",
-                  "mcp/tools/app-connect/create-contact",
-                  "mcp/tools/app-connect/create-call-log",
-                  "mcp/tools/app-connect/rc-get-call-logs",
-                  "mcp/tools/app-connect/logout"
+                  "mcp-integration/tools/ringcentral/index",
+                  "mcp-integration/tools/ringcentral/platform-get-capabilities",
+                  "mcp-integration/tools/ringcentral/platform-call-get-operation",
+                  "mcp-integration/tools/ringcentral/platform-call-post-operation",
+                  "mcp-integration/tools/ringcentral/platform-list-get-operations",
+                  "mcp-integration/tools/ringcentral/platform-list-post-operations",
+                  "mcp-integration/tools/ringcentral/platform-read-extension",
+                  "mcp-integration/tools/ringcentral/platform-read-unified-presence",
+                  "mcp-integration/tools/ringcentral/platform-list-messages",
+                  "mcp-integration/tools/ringcentral/platform-read-message",
+                  "mcp-integration/tools/ringcentral/platform-read-message-content",
+                  "mcp-integration/tools/ringcentral/platform-read-user-call-log",
+                  "mcp-integration/tools/ringcentral/platform-read-ai-notes",
+                  "mcp-integration/tools/ringcentral/platform-search-directory-entries",
+                  "mcp-integration/tools/ringcentral/platform-list-glip-chats-new",
+                  "mcp-integration/tools/ringcentral/platform-list-glip-conversations-new",
+                  "mcp-integration/tools/ringcentral/platform-read-glip-conversation-new",
+                  "mcp-integration/tools/ringcentral/platform-list-glip-teams-new",
+                  "mcp-integration/tools/ringcentral/platform-read-glip-team-new",
+                  "mcp-integration/tools/ringcentral/platform-create-glip-conversation-new",
+                  "mcp-integration/tools/ringcentral/platform-create-glip-post-new",
+                  "mcp-integration/tools/ringcentral/platform-read-glip-posts-new",
+                  "mcp-integration/tools/ringcentral/gatekeeper-select-tool",
+                  "mcp-integration/tools/ringcentral/profile-get-current-extension",
+                  "mcp-integration/tools/app-connect/get-session-info",
+                  "mcp-integration/tools/app-connect/get-help",
+                  "mcp-integration/tools/app-connect/get-public-connectors",
+                  "mcp-integration/tools/app-connect/find-contact-by-name",
+                  "mcp-integration/tools/app-connect/find-contact-by-phone",
+                  "mcp-integration/tools/app-connect/create-contact",
+                  "mcp-integration/tools/app-connect/create-call-log",
+                  "mcp-integration/tools/app-connect/rc-get-call-logs",
+                  "mcp-integration/tools/app-connect/logout"
                 ]
               }
             ]

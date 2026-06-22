@@ -12,7 +12,17 @@ RingCentral supports [RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523) f
 
 At a high level, the JWT auth flow is as follows:
 
-![JWT code Flow](oauth-password-flow.png)}
+```mermaid
+sequenceDiagram
+    participant A as Your App
+    participant RC as RingCentral Auth Server
+    participant API as RingCentral API
+
+    A->>RC: 1. Present JWT assertion (grant_type=jwt-bearer)
+    RC->>A: 2. Access token
+    A->>API: 3. Call API with Bearer access token
+    API->>A: Protected resource
+```
 
 For a deeper dive into this flow, see "Technical discussion" below.
 
