@@ -37,7 +37,17 @@ Bots are automated agents that users can interact with in a coversational manner
 * deliver notifications to users privately
 * automate interactions with users in a conversational manner
 
-RingCentral [supports and offers a number of Bot frameworks](manual/frameworks.md) to help developers create bot applications. To get started creating a bot, we recommend using **`ringcentral-chatbot-js`** — a higher-level wrapper around `@ringcentral/sdk` that adds skill routing, state management, and webhook handling for Team Messaging bots. It uses the same platform APIs underneath as the core SDK but removes the boilerplate of building a bot from scratch.
+RingCentral provides **three official chatbot frameworks** for Team Messaging bots:
+
+| Framework | Language | Purpose |
+|-----------|----------|---------|
+| **`ringcentral-chatbot-js`** | JavaScript/Node.js | Full-featured framework with skill routing, state management, and webhook handling — **recommended for getting started** |
+| **`ringcentral-chatbot-python`** | Python | Python equivalent — handles auth tokens, event subscriptions, persistence, and AWS Lambda hosting |
+| **`ringcentral-chatbot-core`** | TypeScript | Standalone core abstractions (events, messaging, Adaptive Cards) for projects needing bot capabilities without the full server stack |
+
+All three use the same platform APIs as `@ringcentral/sdk` underneath but abstract the bot-specific boilerplate. They are separate frameworks built on the RingCentral platform — not direct wrappers of the SDK — but they share the same underlying API surface.
+
+To get started, use **`ringcentral-chatbot-js`**:
 
 ```js
 const createApp = require('ringcentral-chatbot/dist/apps').default

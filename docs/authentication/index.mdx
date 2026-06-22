@@ -8,7 +8,7 @@
 | Multiple users log in individually / per-user tokens needed | **Auth Code + PKCE** |
 | JWT is **not** recommended when multiple users need individual authentication — use Auth Code for per-user tokens |
 
-**Reuse access tokens** — cache and reuse tokens (~7200s lifetime). Do not re-authenticate on every request.
+**Reuse access tokens** — cache and reuse tokens (~3600s / 1 hour lifetime). Do not re-authenticate on every request. Auth Code refresh tokens last **7 days** — use `grant_type=refresh_token` to silently get a new access token. If the refresh token expires, the user must re-authenticate from scratch. **JWT flows have no refresh token** — simply request a new access token with the JWT grant whenever needed. Re-authenticating too frequently triggers the Auth rate limit (5 requests/user/minute).
 
 Every app needs to first authenticate itself and the user it will be acting on behalf of before calling the API. This process ensures that the application and the user have been authorized to perform the given action via the API. RingCentral supports multiple authentication/authorization methods to support a number of different scenarios and use cases. 
 
