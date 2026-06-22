@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "experiment_date": "2026-06-21T23:57:32.249972",
+    "model": "composer-2.5",
+    "n_questions": 2,
+    "total_elapsed_s": 47.1,
+    "raw": {
+      "avg_elapsed_s": 11.65,
+      "avg_response_length": 1675.5,
+      "accuracy": {
+        "avg_score": 2.0,
+        "pct_correct": 100.0
+      }
+    },
+    "mintlify": {
+      "avg_elapsed_s": 7.98,
+      "avg_response_length": 1102.0,
+      "accuracy": {
+        "avg_score": 2.0,
+        "pct_correct": 100.0
+      }
+    },
+    "time_reduction_pct": 31.5,
+    "score_improvement": 0.0
+  },
+  "results": [
+    {
+      "id": "T1-02",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What HTTP status code does RingCentral return when a rate limit is exceeded?",
+      "ground_truth": "HTTP 429 Too Many Requests",
+      "raw": {
+        "answer": "**429 Too Many Requests**\n\nWhen your app exceeds any RingCentral rate limit, the server rejects the request with **HTTP 429** and the reason phrase **Too Many Requests**.\n\nFrom the official API docs:\n\n> If you exceed any of the rate limits, the server rejects API requests with the `HTTP 429 Too Many Requests` status code.\n\nThe response usually includes a **`Retry-After`** header (seconds to wait before retrying). For user-level limits, you may also see **`X-Rate-Limit-*`** headers with quota details.",
+        "elapsed_s": 11.52,
+        "response_length": 505
+      },
+      "mintlify": {
+        "answer": "RingCentral returns **HTTP 429 Too Many Requests** when a rate limit is exceeded.\n\nThe response includes a `Retry-After` header indicating how many seconds to wait before retrying. Sending more requests during the penalty window resets the penalty clock, so clients should wait until `Retry-After` has fully elapsed before retrying.",
+        "elapsed_s": 4.34,
+        "response_length": 332
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Correctly identifies HTTP 429 Too Many Requests as the rate-limit response and includes accurate supporting details about Retry-After and rate-limit headers.",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Correctly states HTTP 429 Too Many Requests when rate limits are exceeded and adds accurate, relevant context about the Retry-After header and retry behavior."
+      }
+    },
+    {
+      "id": "T2-04",
+      "tier": 2,
+      "category": "how-to",
+      "question": "What is the difference between JWT and Authorization Code authentication in RingCentral, and when should I use each?",
+      "ground_truth": "JWT is for server/script apps acting on behalf of a single service account (no UI, no user login). Auth Code (+ PKCE) is for apps with a user interface where multiple end-users log in with their own accounts. JWT credentials don't expire; Auth Code requires refresh tokens to maintain sessions.",
+      "raw": {
+        "answer": "## JWT vs Authorization Code in RingCentral\n\nBoth flows are OAuth 2.0 and produce the same kind of **Bearer access token** for API calls. The difference is how you get that token and who it represents.\n\n### JWT authentication\n\n**How it works:** Your app presents a pre-generated JWT credential (from the RingCentral Developer Console) directly to `POST /restapi/oauth/token` with `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer`. RingCentral returns an access token \u2014 no browser redirect or user login step.\n\n**Characteristics:**\n- No user interface required\n- One JWT is bound to **one RingCentral user** (a single service account)\n- JWT credentials **do not expire by default** (configurable); access tokens still expire (~2 hours)\n- When an access token expires, you re-present the JWT \u2014 no user interaction needed\n- **Not designed for many individual end-users**\n\n**Use JWT when:**\n- Server-side scripts, cron jobs, or automation\n- Chatbots and backend integrations\n- Server-to-server apps with no login UI\n- You need reliable, unattended access to a single account\n\n---\n\n### Authorization Code authentication\n\n**How it works:** A 3-legged OAuth flow:\n1. Redirect the user to RingCentral\u2019s authorize URL\n2. User logs in and grants consent\n3. Your app receives a temporary `code` and exchanges it for access/refresh tokens\n\nRingCentral recommends **Authorization Code + PKCE** for client-side apps (more secure; client secret is never exposed). Plain Authorization Code fits traditional server-side web apps with a redirect endpoint.\n\n**Characteristics:**\n- Requires a user interface and interactive login\n- Each user authorizes independently with their own account\n- User credentials stay with RingCentral; your app gets scoped tokens\n- Sessions are maintained via **refresh tokens** (expire in ~7 days)\n- Scales to **multiple end-users**\n\n**Use Authorization Code when:**\n- Your app has a web or mobile UI where users log in\n- You need per-user access (e.g., each user\u2019s call log, messages, or CRM data)\n- You want explicit user consent and proper audit trails\n- You\u2019re building embeddable widgets, add-ins, or multi-tenant SaaS apps\n\n---\n\n### Quick decision guide\n\n| Scenario | Recommended flow |\n|----------|------------------|\n| Backend script downloading call logs nightly | **JWT** |\n| Cron job syncing SMS messages | **JWT** |\n| Web app where each customer connects their RC account | **Auth Code (+ PKCE)** |\n| Mobile or SPA app | **Auth Code + PKCE** |\n| RingCX Embeddable / user-facing widgets | **Auth Code + PKCE** (default) |\n\n---\n\n### Important caveat\n\nSharing one JWT across multiple users logs everyone in as the **same RingCentral user**, which breaks audit trails and security. For multi-user apps, use Authorization Code so each user gets their own tokens \u2014 as noted in the RingCentral docs and embeddable guidance.",
+        "elapsed_s": 11.78,
+        "response_length": 2846
+      },
+      "mintlify": {
+        "answer": "## JWT vs Authorization Code in RingCentral\n\nBoth are OAuth 2.0 flows. Every API call still uses a **Bearer access token** in the `Authorization` header; the difference is how you obtain that token.\n\n### JWT (JWT Bearer Grant)\n\n**How it works:** Your server exchanges a pre-generated JWT (signed with a private key from your RingCentral app) for an access token \u2014 no user login UI.\n\n**Best for:**\n- Server-to-server and automation\n- Scripts, cron jobs, chatbots, call log downloaders\n- A **single service account** acting on behalf of one user/extension\n\n**Characteristics:**\n- No user interaction\n- JWTs typically don\u2019t expire by default (configurable)\n- Access tokens still expire (~2 hours)\n- **Not** meant for many individual users logging in\n\n### Authorization Code (+ PKCE)\n\n**How it works:** Redirect the user to RingCentral to log in; RingCentral redirects back with an auth code, which you exchange for access and refresh tokens. PKCE adds a `code_challenge` / `code_verifier` for better security (especially in frontends).\n\n**Best for:**\n- Apps where **each end user** logs in with their own RingCentral account\n- Frontend / multi-user apps (Auth Code + PKCE)\n- Server-side web apps (plain Auth Code \u2014 older, less secure than PKCE)\n\n**Characteristics:**\n- Requires user login and consent\n- You get refresh tokens (expire in ~7 days)\n- Designed for per-user authentication\n\n---\n\n### Quick decision guide\n\n| Scenario | Use |\n|----------|-----|\n| Backend script, cron job, single service account | **JWT** |\n| Web/mobile app where many users sign in individually | **Authorization Code + PKCE** |\n| Server-side web app (legacy) | **Authorization Code** (PKCE preferred) |\n\n**Rule of thumb:** Use **JWT** when one fixed account runs automation with no user UI. Use **Authorization Code** when real users must log in and you need tokens scoped to each user\u2019s account.",
+        "elapsed_s": 11.62,
+        "response_length": 1872
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Covers all key facts\u2014JWT for server/single service account automation without UI, Auth Code (+ PKCE) for multi-user login apps, non-expiring JWT credentials vs refresh-token sessions\u2014with accurate detail and no significant errors.",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Correctly and completely explains JWT for server-side single-account use, Authorization Code (+ PKCE) for per-user UI apps, JWT credential longevity, and refresh-token-based session maintenance."
+      }
+    }
+  ]
+}

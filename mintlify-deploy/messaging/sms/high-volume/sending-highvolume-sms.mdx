@@ -1,0 +1,76 @@
+# Sending High Volume SMS
+
+The High Volume SMS API provides a very flexible way to send multiple SMS message in a single API request (a.k.a. a batch). In other words, one can send the same text message to different recipients and/or different text messages to different recipients in a single request.
+
+<Note title="There is no limit of number of recipients in a batch. However, the maximum size of each batch is about 50MB.">
+</Note>
+
+### Sample codes
+
+Simple request to broadcast the same message to multiple recipients.
+
+<Note title="Running the code">
+If you have tried the [SMS quick start](../../quick-start.md), you can just copy all the functions below and add them to the quick start project then call the `read_extension_phone_number_detect_a2psms_feature()` function. Otherwise, edit the variables in ALL CAPS with your app and user credentials before running the code.
+</Note>
+
+**HTTP**
+    ```http
+    POST /restapi/v1.0/account/~/a2p-sms/batches
+    Content-Type: application/json
+    Accept: application/json
+    
+    ,
+    
+      ]
+    }
+    ```
+    
+**JavaScript**
+    ```javascript
+    
+    
+    ```
+    
+**Python**
+    ```python
+    
+    
+    ```
+    
+**PHP**
+    ```php
+    
+    
+    ```
+    
+**Ruby**
+    ```ruby
+    
+    
+    ```
+    
+**C#**
+    ```c#
+    
+    ```
+    
+**Java**
+    ```java
+    
+    ```
+    
+### Response
+
+The code samples above would all produce a response that would appear similar to the one below.
+
+```json
+
+```
+
+<Note>
+The `rejected` field is a list of invalid numbers (if any). Each item in the `rejected` array is an object contained the index position (starting from 1) of the recipient's phone number in the "messages" array, an error code and a short description of the rejected reason. E.g.:
+```
+[]
+```
+If your batch contains invalid phone numbers, you will receive the `rejected` list with content only from the response returned by sending a batch. Reading the batch status will always return an empty `rejected` array.
+</Note>

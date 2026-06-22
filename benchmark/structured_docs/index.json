@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "docs": [
+    {
+      "id": "authentication",
+      "title": "Authentication & OAuth",
+      "file": "authentication.md",
+      "tags": ["auth", "jwt", "oauth", "login", "token", "authorization", "access_token", "credential", "bearer", "grant_type", "refresh", "pkce", "authorization_code", "sandbox", "production", "client_id", "client_secret"],
+      "summary": "OAuth 2.0 authentication flows for RingCentral: JWT (server apps), Authorization Code + PKCE (user-facing apps). Includes token exchange, refresh, and SDK examples in Python, JS, PHP."
+    },
+    {
+      "id": "rate-limits",
+      "title": "Rate Limits",
+      "file": "rate-limits.md",
+      "tags": ["rate limit", "429", "throttle", "x-rate-limit", "retry-after", "quota", "too many requests", "headers", "heavy", "light", "medium", "auth group", "penalty", "window", "remaining"],
+      "summary": "Rate limit groups (Light/Medium/Heavy/Auth), response headers (X-Rate-Limit-Remaining, Retry-After), and correct handling strategies to avoid 429 errors."
+    },
+    {
+      "id": "webhooks",
+      "title": "Webhooks & Event Subscriptions",
+      "file": "webhooks.md",
+      "tags": ["webhook", "websocket", "subscription", "event", "notification", "push", "eventfilter", "validation-token", "real-time", "SUB-525", "expiration", "renewal", "presence", "sms event", "call event", "missed call"],
+      "summary": "Creating webhook and WebSocket subscriptions, event filters, validation token handshake, renewal, and troubleshooting. Includes Python Flask handler example."
+    },
+    {
+      "id": "api-basics",
+      "title": "API Basics — URLs, Paths, Pagination",
+      "file": "api-basics.md",
+      "tags": ["base url", "sandbox", "production", "restapi", "path", "accountid", "extensionid", "tilde", "pagination", "page", "perPage", "navigation", "endpoint", "uri", "version", "v1.0", "call-log", "message-store", "error codes", "404", "401", "403"],
+      "summary": "Production and sandbox base URLs, path shortcuts using tilde (~), key resource paths, pagination pattern, HTTP methods, common query parameters, and error codes."
+    },
+    {
+      "id": "sdks",
+      "title": "SDKs — Installation & Quick Start",
+      "file": "sdks.md",
+      "tags": ["sdk", "install", "npm", "pip", "gem", "composer", "maven", "gradle", "package", "python", "javascript", "node", "ruby", "php", "java", "go", "dotnet", "csharp", "swift", "chatbot", "quick start", "sms", "send sms", "call log", "websocket subscriptions"],
+      "summary": "Installation commands and quick-start code for all RingCentral SDKs: Python, JavaScript/Node, PHP, Ruby, Java, Go, .NET/C#. Feature matrix across SDKs. Chatbot framework overview."
+    }
+  ]
+}

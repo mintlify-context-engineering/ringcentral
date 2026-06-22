@@ -1,0 +1,213 @@
+{
+  "name": "RingCentral Developers",
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
+  },
+"colors": {
+    "primary": "#FF6C00",
+    "light": "#FF8C30",
+    "dark": "#E55A00"
+  },
+  "topbarLinks": [
+    {
+      "name": "API Reference",
+      "url": "https://developers.ringcentral.com/api-reference"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "Primary APIs",
+      "url": "primary"
+    },
+    {
+      "name": "Reference",
+      "url": "reference"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "getting-started/index",
+        "getting-started/register-app",
+        "getting-started/create-credential",
+        "getting-started/code-app",
+        "getting-started/sms",
+        "getting-started/promote-app"
+      ]
+    },
+    {
+      "group": "Voice",
+      "pages": [
+        "voice/index",
+        "voice/quick-start",
+        {
+          "group": "Placing Calls",
+          "pages": [
+            "voice/ringout",
+            "voice/webrtc",
+            "voice/uri-scheme"
+          ]
+        },
+        {
+          "group": "Call Logs",
+          "pages": [
+            "voice/call-log/index",
+            "voice/call-log/quick-start",
+            "voice/call-log/api",
+            "voice/call-log/recordings",
+            "voice/call-log/best-practices"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "SMS and Fax",
+      "pages": [
+        "messaging/index",
+        "messaging/quick-start",
+        "messaging/sms/sending-sms",
+        "messaging/sms/receiving-sms-mms",
+        {
+          "group": "High Volume SMS",
+          "pages": [
+            "messaging/sms/high-volume/index",
+            "messaging/sms/high-volume/sending-highvolume-sms",
+            "messaging/sms/high-volume/opt-out"
+          ]
+        },
+        {
+          "group": "Fax",
+          "pages": [
+            "messaging/fax/sending-faxes",
+            "messaging/fax/receiving-faxes"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Team Messaging",
+      "pages": [
+        "team-messaging/index",
+        "team-messaging/quick-start",
+        {
+          "group": "Bots",
+          "pages": [
+            "team-messaging/bots/walkthrough",
+            "team-messaging/manual/frameworks"
+          ]
+        },
+        {
+          "group": "Incoming Webhooks",
+          "pages": [
+            "team-messaging/incoming-webhooks/webhook-creation",
+            "team-messaging/incoming-webhooks/posting"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Video",
+      "pages": [
+        "video/api/index",
+        "video/api/quick-start",
+        "video/api/create-meetings",
+        "video/api/meeting-history"
+      ]
+    },
+    {
+      "group": "Webinar",
+      "pages": [
+        "webinar/index",
+        "webinar/quick-start",
+        "webinar/creation",
+        "webinar/registrants",
+        "webinar/events"
+      ]
+    },
+    {
+      "group": "Analytics",
+      "pages": [
+        "analytics/index",
+        "analytics/aggregate",
+        "analytics/timeline"
+      ]
+    },
+    {
+      "group": "Accounts and Users",
+      "pages": [
+        "account/index",
+        "account/extensions",
+        "account/creating-users",
+        "account/phone-numbers",
+        "account/presence"
+      ]
+    },
+    {
+      "group": "Using the API",
+      "pages": [
+        "basics/uris",
+        "basics/errors",
+        "basics/rate-limits",
+        "basics/media"
+      ]
+    },
+    {
+      "group": "Authentication",
+      "pages": [
+        "authentication/index",
+        {
+          "group": "JWT Grant Type",
+          "pages": [
+            "authentication/jwt/quick-start",
+            "authentication/jwt/config-app",
+            "authentication/jwt/jwt-for-public-apps",
+            "authentication/jwt/troubleshooting"
+          ]
+        },
+        {
+          "group": "Auth Code Grant Type",
+          "pages": [
+            "authentication/quick-start",
+            "authentication/oauth-request",
+            "authentication/session-keep-alive"
+          ]
+        },
+        "authentication/tokens",
+        "authentication/refresh-tokens",
+        "authentication/auth-code-flow",
+        "authentication/auth-code-pkce-flow",
+        "authentication/jwt-flow"
+      ]
+    },
+    {
+      "group": "Events and Notifications",
+      "pages": [
+        "notifications/index",
+        {
+          "group": "Webhooks",
+          "pages": [
+            "notifications/webhooks/quick-start",
+            "notifications/webhooks/creating-webhooks",
+            "notifications/webhooks/receiving",
+            "notifications/webhooks/troubleshooting"
+          ]
+        },
+        {
+          "group": "WebSockets",
+          "pages": [
+            "notifications/websockets/quick-start",
+            "notifications/websockets/subscribing"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Downloads and SDKs",
+      "pages": [
+        "sdks"
+      ]
+    }
+  ]
+}

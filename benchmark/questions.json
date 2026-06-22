@@ -1,0 +1,185 @@
+{
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "T1-01",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the production base URL for the RingCentral REST API?",
+      "ground_truth": "https://platform.ringcentral.com/restapi/v1.0/ (or https://platform.ringcentral.com as the host, with /restapi/v1.0/ as the path prefix)",
+      "key_facts": ["platform.ringcentral.com", "restapi/v1.0"],
+      "expected_source": "api-basics or uris.md"
+    },
+    {
+      "id": "T1-02",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What HTTP status code does RingCentral return when a rate limit is exceeded?",
+      "ground_truth": "HTTP 429 Too Many Requests",
+      "key_facts": ["429"],
+      "expected_source": "rate-limits.md"
+    },
+    {
+      "id": "T1-03",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What response header tells you how long to wait after receiving a 429 rate limit error?",
+      "ground_truth": "The Retry-After header contains the recommended retry interval in seconds.",
+      "key_facts": ["Retry-After"],
+      "expected_source": "rate-limits.md"
+    },
+    {
+      "id": "T1-04",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What are the four rate limit usage plan groups in RingCentral?",
+      "ground_truth": "Light (50 req/user/min), Medium (40 req/user/min), Heavy (10 req/user/min), Auth (5 req/user/min)",
+      "key_facts": ["Light", "Medium", "Heavy", "Auth"],
+      "expected_source": "rate-limits.md"
+    },
+    {
+      "id": "T1-05",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the sandbox base URL for RingCentral API testing?",
+      "ground_truth": "https://platform.devtest.ringcentral.com",
+      "key_facts": ["platform.devtest.ringcentral.com"],
+      "expected_source": "api-basics or authentication.md"
+    },
+    {
+      "id": "T1-06",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What grant_type value is used in the RingCentral JWT OAuth flow?",
+      "ground_truth": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+      "key_facts": ["urn:ietf:params:oauth:grant-type:jwt-bearer"],
+      "expected_source": "authentication.md or jwt-flow.md"
+    },
+    {
+      "id": "T1-07",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What pip command installs the RingCentral Python SDK?",
+      "ground_truth": "pip3 install ringcentral",
+      "key_facts": ["pip3 install ringcentral", "ringcentral"],
+      "expected_source": "sdks.md or python README"
+    },
+    {
+      "id": "T2-01",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I authenticate using JWT in the RingCentral Python SDK? Show me the code.",
+      "ground_truth": "Install: pip3 install ringcentral. Code: from ringcentral import SDK; sdk = SDK('CLIENT_ID', 'CLIENT_SECRET', 'https://platform.ringcentral.com'); platform = sdk.platform(); platform.login(jwt='YOUR_JWT_TOKEN'). Then use platform.get/post/put to call APIs.",
+      "key_facts": ["from ringcentral import SDK", "platform.login(jwt=", "pip3 install ringcentral"],
+      "expected_source": "sdks.md + authentication.md"
+    },
+    {
+      "id": "T2-02",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I create a webhook subscription in RingCentral? What validation does my server need to handle?",
+      "ground_truth": "POST to /restapi/v1.0/subscription with eventFilters array and deliveryMode.transportType=WebHook and deliveryMode.address=your-url. Your server must: (1) respond within 3000ms, (2) echo back the Validation-Token header, (3) return HTTP 200, (4) respond with body under 1024 bytes. Use ngrok for local dev.",
+      "key_facts": ["POST /restapi/v1.0/subscription", "Validation-Token", "3000ms", "1024 bytes", "deliveryMode"],
+      "expected_source": "webhooks.md"
+    },
+    {
+      "id": "T2-03",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How should my app use the X-Rate-Limit-Remaining header to proactively avoid 429 errors?",
+      "ground_truth": "Check X-Rate-Limit-Remaining on every API response. When it reaches 0, wait X-Rate-Limit-Window seconds before sending more requests of that group. If you do get a 429, read Retry-After and wait that full interval before retrying — every request during the penalty window resets the clock.",
+      "key_facts": ["X-Rate-Limit-Remaining", "X-Rate-Limit-Window", "Retry-After", "reset the clock"],
+      "expected_source": "rate-limits.md"
+    },
+    {
+      "id": "T2-04",
+      "tier": 2,
+      "category": "how-to",
+      "question": "What is the difference between JWT and Authorization Code authentication in RingCentral, and when should I use each?",
+      "ground_truth": "JWT is for server/script apps acting on behalf of a single service account (no UI, no user login). Auth Code (+ PKCE) is for apps with a user interface where multiple end-users log in with their own accounts. JWT credentials don't expire; Auth Code requires refresh tokens to maintain sessions.",
+      "key_facts": ["JWT for server apps", "Auth Code for user-facing apps", "PKCE", "multiple users"],
+      "expected_source": "authentication.md"
+    },
+    {
+      "id": "T2-05",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I use the tilde (~) shortcut in RingCentral API paths?",
+      "ground_truth": "Use ~ in place of accountId and/or extensionId to reference the authenticated user's account/extension. Example: /restapi/v1.0/account/~/extension/~/call-log is equivalent to /restapi/v1.0/account/159048008/extension/171857008/call-log for the authenticated user.",
+      "key_facts": ["~", "accountId", "extensionId", "authenticated user"],
+      "expected_source": "api-basics.md or uris.md"
+    },
+    {
+      "id": "T2-06",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I paginate through all call log records using the RingCentral Python SDK?",
+      "ground_truth": "Use page and perPage query params. Check navigation.nextPage in the response to see if more pages exist. Loop: GET /restapi/v1.0/account/~/extension/~/call-log?page=1&perPage=100, if navigation.nextPage exists increment page and repeat.",
+      "key_facts": ["page", "perPage", "navigation", "nextPage", "call-log"],
+      "expected_source": "api-basics.md"
+    },
+    {
+      "id": "T2-07",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I send an SMS using the RingCentral Python SDK?",
+      "ground_truth": "platform.post('/restapi/v1.0/account/~/extension/~/sms', {'from': {'phoneNumber': '+15551234567'}, 'to': [{'phoneNumber': '+15559876543'}], 'text': 'Hello!'})",
+      "key_facts": ["/restapi/v1.0/account/~/extension/~/sms", "from", "to", "text", "phoneNumber"],
+      "expected_source": "sdks.md or python README"
+    },
+    {
+      "id": "T3-01",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Which RingCentral SDKs support JWT authentication, and what is the install command for each?",
+      "ground_truth": "All major SDKs support JWT: Python (pip3 install ringcentral), JavaScript (npm install @ringcentral/sdk), PHP (composer require ringcentral/ringcentral-php), Ruby (gem install ringcentral_sdk), Java (Maven: com.ringcentral:ringcentral), Go (go get github.com/ringcentral/ringcentral-go), .NET (dotnet add package RingCentral.Net).",
+      "key_facts": ["pip3 install ringcentral", "npm install @ringcentral/sdk", "composer require", "gem install ringcentral_sdk", "dotnet add package RingCentral.Net"],
+      "expected_source": "sdks.md + multiple SDK READMEs"
+    },
+    {
+      "id": "T3-02",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "When building a real-time call notification feature for a mobile app, should I use webhooks or WebSockets? Why?",
+      "ground_truth": "Use WebSockets. They deliver low-latency push notifications directly to clients without requiring a publicly accessible server. Webhooks require a public HTTPS endpoint and are better suited for always-on server-side event processing. For mobile, WebSocket via the @ringcentral/subscriptions package is ideal.",
+      "key_facts": ["WebSocket", "low-latency", "no public server", "mobile", "@ringcentral/subscriptions"],
+      "expected_source": "webhooks.md"
+    },
+    {
+      "id": "T3-03",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "How does the RingCentral chatbot framework (ringcentral-chatbot-js) relate to the core JS SDK (@ringcentral/sdk)?",
+      "ground_truth": "ringcentral-chatbot-js is a separate higher-level framework built on top of the RingCentral platform. It handles bot-specific concerns: webhook routing, skill system, conversation state management. Under the hood it uses the same platform APIs as @ringcentral/sdk for authentication and API calls, but abstracts them behind a bot-friendly interface.",
+      "key_facts": ["ringcentral-chatbot-js", "@ringcentral/sdk", "skill", "routing", "higher-level", "same platform APIs"],
+      "expected_source": "sdks.md + chatbot-js README"
+    },
+    {
+      "id": "T3-04",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What rate limit applies to the authentication (token) endpoint, and what is the default limit?",
+      "ground_truth": "The Auth usage plan group applies to authentication/token endpoints. Default limit: 5 requests per user per minute, with a 60-second penalty window. This means you should cache and reuse access tokens rather than re-authenticating on every request.",
+      "key_facts": ["Auth group", "5 requests/user/minute", "60 seconds", "reuse access tokens"],
+      "expected_source": "rate-limits.md + authentication.md"
+    },
+    {
+      "id": "T3-05",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Write a complete Python script outline for a server-side job that downloads all call logs daily, covering authentication, pagination, rate limit handling, and error recovery.",
+      "ground_truth": "1) JWT auth: SDK('id','secret','https://platform.ringcentral.com'), platform.login(jwt='...'). 2) Paginate: GET /restapi/v1.0/account/~/extension/~/call-log with dateFrom/dateTo/page/perPage, loop on navigation.nextPage. 3) Rate limits: check X-Rate-Limit-Remaining after each call, sleep X-Rate-Limit-Window if 0. 4) On 429: sleep Retry-After seconds before retrying — don't retry early or the window resets. 5) On 401: re-authenticate with JWT (token expired).",
+      "key_facts": ["JWT", "platform.login(jwt=", "pagination", "nextPage", "X-Rate-Limit-Remaining", "Retry-After", "401 re-authenticate"],
+      "expected_source": "authentication.md + api-basics.md + rate-limits.md + sdks.md"
+    },
+    {
+      "id": "T3-06",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "A developer wants to build a CRM integration that logs all incoming calls for multiple users in an organization. What auth flow should they use, and how does the API path structure work for accessing each user's call log?",
+      "ground_truth": "Use Auth Code + PKCE flow so each user can independently authorize the app with their own RingCentral account. After each user authorizes, store their access/refresh tokens. To access each user's call log: GET /restapi/v1.0/account/~/extension/~/call-log (where ~ resolves to the authenticated user's account/extension). Use refresh tokens to maintain sessions. JWT would not scale to multiple users.",
+      "key_facts": ["Auth Code + PKCE", "multiple users", "per-user tokens", "refresh tokens", "~/extension/~/call-log", "not JWT"],
+      "expected_source": "authentication.md + api-basics.md"
+    }
+  ]
+}

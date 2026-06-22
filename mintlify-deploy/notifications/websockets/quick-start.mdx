@@ -1,0 +1,212 @@
+style: quick-start
+
+# WebSockets Quick Start
+
+Welcome to the RingCentral Platform. RingCentral is the leading unified communications platform. From one system developers can integrate with, or build products around all the ways people communicate today: SMS, voice, fax, chat and meetings.
+
+In this Quick Start, we are going to help you subscribe to RingCentral events using Web Sockets, which allows your application to receive notifications on a selected events. Let's get started.
+
+## Create an app and obtain credentials
+
+The first thing we need to do is create an app in the RingCentral Developer Console. This can be done quickly by clicking the "Create Notifications App" button below. Just click the button, enter a name and description if you choose, and click the "Create" button. If you do not yet have a RingCentral account, you will be prompted to create one.
+
+
+
+
+
+1. Login or create an account if you have not done so already.
+2. Go to Console/Apps and click 'Create App' button.
+3. Select "REST API App" under "What type of app are you creating?" Click "Next."
+4. Under "Auth" select "JWT auth flow."
+5. Under "Security" add the following permissions:
+```
+WebSocketsSubscriptions
+6. Under "Security" select "This app is private and will only be callable using credentials from the same RingCentral account."
+
+
+
+When you are done, you will be taken to the app's dashboard. Make note of the Client ID and Client Secret. We will be using those momentarily.
+
+## Download and edit a `.env` file
+
+Follow the instructions found in our guide to [running Developer Guide code samples](../../basics/code-samples.md). Or:
+
+1. Download our [env-template](https://raw.githubusercontent.com/ringcentral/ringcentral-api-docs/main/code-samples/env-template) and save it as a file named `.env`.
+2. Edit your newly downloaded `.env` file, setting its variables with the proper values for the app you created above.
+     * `RC_APP_CLIENT_ID` - set to the Client ID of the app you created above
+     * `RC_APP_CLIENT_SECRET` - set to the Client Secret of the app you created above
+     * `RC_USER_JWT` - set to the [JWT credential you created](../../getting-started/create-credential.md) for yourself
+    
+## Subscribe to an event via WebSockets
+
+**Javascript**
+    ### Install RingCentral JavaScript SDK 5.0.0+
+    
+    ```bash
+    $ npm init # init npm project
+    $ npm install @ringcentral/sdk --save
+	$ npm install @ringcentral/subscriptions --save
+	$ npm install dotenv --save
+```
+```
+
+### Create and edit websockets.js
+
+Create a file called <tt>websockets.js</tt>. Be sure to edit the variables in ALL CAPS with your app and user credentials.
+
+```javascript
+
+```
+
+### Run your code
+
+You are almost done. Now run your script.
+
+```bash
+$ node websockets.js
+```
+```
+
+**C#**
+```
+### Create a Visual Studio project
+
+* Choose Console Application .Net Core -> App
+* Select Target Framework .NET Core 2.1
+* Enter project name "WebSocket_Notifications"
+* Add NuGet package RingCentral.Net (6.3.1 or latest version) SDK
+* Add NuGet package RingCentral.Net.WebSocket (2.3.4 or latest version) SDK
+
+### Edit the file Program.cs
+
+Be sure to edit the variables in ALL CAPS with your app and user credentials.
+
+```c#
+
+```
+
+### Run your app
+
+You are almost done. Now run your app from Visual Studio and send an SMS message to the phone number specified in the `RINGCENTRAL_USERNAME`.
+```
+
+**Java**
+```
+### Create a Java project (using Eclipse IDE)
+
+* Create a new Java project
+* Select the Gradle Project wizard
+* Enter project name "WebSocket_Notifications"
+* Open the <tt>build.gradle</tt> file and add the RingCentral Java SDK to the project as shown below:
+
+```json hl_lines="3 4",linenums="1"
+dependencies 
+```
+
+### Create a new Java Class
+
+Select "File -> New -> Class" to create a new Java class named "WebSockets_Notifications"
+
+```java
+package WebSockets_Notifications;
+
+public class WebsSockets_Notifications 
+}
+```
+
+### Edit the file "WebSockets_Notifications.java".
+
+Be sure to edit the variables in ALL CAPS with your app and user credentials.
+
+```java
+
+```
+
+### Run your app
+
+You are almost done. Now run your app from Eclipse.
+```
+
+**Ruby**
+```
+### Install RingCentral Ruby SDK
+
+```bash
+$ gem install ringcentral-sdk dotenv
+```
+
+### Create and edit websockets.rb
+
+Create a file called <tt>websockets.rb</tt> using the contents below.
+
+```ruby
+
+```
+
+### Run your code
+
+You are almost done. Now run your script.
+
+```bash
+$ ruby websockets.rb
+```
+```
+
+**Python**
+```
+### Install RingCentral Python SDK
+
+```bash
+$ pip install ringcentral python-dotenv
+```
+
+### Create and edit websocket_quick_start.py
+
+Create a file called <tt>websocket_quick_start.py</tt> using the contents below.
+
+```python
+
+```
+
+### fill in .env file
+
+You'll need RINGCENTRAL_SERVER_URL, RINGCENTRAL_CLIENT_ID, RINGCENTRAL_CLIENT_SECRET and RINGCENTRAL_JWT_TOKEN. All of them can be generated from developer portal.
+
+### Run your code
+
+You are almost done. Now run your script.
+
+```bash
+$ python websocket_quick_start.py
+```
+```
+
+**PHP**
+```
+### Install RingCentral PHP SDK
+
+```php
+$ curl -sS https://getcomposer.org/installer | php
+$ php composer.phar require ringcentral/ringcentral-php vlucas/phpdotenv
+```
+
+### Create and edit websockets.php
+
+Create a file called <tt>websockets.php</tt> using the contents below.
+
+```php
+
+```
+
+### Run your code
+
+You are almost done. Now run your script.
+
+```bask
+$ php websockets.php
+```
+```
+
+## Test your WebSocket subscription
+
+Now that your sample app is running, trigger a notification by sending yourself an SMS.

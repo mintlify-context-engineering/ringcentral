@@ -1,0 +1,427 @@
+{
+  "summary": {
+    "experiment_date": "2026-06-21T23:56:40.569390",
+    "model": "composer-2.5",
+    "n_questions": 20,
+    "total_elapsed_s": 0.0,
+    "raw": {
+      "avg_elapsed_s": 0,
+      "avg_response_length": 0,
+      "accuracy": {
+        "avg_score": 0.0,
+        "pct_correct": 0.0
+      }
+    },
+    "mintlify": {
+      "avg_elapsed_s": 0,
+      "avg_response_length": 0,
+      "accuracy": {
+        "avg_score": 0.0,
+        "pct_correct": 0.0
+      }
+    },
+    "score_improvement": 0.0
+  },
+  "results": [
+    {
+      "id": "T1-01",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the production base URL for the RingCentral REST API?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T1-02",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What HTTP status code does RingCentral return when a rate limit is exceeded?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T1-03",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What response header tells you how long to wait after receiving a 429 rate limit error?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T1-04",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What are the four rate limit usage plan groups in RingCentral?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T1-05",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the sandbox base URL for RingCentral API testing?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T1-06",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What grant_type value is used in the RingCentral JWT OAuth flow?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T1-07",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What pip command installs the RingCentral Python SDK?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T2-01",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I authenticate using JWT in the RingCentral Python SDK? Show me the code.",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T2-02",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I create a webhook subscription in RingCentral? What validation does my server need to handle?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T2-03",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How should my app use the X-Rate-Limit-Remaining header to proactively avoid 429 errors?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T2-04",
+      "tier": 2,
+      "category": "how-to",
+      "question": "What is the difference between JWT and Authorization Code authentication in RingCentral, and when should I use each?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T2-05",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I use the tilde (~) shortcut in RingCentral API paths?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T2-06",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I paginate through all call log records using the RingCentral Python SDK?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T2-07",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I send an SMS using the RingCentral Python SDK?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T3-01",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Which RingCentral SDKs support JWT authentication, and what is the install command for each?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T3-02",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "When building a real-time call notification feature for a mobile app, should I use webhooks or WebSockets? Why?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T3-03",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "How does the RingCentral chatbot framework (ringcentral-chatbot-js) relate to the core JS SDK (@ringcentral/sdk)?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T3-04",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "What rate limit applies to the authentication (token) endpoint, and what is the default limit?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T3-05",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Write a complete Python script outline for a server-side job that downloads all call logs daily, covering authentication, pagination, rate limit handling, and error recovery.",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T3-06",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "A developer wants to build a CRM integration that logs all incoming calls for multiple users in an organization. What auth flow should they use, and how does the API path structure work for accessing each user's call log?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    }
+  ]
+}
