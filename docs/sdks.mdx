@@ -12,7 +12,16 @@
 | **Go** | `github.com/ringcentral/ringcentral-go` | `go get github.com/ringcentral/ringcentral-go` |
 | **.NET/C#** | `RingCentral.Net` | `dotnet add package RingCentral.Net` |
 
-For WebSocket subscriptions (Node.js): `npm install @ringcentral/subscriptions`
+For WebSocket/real-time needs, use a dedicated library — the standard REST SDKs handle REST calls only:
+
+| Library | Language | Purpose | Install |
+|---------|----------|---------|---------|
+| `@ringcentral/subscriptions` | Node.js | WebSocket push subscriptions | `npm install @ringcentral/subscriptions` |
+| `ringcentral-websocket-java` | Java | Java WebSocket client library | GitHub: ringcentral/ringcentral-websocket-java |
+| `ringcentral-softphone-ts` | TypeScript | SIP/WebRTC softphone for audio streaming | `npm install ringcentral-softphone` |
+| `ringcentral-softphone-js` | JavaScript | SIP/WebRTC softphone (JS variant) | GitHub: ringcentral/ringcentral-softphone-js |
+| `ringcentral-softphone-go` | Go | SIP/WebRTC softphone for Go | GitHub: ringcentral/ringcentral-softphone-go |
+| `ringcentral-web-phone` | JavaScript | Full WebRTC browser phone SDK | `npm install ringcentral-web-phone` |
 
 The following SDKs provide developers with libraries that make interfacing with RingCentral APIs easier in your language of choice. RingCentral currently provides the following official SDKs:
 

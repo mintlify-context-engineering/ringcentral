@@ -61,13 +61,16 @@ To learn more about these two event mediums, checkout the following resources:
 
 ## What events/notifications does RingCentral support?
 
-RingCentral offers a comprehensive set of events that developers can subscribe to. Such events include:
+RingCentral subscriptions support seven major event categories. All are created via `POST /restapi/v1.0/subscription` with an `eventFilters` array specifying which events to receive:
 
-* SMS received
-* Voicemail received
-* Fax received
-* Call started and call ended
-* Missed call
-* Presence/availability changed
+| Category | What it covers |
+|----------|---------------|
+| **Telephony / call events** | Active call sessions and state changes (started, ended, missed, ringing) |
+| **Message events** | Incoming SMS, voicemail, fax via `/message-store` |
+| **Presence events** | User presence and availability changes |
+| **Extension / account events** | Extension updates, account configuration changes |
+| **Call queue events** | Call queue member activity and queue state |
+| **AI Conversation Expert (ACE) events** | ACE analysis complete notifications |
+| **Meeting / video events** | RingCentral Video session events |
 
-For a comprehensive list of events, please consult our [API Reference](https://developers.ringcentral.com/api-reference/Account-Presence-Event). 
+For a comprehensive list of individual event filter strings, consult the [API Reference](https://developers.ringcentral.com/api-reference/Account-Presence-Event).

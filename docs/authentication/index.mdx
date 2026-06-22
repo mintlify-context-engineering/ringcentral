@@ -6,7 +6,10 @@
 |----------|-----|
 | Server script / automation / single service account | **JWT** |
 | Multiple users log in individually / per-user tokens needed | **Auth Code + PKCE** |
-| JWT is **not** recommended when multiple users need individual authentication — use Auth Code for per-user tokens |
+| CRM integration where each user authorizes independently | **Auth Code + PKCE** — NOT JWT |
+| Mobile app or frontend with per-user login | **Auth Code + PKCE** |
+
+**JWT does NOT scale to multiple users.** JWT authenticates a single service account only. If you need each user to independently authorize the app with their own RingCentral account (e.g. a CRM where multiple sales reps each connect their own account), use Auth Code + PKCE. After each user authorizes, store their individual access/refresh tokens and use those for API calls on their behalf (e.g. `GET /restapi/v1.0/account/~/extension/~/call-log` resolves `~` to the authenticated user).
 
 **Reuse access tokens** — cache and reuse tokens (~3600s / 1 hour lifetime). Do not re-authenticate on every request. Auth Code refresh tokens last **7 days** — use `grant_type=refresh_token` to silently get a new access token. If the refresh token expires, the user must re-authenticate from scratch. **JWT flows have no refresh token** — simply request a new access token with the JWT grant whenever needed. Re-authenticating too frequently triggers the Auth rate limit (5 requests/user/minute).
 
