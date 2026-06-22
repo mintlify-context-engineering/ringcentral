@@ -32,7 +32,8 @@ SYSTEM_PROMPT = (
 QUESTION_PREFIX = (
     "You are using the RingCentral documentation portal (powered by Mintlify). "
     "Use the search tools available to find documentation and answer the following question "
-    "accurately and concisely.\n\nQuestion: "
+    "accurately. Include specific package names, install commands, and exact values (URLs, "
+    "error codes, header names) when they are relevant to the answer.\n\nQuestion: "
 )
 
 
