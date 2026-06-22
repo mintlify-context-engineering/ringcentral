@@ -11,7 +11,7 @@ import tempfile
 import time
 from pathlib import Path
 
-from agents import context_metrics
+from agents import context_metrics, openrouter_agent
 
 REPO_ROOT = Path(__file__).parent.parent.parent
 API_KEY = os.environ.get("CURSOR_API_KEY", "")
@@ -27,6 +27,19 @@ SOURCE_ENTRIES = (
     "infrastructure",
     "README.md",
 )
+SKIP_DIRS = {
+    ".git",
+    ".venv",
+    "__pycache__",
+    "node_modules",
+    "benchmark",
+    "results",
+    "build",
+    "coverage",
+    "dist",
+    ".next",
+    "storybook-static",
+}
 
 QUESTION_PREFIX = (
     "You are navigating the RingCentral open-source monorepo to answer a developer question. "
@@ -37,7 +50,37 @@ QUESTION_PREFIX = (
 )
 
 
-def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> dict:
+def _populate_workspace(workspace: Path) -> None:
+    for entry in SOURCE_ENTRIES:
+        source_root = REPO_ROOT / entry
+        if not source_root.exists():
+            continue
+
+        if source_root.is_file():
+            os.symlink(source_root, workspace / entry)
+            continue
+
+        dest_root = workspace / entry
+        dest_root.mkdir(parents=True, exist_ok=True)
+        for current_root, dirs, files in os.walk(source_root):
+            current = Path(current_root)
+            dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+
+            rel_dir = current.relative_to(source_root)
+            dest_dir = dest_root / rel_dir
+            dest_dir.mkdir(parents=True, exist_ok=True)
+
+            for filename in files:
+                source_file = current / filename
+                os.symlink(source_file, dest_dir / filename)
+
+
+def run(
+    question: str,
+    model: str = "composer-2.5",
+    verbose: bool = False,
+    provider: str = "cursor",
+) -> dict:
     """Run the raw-source Cursor agent on a question.
 
     Returns:
@@ -55,25 +98,36 @@ def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> di
     metrics = context_metrics.empty_metrics()
 
     try:
-        from cursor_sdk import Agent, LocalAgentOptions
-
         with tempfile.TemporaryDirectory(prefix="rc-raw-benchmark-") as tmpdir:
             workspace = Path(tmpdir)
-            for entry in SOURCE_ENTRIES:
-                source = REPO_ROOT / entry
-                if source.exists():
-                    os.symlink(source, workspace / entry, target_is_directory=source.is_dir())
+            _populate_workspace(workspace)
 
-            with Agent.create(
-                model=model,
-                api_key=API_KEY,
-                local=LocalAgentOptions(cwd=str(workspace), setting_sources=[]),
-            ) as agent:
+            if provider == "openrouter":
+                if verbose:
+                    print(f"  [raw:openrouter] sanitized workspace={workspace}, sending question...")
+                result = openrouter_agent.run_with_workspace(
+                    prompt=QUESTION_PREFIX + question,
+                    workspace=workspace,
+                    model=model,
+                    verbose=verbose,
+                )
+                answer = result["answer"]
+                metrics = {k: v for k, v in result.items() if k != "answer"}
+            elif provider == "cursor":
+                from cursor_sdk import Agent, LocalAgentOptions
+
                 if verbose:
                     print(f"  [raw] sanitized workspace={workspace}, sending question...")
-                run_result = agent.send(QUESTION_PREFIX + question)
-                answer = run_result.text()
-                metrics = context_metrics.metrics_from_run(run_result, answer)
+                with Agent.create(
+                    model=model,
+                    api_key=API_KEY,
+                    local=LocalAgentOptions(cwd=str(workspace), setting_sources=[]),
+                ) as agent:
+                    run_result = agent.send(QUESTION_PREFIX + question)
+                    answer = run_result.text()
+                    metrics = context_metrics.metrics_from_run(run_result, answer)
+            else:
+                raise ValueError(f"Unknown provider: {provider}")
     except Exception as e:
         error = str(e)
         answer = f"ERROR: {error}"

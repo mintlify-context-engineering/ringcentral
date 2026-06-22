@@ -19,7 +19,7 @@ import tempfile
 import time
 from pathlib import Path
 
-from agents import context_metrics
+from agents import context_metrics, openrouter_agent
 
 DOCS_ROOT = Path(__file__).parent.parent / "structured_docs"
 MCP_URL = os.environ.get("MINTLIFY_MCP_URL", "https://ringcentral.mintlify.app/mcp")
@@ -132,7 +132,12 @@ TOOL_FUNCTIONS = {
 # Main entry point — Cursor SDK agent connected to the Mintlify docs MCP
 # ---------------------------------------------------------------------------
 
-def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> dict:
+def run(
+    question: str,
+    model: str = "composer-2.5",
+    verbose: bool = False,
+    provider: str = "cursor",
+) -> dict:
     """Run the Mintlify-docs agent on a question.
 
     Spins up a Cursor SDK agent in an empty working directory (so it has no
@@ -150,6 +155,31 @@ def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> di
     error = None
     metrics = context_metrics.empty_metrics()
     try:
+        if provider == "openrouter":
+            if verbose:
+                print(f"  [mintlify:openrouter] using live Mintlify MCP={MCP_URL}...")
+            result = openrouter_agent.run_with_mcp(
+                prompt=QUESTION_PREFIX + question,
+                model=model,
+                mcp_url=MCP_URL,
+                verbose=verbose,
+            )
+            answer = result["answer"]
+            metrics = {k: v for k, v in result.items() if k != "answer"}
+            elapsed = time.time() - t0
+            if verbose:
+                print(f"  [mintlify:openrouter] done in {elapsed:.1f}s, response_len={len(answer)}")
+            return {
+                "answer": answer.strip(),
+                "elapsed_s": round(elapsed, 2),
+                "response_length": len(answer),
+                "ok": True,
+                "error": None,
+                **metrics,
+            }
+        if provider != "cursor":
+            raise ValueError(f"Unknown provider: {provider}")
+
         from cursor_sdk import (
             Agent,
             AgentOptions,

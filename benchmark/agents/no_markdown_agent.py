@@ -12,7 +12,7 @@ import tempfile
 import time
 from pathlib import Path
 
-from agents import context_metrics
+from agents import context_metrics, openrouter_agent
 
 REPO_ROOT = Path(__file__).parent.parent.parent
 API_KEY = os.environ.get("CURSOR_API_KEY", "")
@@ -29,7 +29,19 @@ SOURCE_ENTRIES = (
 )
 
 MARKDOWN_SUFFIXES = {".md", ".mdx", ".markdown"}
-SKIP_DIRS = {".git", ".venv", "__pycache__", "node_modules", "benchmark", "results"}
+SKIP_DIRS = {
+    ".git",
+    ".venv",
+    "__pycache__",
+    "node_modules",
+    "benchmark",
+    "results",
+    "build",
+    "coverage",
+    "dist",
+    ".next",
+    "storybook-static",
+}
 
 QUESTION_PREFIX = (
     "You are navigating the RingCentral open-source monorepo to answer a developer question. "
@@ -74,7 +86,12 @@ def _populate_workspace(workspace: Path) -> None:
                 os.symlink(source_file, dest_dir / filename)
 
 
-def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> dict:
+def run(
+    question: str,
+    model: str = "composer-2.5",
+    verbose: bool = False,
+    provider: str = "cursor",
+) -> dict:
     """Run the source-without-Markdown Cursor agent on a question."""
     t0 = time.time()
     answer = ""
@@ -82,22 +99,36 @@ def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> di
     metrics = context_metrics.empty_metrics()
 
     try:
-        from cursor_sdk import Agent, LocalAgentOptions
-
         with tempfile.TemporaryDirectory(prefix="rc-no-markdown-benchmark-") as tmpdir:
             workspace = Path(tmpdir)
             _populate_workspace(workspace)
 
-            with Agent.create(
-                model=model,
-                api_key=API_KEY,
-                local=LocalAgentOptions(cwd=str(workspace), setting_sources=[]),
-            ) as agent:
+            if provider == "openrouter":
                 if verbose:
-                    print(f"  [no-markdown] filtered workspace={workspace}, sending question...")
-                run_result = agent.send(QUESTION_PREFIX + question)
-                answer = run_result.text()
-                metrics = context_metrics.metrics_from_run(run_result, answer)
+                    print(f"  [no-markdown:openrouter] filtered workspace={workspace}, sending question...")
+                result = openrouter_agent.run_with_workspace(
+                    prompt=QUESTION_PREFIX + question,
+                    workspace=workspace,
+                    model=model,
+                    verbose=verbose,
+                )
+                answer = result["answer"]
+                metrics = {k: v for k, v in result.items() if k != "answer"}
+            elif provider == "cursor":
+                from cursor_sdk import Agent, LocalAgentOptions
+
+                with Agent.create(
+                    model=model,
+                    api_key=API_KEY,
+                    local=LocalAgentOptions(cwd=str(workspace), setting_sources=[]),
+                ) as agent:
+                    if verbose:
+                        print(f"  [no-markdown] filtered workspace={workspace}, sending question...")
+                    run_result = agent.send(QUESTION_PREFIX + question)
+                    answer = run_result.text()
+                    metrics = context_metrics.metrics_from_run(run_result, answer)
+            else:
+                raise ValueError(f"Unknown provider: {provider}")
     except Exception as e:
         error = str(e)
         answer = f"ERROR: {error}"

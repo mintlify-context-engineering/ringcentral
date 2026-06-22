@@ -376,7 +376,7 @@ def run_coverage_check(questions: list[dict]) -> None:
     print(f"\n{'═'*68}")
     print("PHASE 2 — BENCHMARK COVERAGE CHECK")
     print(f"{'═'*68}")
-    print(f"  Metric: chars surfaced before all key facts appear in context")
+    print(f"  Metric: chars surfaced before all literal key-fact strings appear in context")
     print()
 
     structured_totals = []
@@ -412,7 +412,7 @@ def run_coverage_check(questions: list[dict]) -> None:
     print(f"  Avg structured  : {avg_s:>8,.0f} chars")
     print(f"  Avg raw         : {avg_r:>8,.0f} chars")
     print(f"  Context reduction : {reduction:>5.1f}%  (structured vs raw)")
-    print(f"  Full coverage   : {complete}/{len(questions)} questions answered from structured docs")
+    print(f"  Literal coverage: {complete}/{len(questions)} questions with all key-fact strings present")
 
     if gaps_by_question:
         print(f"\n  MISSING FACTS TO ADD TO STRUCTURED DOCS")

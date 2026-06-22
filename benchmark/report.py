@@ -79,7 +79,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <div class="container">
 
   <div class="note">
-    <strong>Experiment design:</strong> The same Cursor model answers each question twice.
+    <strong>Experiment design:</strong> The same model answers each question across benchmark access layers.
     <strong>Condition A (Raw):</strong> Agent navigates a sanitized source workspace that excludes benchmark files and prior results.
     <strong>Condition B (Mintlify):</strong> Agent navigates the live RingCentral docs MCP from an empty workspace.
     Scores reflect blind-judged answer accuracy against ground truth. Invalid rows are excluded from aggregates.
@@ -208,12 +208,16 @@ def _condition_palette(index: int) -> str:
 
 
 # Canonical condition display order: least docs → more docs → structured docs.
-CONDITION_ORDER = ["no_markdown", "raw", "mintlify"]
+CONDITION_ORDER = ["no_markdown", "raw", "mintlify", "raw_mintlify"]
 
 
 def generate_multi_condition_report(data: dict, output_path: Path):
     summary = data["summary"]
     results = data["results"]
+    provider = summary.get("provider", "cursor")
+    native_tokens = provider == "openrouter"
+    token_key = "total_tokens" if native_tokens else "total_tokens_est"
+    avg_token_key = "avg_total_tokens" if native_tokens else "avg_total_tokens_est"
     conditions = sorted(
         summary["conditions"],
         key=lambda c: CONDITION_ORDER.index(c["key"]) if c["key"] in CONDITION_ORDER else len(CONDITION_ORDER),
@@ -229,7 +233,7 @@ def generate_multi_condition_report(data: dict, output_path: Path):
             key = condition["key"]
             tier_data[tier][key]["times"].append(r[key]["elapsed_s"])
             tier_data[tier][key]["scores"].append(r["scores"].get(f"{key}_score", 0))
-            tier_data[tier][key]["tokens"].append(r[key].get("total_tokens_est", 0))
+            tier_data[tier][key]["tokens"].append(r[key].get(token_key, 0))
 
     max_time = 1
     max_tokens = 1
@@ -247,15 +251,22 @@ def generate_multi_condition_report(data: dict, output_path: Path):
         key = condition["key"]
         metric = summary[key]
         color = _condition_palette(index)
-        tok = metric.get("avg_total_tokens_est", 0)
+        tok = metric.get(avg_token_key, 0)
         tok_delta = metric.get("token_delta_vs_raw_pct")
         tok_delta_text = f" · {tok_delta:+.0f}% tok vs raw" if tok_delta else ""
+        tok_prefix = "" if native_tokens else "~"
+        cost_text = (
+            f"<div class=\"sublabel\">{metric.get('openrouter_cost', 0):.6f} credits total</div>"
+            if native_tokens
+            else ""
+        )
         kpi_cards += f"""
         <div class="kpi" style="border-top: 3px solid {color}">
           <div class="value" style="color:{color}">{metric['accuracy']['avg_score']:.2f}</div>
           <div class="label">{html.escape(condition['label'])}</div>
           <div class="sublabel">{metric['accuracy']['pct_correct']:.1f}% correct · {metric['avg_elapsed_s']:.1f}s avg</div>
-          <div class="sublabel">~{tok:,.0f} tokens/question{tok_delta_text}</div>
+          <div class="sublabel">{tok_prefix}{tok:,.0f} tokens/question{tok_delta_text}</div>
+          {cost_text}
         </div>
         """
 
@@ -291,7 +302,7 @@ def generate_multi_condition_report(data: dict, output_path: Path):
             """
             token_bars += f"""
             <div class="bar-container">
-              <div class="bar-label"><span class="name">Tier {tier} — {html.escape(condition['label'])}</span><span class="val">~{avg_tokens:,.0f} tok</span></div>
+              <div class="bar-label"><span class="name">Tier {tier} — {html.escape(condition['label'])}</span><span class="val">{'' if native_tokens else '~'}{avg_tokens:,.0f} tok</span></div>
               <div class="bar-track"><div class="bar-fill" style="width:{token_pct:.1f}%; background:{color}"></div></div>
             </div>
             """
@@ -310,11 +321,11 @@ def generate_multi_condition_report(data: dict, output_path: Path):
             key = condition["key"]
             score = scores.get(f"{key}_score")
             score_text = f"{score}/2" if score is not None else "n/a"
-            tok = r[key].get("total_tokens_est", 0)
+            tok = r[key].get(token_key, 0)
             cells += f"""
             <td>
               <div>{r[key]['elapsed_s']:.1f}s</div>
-              <div class="muted">~{tok:,.0f} tok</div>
+              <div class="muted">{'' if native_tokens else '~'}{tok:,.0f} tok</div>
               <span class="score {score_class(score)}">{score_text}</span>
             </td>
             """
@@ -336,7 +347,7 @@ def generate_multi_condition_report(data: dict, output_path: Path):
       .badge { display: inline-block; background: #3b82f6; color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 12px; margin-left: 10px; }
       .container { max-width: 1320px; margin: 0 auto; padding: 32px 48px; }
       .note { background: #1a1a2e; border: 1px solid #2a2a3e; border-left: 3px solid #3b82f6; border-radius: 6px; padding: 14px 18px; margin-bottom: 32px; font-size: 13px; color: #a7a7b6; line-height: 1.6; }
-      .kpi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-bottom: 40px; }
+      .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px; }
       .kpi, .metric-card { background: #1a1a2e; border: 1px solid #2a2a3e; border-radius: 10px; padding: 20px; }
       .kpi { text-align: center; }
       .kpi .value { font-size: 40px; font-weight: 800; margin-bottom: 4px; }
@@ -368,6 +379,17 @@ def generate_multi_condition_report(data: dict, output_path: Path):
       @media (max-width: 900px) { .container, .header { padding-left: 20px; padding-right: 20px; } .kpi-grid, .comparison-grid { grid-template-columns: 1fr; } table { display: block; overflow-x: auto; } }
     """
 
+    condition_lines = " ".join(
+        f"<strong>{html.escape(condition['label'])}:</strong> {html.escape(condition.get('description', ''))}."
+        for condition in conditions
+    )
+    token_note = (
+        "OpenRouter token counts are native usage totals returned by OpenRouter across each tool loop. "
+        "Condition costs are shown in credits when available."
+        if native_tokens
+        else "Estimated total tokens/question = context (tool-result bytes ÷ 4) + output (answer chars ÷ 4). Lower is cheaper."
+    )
+
     rendered_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -379,13 +401,13 @@ def generate_multi_condition_report(data: dict, output_path: Path):
 <body>
 <div class="header">
   <h1>Markdown Layer Benchmark <span class="badge">RingCentral</span></h1>
-  <div class="subtitle">{html.escape(summary['experiment_date'][:10])} · Model: {html.escape(summary['model'])} · {summary['n_questions']} questions · {summary.get('n_scored', 0)} scored</div>
+  <div class="subtitle">{html.escape(summary['experiment_date'][:10])} · Provider: {html.escape(provider)} · Model: {html.escape(summary['model'])} · {summary['n_questions']} questions · {summary.get('n_scored', 0)} scored</div>
 </div>
 <div class="container">
   <div class="note">
-    <strong>Experiment design:</strong> The same Cursor model answers each question under three access layers:
-    local source with Markdown, local source with Markdown removed, and the live Mintlify docs MCP.
-    Each answer is scored independently against the same ground truth.
+    <strong>Experiment design:</strong> The same provider/model answers each question under benchmark access layers.
+    {condition_lines}
+    Each answer is scored independently against the same ground truth. Invalid rows are excluded from aggregates.
   </div>
   <div class="kpi-grid">{kpi_cards}</div>
   <div class="comparison-grid">
@@ -393,8 +415,8 @@ def generate_multi_condition_report(data: dict, output_path: Path):
     <div class="metric-card"><h3>Accuracy by Tier</h3>{accuracy_bars}</div>
   </div>
   <div class="metric-card" style="margin-bottom:32px;">
-    <h3>Est. Token Cost by Tier</h3>{token_bars}
-    <div class="muted" style="margin-top:12px;">Estimated total tokens/question = context (tool-result bytes ÷ 4) + output (answer chars ÷ 4). Lower is cheaper.</div>
+    <h3>{'Native' if native_tokens else 'Estimated'} Token Cost by Tier</h3>{token_bars}
+    <div class="muted" style="margin-top:12px;">{html.escape(token_note)}</div>
   </div>
   <div class="section">
     <h2>Per-Question Results</h2>

@@ -60,7 +60,19 @@ NO_MARKDOWN_SOURCE_ENTRIES = (
 )
 
 MARKDOWN_SUFFIXES = {".md", ".mdx", ".markdown"}
-SKIP_DIRS = {".git", ".venv", "__pycache__", "node_modules", "benchmark", "results"}
+SKIP_DIRS = {
+    ".git",
+    ".venv",
+    "__pycache__",
+    "node_modules",
+    "benchmark",
+    "results",
+    "build",
+    "coverage",
+    "dist",
+    ".next",
+    "storybook-static",
+}
 
 RAW_PREFIX = (
     "You are navigating the RingCentral open-source monorepo to answer a developer question. "
@@ -91,9 +103,23 @@ def _is_markdown_file(path: Path) -> bool:
 
 def populate_raw_workspace(workspace: Path) -> None:
     for entry in RAW_SOURCE_ENTRIES:
-        source = REPO_ROOT / entry
-        if source.exists():
-            os.symlink(source, workspace / entry, target_is_directory=source.is_dir())
+        source_root = REPO_ROOT / entry
+        if not source_root.exists():
+            continue
+        if source_root.is_file():
+            os.symlink(source_root, workspace / entry)
+            continue
+
+        dest_root = workspace / entry
+        dest_root.mkdir(parents=True, exist_ok=True)
+        for current_root, dirs, files in os.walk(source_root):
+            current = Path(current_root)
+            dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+            rel_dir = current.relative_to(source_root)
+            dest_dir = dest_root / rel_dir
+            dest_dir.mkdir(parents=True, exist_ok=True)
+            for filename in files:
+                os.symlink(current / filename, dest_dir / filename)
 
 
 def populate_no_markdown_workspace(workspace: Path) -> None:

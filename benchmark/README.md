@@ -1,16 +1,18 @@
 # RingCentral Context Engineering Benchmark
 
-Measures answer accuracy, response time, and response length for agents answering RingCentral developer questions under three documentation access layers: raw source with Markdown, raw source without Markdown, and the Mintlify docs MCP.
+Measures answer accuracy, response time, and response length for agents answering RingCentral developer questions under four information-access conditions: raw source without Markdown, raw source with Markdown, Mintlify docs MCP, and a hybrid Raw + Markdown + Mintlify MCP condition.
 
 ## What It Tests
 
-**Condition A — Raw + Markdown**: An AI agent navigates a sanitized source workspace containing the public source/doc directories (`docs/`, `sdks/`, `chatbots/`, `embeddable/`, `integrations/`, `crm/`, `video/`, `voice/`, and `infrastructure/`). The workspace excludes `benchmark/`, prior results, local secrets, and optimized structured docs so the baseline cannot read the answer key.
+**Condition A — Raw + Markdown**: An AI agent navigates a sanitized source workspace containing the public source/doc directories (`docs/`, `sdks/`, `chatbots/`, `embeddable/`, `integrations/`, `crm/`, `video/`, `voice/`, and `infrastructure/`). The workspace excludes `benchmark/`, prior results, local secrets, nested `.git` directories, dependency caches, generated build output, and optimized structured docs so the baseline cannot read the answer key or irrelevant generated artifacts.
 
-**Condition B — Raw without Markdown**: The same Cursor model navigates a sanitized source workspace where the Markdown layer has been removed. `docs/` is unavailable, and Markdown-like files such as `README.md`, `*.md`, `*.mdx`, and `*.markdown` are omitted. Source code, examples, package metadata, JSON/YAML/config files, tests, and inline code comments remain available.
+**Condition B — Raw without Markdown**: The same model navigates a sanitized source workspace where the Markdown layer has been removed. `docs/` is unavailable, and Markdown-like files such as `README.md`, `*.md`, `*.mdx`, and `*.markdown` are omitted. Source code, examples, package metadata, JSON/YAML/config files, tests, and inline code comments remain available.
 
-**Condition C — Mintlify MCP**: The same Cursor model is connected to the live Mintlify-hosted RingCentral docs MCP server (`ringcentral.mintlify.app/mcp`). It runs in an empty working directory, so its only tools are the docs portal's semantic search and page-read tools.
+**Condition C — Mintlify MCP**: The same model is connected to the live Mintlify-hosted RingCentral docs MCP server (`ringcentral.mintlify.app/mcp`). In Cursor mode this is wired through Cursor's MCP support; in OpenRouter mode the benchmark exposes the live MCP tools to the OpenRouter tool loop and routes each tool call back to the same MCP endpoint.
 
-All conditions use the **same Cursor model** and the **same `CURSOR_API_KEY`**. The main variable is the information layer: local Markdown docs, no Markdown docs, or hosted structured docs through MCP.
+**Condition D — Raw + Markdown + Mintlify MCP**: The same model gets both the sanitized Raw + Markdown workspace and the live Mintlify MCP. This tests whether structured docs improve answers when the agent can still fall back to source, examples, package metadata, tests, and repo-specific details.
+
+By default, all conditions use the **same Cursor model** and the **same `CURSOR_API_KEY`**. You can also run through OpenRouter with `--provider openrouter`, where all conditions use the same OpenRouter model and `OPENROUTER_API_KEY`; in that mode the raw conditions use OpenRouter tool-calling over read-only local file tools, and both MCP conditions use the live Mintlify MCP through the local MCP bridge. The main variable remains the information layer: no Markdown, local Markdown, hosted structured docs through MCP, or combined local + MCP access.
 
 ## Main Runner Metrics
 
@@ -19,13 +21,13 @@ All conditions use the **same Cursor model** and the **same `CURSOR_API_KEY`**. 
 | **Accuracy improvement** | Blind judge score delta against ground truth |
 | **Response time** | Elapsed wall-clock time per answer |
 | **Response length** | Output verbosity in characters |
-| **Token spend (est.)** | Estimated tokens per question — context (tool-result bytes ÷ 4) + output (answer chars ÷ 4), with `Δ tok` vs the raw baseline |
+| **Token spend** | Cursor mode: estimated tokens per question — context (tool-result bytes ÷ 4) + output (answer chars ÷ 4). OpenRouter mode: native usage totals and cost returned by OpenRouter |
 
-Token estimates are captured automatically on every run: each agent measures the bytes of tool results (file reads, grep, MCP search results) returned by the **same** run it already makes, so there is no extra API cost. Context bytes are the primary driver of input-token cost; the regular runner reports per-condition context/output/total token estimates and a `Δ tok` reduction vs the Raw + Markdown baseline. The standalone `measure_context.py` reports the exact byte breakdown by tool type (and shares the same measurement code in `agents/context_metrics.py`). For deterministic structured-doc coverage and character-count checks, run `autoresearch_loop.py`.
+Token estimates are captured automatically in Cursor mode: each agent measures the bytes of tool results (file reads, grep, MCP search results) returned by the **same** run it already makes, so there is no extra API cost. In OpenRouter mode, the runner stores OpenRouter's native `prompt_tokens`, `completion_tokens`, `total_tokens`, `openrouter_cost`, and `openrouter_generation_ids` in the result JSON. The standalone `measure_context.py` reports the exact byte breakdown by tool type for the Cursor SDK path. For deterministic structured-doc literal key-fact coverage and character-count checks, run `autoresearch_loop.py`.
 
 ## Setup
 
-Requires Python 3.10+ and a [Cursor API key](https://cursor.com/dashboard/integrations). That single key powers all agents (raw + Markdown, raw without Markdown, Mintlify MCP) and the judge. No Anthropic key is needed for the main benchmark.
+Requires Python 3.10+ and either a [Cursor API key](https://cursor.com/dashboard/integrations) or an OpenRouter API key. No Anthropic key is needed for the main benchmark.
 
 ```bash
 # Use the included venv (Python 3.11)
@@ -33,12 +35,12 @@ uv venv .venv --python 3.11
 uv pip install -r requirements.txt --python .venv
 source .venv/bin/activate
 
-# Add your key to the .env file (already created, just paste your key)
+# Add your key(s) to the .env file (already created, just paste your key)
 cp .env.example .env   # if .env doesn't exist yet
-# then edit .env and set CURSOR_API_KEY=crsr_...
+# then edit .env and set CURSOR_API_KEY=crsr_... and/or OPENROUTER_API_KEY=sk-or-...
 ```
 
-`run_experiment.py` auto-loads `benchmark/.env`, so you don't need to `export` anything. (You still can if you prefer: `export CURSOR_API_KEY=crsr_...`.)
+`run_experiment.py` auto-loads `benchmark/.env`, so you don't need to `export` anything. (You still can if you prefer.)
 
 ## Run the Experiment
 
@@ -46,8 +48,17 @@ cp .env.example .env   # if .env doesn't exist yet
 # Full benchmark (all questions, ~30-60 min)
 python run_experiment.py
 
+# Run through OpenRouter for native token/cost tracking
+python run_experiment.py --provider openrouter --model "~openai/gpt-latest"
+
+# Cursor explicitly, matching the default behavior
+python run_experiment.py --provider cursor --model composer-2.5
+
 # Quick smoke test — Tier 1 only (7 questions, ~10 min)
 python run_experiment.py --tier 1
+
+# Quick OpenRouter smoke test
+python run_experiment.py --provider openrouter --ids T1-01
 
 # Source-only cross-repo questions — Tier 4 only
 python run_experiment.py --tier 4
@@ -77,7 +88,7 @@ This creates an HTML dashboard at the same path showing:
 
 Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch) — finds the doc structure that makes MCP lookup use less retrieved context than raw source navigation, for any question.
 
-**No API keys required.** The loop is fully deterministic — it measures `chars_read` as a rough proxy for tool-result context size, not exact model input tokens.
+**No API keys required.** The loop is fully deterministic — it measures `chars_read` as a rough proxy for tool-result context size and checks literal key-fact strings, not semantic answer quality or exact model input tokens.
 
 ```bash
 # Full audit + coverage check (no API keys needed)
@@ -86,7 +97,7 @@ python autoresearch_loop.py
 # Phase 1 only: scan all 202 raw docs, find everything missing from structured_docs/
 python autoresearch_loop.py --audit
 
-# Phase 2 only: measure chars needed to cover key facts per question
+# Phase 2 only: measure chars needed to surface literal key facts per question
 python autoresearch_loop.py --coverage
 
 # Show all missing facts verbosely
@@ -105,13 +116,13 @@ Walks all 202 raw doc files, extracts API endpoints/headings/concepts, compares 
 For each benchmark question, measures:
 - `chars_read` by structured docs agent (search → chunk)
 - `chars_read` by raw monorepo agent (file scanning)
-- Which key facts are still missing from structured docs
+- Which literal key-fact strings are still missing from structured docs
 
 **Historical 20-question result (before the question set was expanded):**
 
 | Metric | Before | After |
 |--------|--------|-------|
-| Questions fully covered | 11/20 (55%) | 20/20 (100%) |
+| Questions with literal key-fact coverage | 11/20 (55%) | 20/20 (100%) |
 | Avg chars — structured | 5,125 | **3,375** |
 | Avg chars — raw baseline | 30,725 | 30,725 |
 | Context reduction | 83.3% | **89.0%** |
