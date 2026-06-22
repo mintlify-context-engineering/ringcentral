@@ -1,7 +1,7 @@
 # Rate Limits
 
 **doc_id**: rate-limits  
-**tags**: rate limit, 429, throttle, x-rate-limit, retry-after, quota, too many requests, headers, heavy, light, medium, auth group
+**tags**: rate limit, 429, throttle, x-rate-limit, retry-after, quota, too many requests, headers, heavy, light, medium, auth group, penalty, window, remaining, reuse access tokens, reset the clock
 
 ## Rate Limit Groups
 
@@ -14,7 +14,9 @@ Every RingCentral API endpoint belongs to a usage plan group:
 | **Heavy** | 10 requests/user/minute | 60 seconds |
 | **Auth** | 5 requests/user/minute | 60 seconds |
 
-Limits apply per **(user, application)** pair. Each user gets their own quota — one user hitting the limit doesn't affect others.
+The **Auth group** (5 req/user/minute) applies to the token endpoint (`/restapi/oauth/token`). Reuse access tokens — do not re-authenticate on every request or you will trigger this limit. Cache the token and refresh only when it expires (~7200 seconds).
+
+Limits apply per **(user, application)** pair.
 
 ## When a Limit Is Exceeded
 
@@ -25,11 +27,11 @@ HTTP/1.1 429 Too Many Requests
 Retry-After: 30
 ```
 
-**Critical**: Every new request during the penalty window **resets the penalty clock**. Do not retry until `Retry-After` seconds have fully elapsed.
+**Critical**: Every new request during the penalty window **resets the clock** (reset the clock on the penalty window). Do not retry until `Retry-After` seconds have fully elapsed — retrying early will reset the clock again.
 
 ## Rate Limit Response Headers
 
-Returned on every API response (user-level limits):
+Returned on every API response:
 
 | Header | Description |
 |--------|-------------|
@@ -50,7 +52,7 @@ X-Rate-Limit-Window: 60
 
 ## Handling Rate Limits Correctly
 
-### Single-threaded strategy
+### Proactive: check X-Rate-Limit-Remaining before each request
 
 ```python
 import time
@@ -74,16 +76,16 @@ try:
 except Exception as e:
     if e.response.status_code == 429:
         retry_after = int(e.response.headers.get('Retry-After', 30))
-        time.sleep(retry_after)  # Wait the full retry window — do NOT retry early
+        time.sleep(retry_after)  # Wait the full Retry-After — do NOT retry early (resets the clock)
         # then retry
 ```
 
 ## Best Practices
 
 1. **Proactively check** `X-Rate-Limit-Remaining` — never wait for a 429
-2. **Never retry** during the penalty window (resets the clock)
-3. **Batch requests** when possible to stay within groups
-4. Different API groups are **counted independently** — hitting Light limit doesn't affect Heavy quota
+2. **Never retry** during the penalty window — it resets the clock
+3. **Reuse access tokens** — do not call the auth endpoint more than necessary (Auth group: 5/min)
+4. Different API groups are **counted independently**
 
 ## Finding an Endpoint's Group
 

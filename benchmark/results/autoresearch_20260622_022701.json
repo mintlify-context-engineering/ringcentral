@@ -1,0 +1,614 @@
+{
+  "configs_evaluated": [
+    "answer-first",
+    "full-doc"
+  ],
+  "evals": [
+    {
+      "config_name": "answer-first",
+      "config": {
+        "name": "answer-first",
+        "description": "2500-char chunks, code included \u2014 designed for key-fact-first structure",
+        "chunk_size": 2500,
+        "strip_code": false,
+        "max_results": 3
+      },
+      "avg_chars_read": 5125,
+      "avg_fact_coverage_pct": 76.1,
+      "questions_fully_covered": 11,
+      "questions_total": 20,
+      "coverage_rate": 55.0,
+      "results": [
+        {
+          "id": "T1-01",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 22644,
+          "raw_coverage": 2,
+          "raw_complete": true,
+          "raw_files": 8
+        },
+        {
+          "id": "T1-02",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 8000,
+          "raw_coverage": 1,
+          "raw_complete": true,
+          "raw_files": 1
+        },
+        {
+          "id": "T1-03",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 8000,
+          "raw_coverage": 1,
+          "raw_complete": true,
+          "raw_files": 1
+        },
+        {
+          "id": "T1-04",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 8000,
+          "raw_coverage": 4,
+          "raw_complete": true,
+          "raw_files": 1
+        },
+        {
+          "id": "T1-05",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 53092,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T1-06",
+          "tier": 1,
+          "structured_chars": 7500,
+          "structured_coverage": 0,
+          "structured_total_facts": 1,
+          "structured_complete": false,
+          "structured_missing": [
+            "urn:ietf:params:oauth:grant-type:jwt-bearer"
+          ],
+          "raw_chars": 5738,
+          "raw_coverage": 1,
+          "raw_complete": true,
+          "raw_files": 1
+        },
+        {
+          "id": "T1-07",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 70308,
+          "raw_coverage": 1,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-01",
+          "tier": 2,
+          "structured_chars": 5000,
+          "structured_coverage": 3,
+          "structured_total_facts": 3,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 70308,
+          "raw_coverage": 2,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-02",
+          "tier": 2,
+          "structured_chars": 7500,
+          "structured_coverage": 4,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "POST /restapi/v1.0/subscription"
+          ],
+          "raw_chars": 33799,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-03",
+          "tier": 2,
+          "structured_chars": 7500,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reset the clock"
+          ],
+          "raw_chars": 38314,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-04",
+          "tier": 2,
+          "structured_chars": 7500,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "JWT for server apps",
+            "Auth Code for user-facing apps",
+            "multiple users"
+          ],
+          "raw_chars": 70308,
+          "raw_coverage": 2,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-05",
+          "tier": 2,
+          "structured_chars": 2500,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 75219,
+          "raw_coverage": 2,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-06",
+          "tier": 2,
+          "structured_chars": 7500,
+          "structured_coverage": 3,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "navigation",
+            "nextPage"
+          ],
+          "raw_chars": 41586,
+          "raw_coverage": 3,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-07",
+          "tier": 2,
+          "structured_chars": 2500,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 10621,
+          "raw_coverage": 5,
+          "raw_complete": true,
+          "raw_files": 2
+        },
+        {
+          "id": "T3-01",
+          "tier": 3,
+          "structured_chars": 2500,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 56771,
+          "raw_coverage": 1,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-02",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 24040,
+          "raw_coverage": 1,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-03",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 1,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "ringcentral-chatbot-js",
+            "skill",
+            "routing",
+            "higher-level",
+            "same platform APIs"
+          ],
+          "raw_chars": 39618,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-04",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reuse access tokens"
+          ],
+          "raw_chars": 46152,
+          "raw_coverage": 2,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-05",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 4,
+          "structured_total_facts": 7,
+          "structured_complete": false,
+          "structured_missing": [
+            "pagination",
+            "nextPage",
+            "401 re-authenticate"
+          ],
+          "raw_chars": 42899,
+          "raw_coverage": 4,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-06",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 2,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "multiple users",
+            "per-user tokens",
+            "refresh tokens",
+            "not JWT"
+          ],
+          "raw_chars": 36046,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        }
+      ],
+      "avg_raw_chars": 38073,
+      "chars_reduction_pct": 86.5
+    },
+    {
+      "config_name": "full-doc",
+      "config": {
+        "name": "full-doc",
+        "description": "Entire doc per result \u2014 maximum coverage, maximum chars",
+        "chunk_size": 99999,
+        "strip_code": false,
+        "max_results": 5
+      },
+      "avg_chars_read": 10828,
+      "avg_fact_coverage_pct": 85.0,
+      "questions_fully_covered": 13,
+      "questions_total": 20,
+      "coverage_rate": 65.0,
+      "results": [
+        {
+          "id": "T1-01",
+          "tier": 1,
+          "structured_chars": 4139,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 22644,
+          "raw_coverage": 2,
+          "raw_complete": true,
+          "raw_files": 8
+        },
+        {
+          "id": "T1-02",
+          "tier": 1,
+          "structured_chars": 2843,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 8000,
+          "raw_coverage": 1,
+          "raw_complete": true,
+          "raw_files": 1
+        },
+        {
+          "id": "T1-03",
+          "tier": 1,
+          "structured_chars": 2843,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 8000,
+          "raw_coverage": 1,
+          "raw_complete": true,
+          "raw_files": 1
+        },
+        {
+          "id": "T1-04",
+          "tier": 1,
+          "structured_chars": 2843,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 8000,
+          "raw_coverage": 4,
+          "raw_complete": true,
+          "raw_files": 1
+        },
+        {
+          "id": "T1-05",
+          "tier": 1,
+          "structured_chars": 4139,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 53092,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T1-06",
+          "tier": 1,
+          "structured_chars": 20335,
+          "structured_coverage": 0,
+          "structured_total_facts": 1,
+          "structured_complete": false,
+          "structured_missing": [
+            "urn:ietf:params:oauth:grant-type:jwt-bearer"
+          ],
+          "raw_chars": 5738,
+          "raw_coverage": 1,
+          "raw_complete": true,
+          "raw_files": 1
+        },
+        {
+          "id": "T1-07",
+          "tier": 1,
+          "structured_chars": 5297,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 70308,
+          "raw_coverage": 1,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-01",
+          "tier": 2,
+          "structured_chars": 8978,
+          "structured_coverage": 3,
+          "structured_total_facts": 3,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 70308,
+          "raw_coverage": 2,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-02",
+          "tier": 2,
+          "structured_chars": 20335,
+          "structured_coverage": 4,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "POST /restapi/v1.0/subscription"
+          ],
+          "raw_chars": 33799,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-03",
+          "tier": 2,
+          "structured_chars": 20335,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reset the clock"
+          ],
+          "raw_chars": 38314,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-04",
+          "tier": 2,
+          "structured_chars": 20335,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "JWT for server apps",
+            "Auth Code for user-facing apps",
+            "multiple users"
+          ],
+          "raw_chars": 70308,
+          "raw_coverage": 2,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-05",
+          "tier": 2,
+          "structured_chars": 4139,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 75219,
+          "raw_coverage": 2,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-06",
+          "tier": 2,
+          "structured_chars": 17492,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 41586,
+          "raw_coverage": 3,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T2-07",
+          "tier": 2,
+          "structured_chars": 5297,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 10621,
+          "raw_coverage": 5,
+          "raw_complete": true,
+          "raw_files": 2
+        },
+        {
+          "id": "T3-01",
+          "tier": 3,
+          "structured_chars": 5297,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 56771,
+          "raw_coverage": 1,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-02",
+          "tier": 3,
+          "structured_chars": 4375,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 24040,
+          "raw_coverage": 1,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-03",
+          "tier": 3,
+          "structured_chars": 20335,
+          "structured_coverage": 5,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "higher-level"
+          ],
+          "raw_chars": 39618,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-04",
+          "tier": 3,
+          "structured_chars": 6524,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": [],
+          "raw_chars": 46152,
+          "raw_coverage": 2,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-05",
+          "tier": 3,
+          "structured_chars": 20335,
+          "structured_coverage": 6,
+          "structured_total_facts": 7,
+          "structured_complete": false,
+          "structured_missing": [
+            "401 re-authenticate"
+          ],
+          "raw_chars": 42899,
+          "raw_coverage": 4,
+          "raw_complete": false,
+          "raw_files": 15
+        },
+        {
+          "id": "T3-06",
+          "tier": 3,
+          "structured_chars": 20335,
+          "structured_coverage": 3,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "multiple users",
+            "per-user tokens",
+            "not JWT"
+          ],
+          "raw_chars": 36046,
+          "raw_coverage": 0,
+          "raw_complete": false,
+          "raw_files": 15
+        }
+      ],
+      "avg_raw_chars": 38073,
+      "chars_reduction_pct": 71.6
+    }
+  ]
+}

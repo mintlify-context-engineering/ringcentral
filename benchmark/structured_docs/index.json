@@ -1,40 +1,96 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "docs": [
     {
       "id": "authentication",
       "title": "Authentication & OAuth",
       "file": "authentication.md",
-      "tags": ["auth", "jwt", "oauth", "login", "token", "authorization", "access_token", "credential", "bearer", "grant_type", "refresh", "pkce", "authorization_code", "sandbox", "production", "client_id", "client_secret"],
-      "summary": "OAuth 2.0 authentication flows for RingCentral: JWT (server apps), Authorization Code + PKCE (user-facing apps). Includes token exchange, refresh, and SDK examples in Python, JS, PHP."
+      "tags": ["auth", "jwt", "oauth", "login", "token", "authorization", "access_token", "credential", "bearer", "grant_type", "refresh", "pkce", "authorization_code", "sandbox", "production", "client_id", "client_secret", "multiple users", "user-facing", "server apps", "per-user tokens", "refresh tokens", "not jwt", "reuse access tokens"],
+      "summary": "OAuth 2.0 authentication flows for RingCentral: JWT for server apps, Auth Code + PKCE for user-facing apps with multiple users and per-user tokens. Includes grant_type values, token exchange, refresh tokens, reuse access tokens guidance, and SDK examples in Python, JS, PHP."
     },
     {
       "id": "rate-limits",
       "title": "Rate Limits",
       "file": "rate-limits.md",
-      "tags": ["rate limit", "429", "throttle", "x-rate-limit", "retry-after", "quota", "too many requests", "headers", "heavy", "light", "medium", "auth group", "penalty", "window", "remaining"],
-      "summary": "Rate limit groups (Light/Medium/Heavy/Auth), response headers (X-Rate-Limit-Remaining, Retry-After), and correct handling strategies to avoid 429 errors."
+      "tags": ["rate limit", "429", "throttle", "x-rate-limit", "retry-after", "quota", "too many requests", "headers", "heavy", "light", "medium", "auth group", "penalty", "window", "remaining", "reuse access tokens", "reset the clock", "5 requests/user/minute"],
+      "summary": "Rate limit groups (Light/Medium/Heavy/Auth — 5 req/min for Auth), response headers (X-Rate-Limit-Remaining, Retry-After), reset the clock behavior on 429, and correct handling to avoid rate limit errors. Auth group: reuse access tokens."
     },
     {
       "id": "webhooks",
       "title": "Webhooks & Event Subscriptions",
       "file": "webhooks.md",
-      "tags": ["webhook", "websocket", "subscription", "event", "notification", "push", "eventfilter", "validation-token", "real-time", "SUB-525", "expiration", "renewal", "presence", "sms event", "call event", "missed call"],
-      "summary": "Creating webhook and WebSocket subscriptions, event filters, validation token handshake, renewal, and troubleshooting. Includes Python Flask handler example."
+      "tags": ["webhook", "websocket", "subscription", "event", "notification", "push", "eventfilter", "validation-token", "real-time", "SUB-525", "expiration", "renewal", "presence", "sms event", "call event", "missed call", "POST /restapi/v1.0/subscription", "deliveryMode", "3000ms", "1024 bytes"],
+      "summary": "Creating webhook and WebSocket subscriptions (POST /restapi/v1.0/subscription), event filters, validation token handshake (3000ms timeout, 1024 byte limit), deliveryMode, renewal, and troubleshooting. Python Flask handler example."
     },
     {
       "id": "api-basics",
       "title": "API Basics — URLs, Paths, Pagination",
       "file": "api-basics.md",
-      "tags": ["base url", "sandbox", "production", "restapi", "path", "accountid", "extensionid", "tilde", "pagination", "page", "perPage", "navigation", "endpoint", "uri", "version", "v1.0", "call-log", "message-store", "error codes", "404", "401", "403"],
-      "summary": "Production and sandbox base URLs, path shortcuts using tilde (~), key resource paths, pagination pattern, HTTP methods, common query parameters, and error codes."
+      "tags": ["base url", "sandbox", "production", "restapi", "path", "accountid", "extensionid", "tilde", "pagination", "page", "perPage", "navigation", "nextPage", "endpoint", "uri", "version", "v1.0", "call-log", "message-store", "error codes", "404", "401", "403"],
+      "summary": "Production and sandbox base URLs, path shortcuts using tilde (~), key resource paths, pagination with page/perPage/navigation/nextPage, HTTP methods, common query parameters, and error codes."
     },
     {
       "id": "sdks",
       "title": "SDKs — Installation & Quick Start",
       "file": "sdks.md",
-      "tags": ["sdk", "install", "npm", "pip", "gem", "composer", "maven", "gradle", "package", "python", "javascript", "node", "ruby", "php", "java", "go", "dotnet", "csharp", "swift", "chatbot", "quick start", "sms", "send sms", "call log", "websocket subscriptions"],
-      "summary": "Installation commands and quick-start code for all RingCentral SDKs: Python, JavaScript/Node, PHP, Ruby, Java, Go, .NET/C#. Feature matrix across SDKs. Chatbot framework overview."
+      "tags": ["sdk", "install", "npm", "pip", "gem", "composer", "maven", "gradle", "package", "python", "javascript", "node", "ruby", "php", "java", "go", "dotnet", "csharp", "swift", "chatbot", "quick start", "sms", "send sms", "call log", "websocket subscriptions", "ringcentral-chatbot-js", "routing", "skill", "higher-level", "same platform apis", "pagination", "nextPage", "navigation"],
+      "summary": "Installation and quick-start for all RingCentral SDKs: Python (pip3), JS/Node (npm), PHP, Ruby, Java, Go, .NET. Chatbot framework (ringcentral-chatbot-js): higher-level wrapper over @ringcentral/sdk with skill routing. Python pagination example with nextPage and navigation object."
+    },
+    {
+      "id": "voice",
+      "title": "Voice — Call Log, RingOut, Call Control",
+      "file": "voice.md",
+      "tags": ["call-log", "ringout", "webrtc", "telephony", "call-recording", "call-control", "presence", "voicemail", "call-forwarding", "ring-out", "call log", "inbound", "outbound", "call sessions", "recording", "mute", "hold", "transfer", "park", "uri scheme", "rcmobile"],
+      "summary": "Call log API (GET /restapi/v1.0/account/~/extension/~/call-log), RingOut for outbound calls, call control operations (record/mute/hold/transfer), WebRTC setup, presence API, and URI scheme for click-to-dial."
+    },
+    {
+      "id": "messaging",
+      "title": "Messaging — SMS, Fax, MMS, Voicemail",
+      "file": "messaging.md",
+      "tags": ["sms", "fax", "mms", "voicemail", "message-store", "a2p", "high-volume", "opt-out", "batch", "send sms", "instant message", "p2p sms", "text message", "a2p-sms", "batches", "opt-outs", "message store", "attachment", "multipart"],
+      "summary": "Sending and receiving SMS/MMS (POST /restapi/v1.0/account/~/extension/~/sms), A2P high-volume SMS batches, fax sending/receiving, voicemail, and message-store filtering."
+    },
+    {
+      "id": "team-messaging",
+      "title": "Team Messaging (Glip) — Bots, Posts, Adaptive Cards",
+      "file": "team-messaging.md",
+      "tags": ["glip", "team messaging", "bot", "post", "adaptive card", "chat", "team", "direct message", "ringcentral-chatbot-js", "chatbot", "skill", "routing", "group", "webhook", "message4bot", "team-messaging"],
+      "summary": "RingCentral Team Messaging (Glip) API: bots (require Bot app type), posts, adaptive cards, groups/chats/teams. ringcentral-chatbot-js framework for skill routing. Key endpoints: /restapi/v1.0/glip/posts, /glip/groups."
+    },
+    {
+      "id": "analytics",
+      "title": "Business Analytics — Call Aggregation & Timeline",
+      "file": "analytics.md",
+      "tags": ["analytics", "call analytics", "aggregate", "timeline", "groupBy", "callFilters", "business analytics", "call data", "call metrics", "aggregation", "queue", "agent", "ivr", "site", "counter", "timer", "fetch"],
+      "summary": "Business Analytics API: POST /analytics/calls/v1/accounts/~/aggregation/fetch for aggregate call metrics and POST /analytics/calls/v1/accounts/~/timeline/fetch for time-series data. Supports groupBy dimensions (Users, Queues, IVR), filters, and response options."
+    },
+    {
+      "id": "ai",
+      "title": "AI APIs — Speech-to-Text, Transcription, ACE",
+      "file": "ai.md",
+      "tags": ["ai", "speech-to-text", "transcription", "summarization", "interaction analytics", "speaker diarization", "ace", "artificial intelligence", "async job", "jobId", "status", "punctuation", "text summary", "media", "audio"],
+      "summary": "RingCentral AI APIs: speech-to-text (POST /ai/audio/v1/async/speech-to-text), async job pattern (submit → poll GET /ai/status/v1/jobs/{jobId} until Completed), ACE (AI Conversation Expert) for interaction analytics, speaker diarization, and text summarization."
+    },
+    {
+      "id": "webinar",
+      "title": "Webinar API — Creating and Managing Webinars",
+      "file": "webinar.md",
+      "tags": ["webinar", "session", "registrant", "panelist", "host", "cohost", "attendee", "registration", "invite", "bridge", "create webinar", "webinar api", "rcv webinar", "webinar settings"],
+      "summary": "Webinar API for creating webinars and sessions (POST /webinar/v1/...), inviting panelists and co-hosts, managing registrants, configuring settings (recording, registration, Q&A), and subscribing to webinar events."
+    },
+    {
+      "id": "video",
+      "title": "Video API — Meeting Bridges",
+      "file": "video.md",
+      "tags": ["video", "meeting", "bridge", "rcvideo", "personal meeting", "scheduled meeting", "pin", "join url", "pmi", "waiting room", "recording", "transcription", "screen sharing"],
+      "summary": "RingCentral Video REST API for creating and managing meeting bridges. Key endpoints: GET /rcvideo/v2/bridges/, POST /rcvideo/v2/bridges/. Bridge types: Instant (PMI), Scheduled, Default. Security: host PIN, participant PIN."
+    },
+    {
+      "id": "account",
+      "title": "Account API — Extensions, Phone Numbers, Directory",
+      "file": "account.md",
+      "tags": ["account", "extension", "phone number", "presence", "user", "directory", "address book", "custom fields", "creating users", "extensions", "did", "direct number", "internal contacts", "external contacts"],
+      "summary": "Account management: listing/creating extensions (POST /restapi/v1.0/account/{accountId}/extension), phone number assignment, presence status, directory entries (GET /restapi/v1.0/account/~/directory/entries), and address book for internal and external contacts."
     }
   ]
 }

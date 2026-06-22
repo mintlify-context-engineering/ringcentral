@@ -1,10 +1,13 @@
 """
 Mintlify MCP agent — Condition B (treatment).
 
-The run() function queries the live Mintlify search MCP server at
-ringcentral.mintlify.app/mcp, representing what a developer / AI agent
-experiences with a proper documentation portal: semantic search over
-deployed, structured docs instead of 40+ raw repositories.
+The run() function drives a Cursor SDK agent that is connected to the live
+Mintlify-hosted RingCentral docs MCP server (ringcentral.mintlify.app/mcp).
+It represents what a developer / AI agent experiences with a proper
+documentation portal: semantic search over deployed, structured docs instead
+of navigating 40+ raw repositories. Both conditions now run on the same
+Cursor model and the same CURSOR_API_KEY — the only difference is the tools:
+the raw agent gets the monorepo filesystem, this agent gets the docs MCP.
 
 Module-level exports (TOOLS, TOOL_FUNCTIONS, _load_index, _score_doc, …)
 are the local-file equivalents kept for autoresearch_loop.py compatibility.
@@ -12,14 +15,12 @@ are the local-file equivalents kept for autoresearch_loop.py compatibility.
 
 import json
 import os
-import re
+import tempfile
 import time
 from pathlib import Path
 
-import httpx
-
 DOCS_ROOT = Path(__file__).parent.parent / "structured_docs"
-MCP_URL = "https://ringcentral.mintlify.app/mcp"
+MCP_URL = os.environ.get("MINTLIFY_MCP_URL", "https://ringcentral.mintlify.app/mcp")
 MAX_TOOL_CALLS = 8
 
 SYSTEM_PROMPT = (
@@ -125,169 +126,52 @@ TOOL_FUNCTIONS = {
 
 
 # ---------------------------------------------------------------------------
-# Mintlify MCP client (Streamable HTTP transport)
+# Main entry point — Cursor SDK agent connected to the Mintlify docs MCP
 # ---------------------------------------------------------------------------
 
-class _MCPClient:
-    """Minimal MCP client over Streamable HTTP."""
+def run(question: str, model: str = "composer-2.5", verbose: bool = False) -> dict:
+    """Run the Mintlify-docs agent on a question.
 
-    def __init__(self, url: str):
-        self.url = url
-        self.session_id: str | None = None
-        self._req_id = 0
-        self._http = httpx.Client(timeout=30.0)
-
-    def _next_id(self) -> int:
-        self._req_id += 1
-        return self._req_id
-
-    def _headers(self) -> dict:
-        h = {"Content-Type": "application/json", "Accept": "application/json, text/event-stream"}
-        if self.session_id:
-            h["Mcp-Session-Id"] = self.session_id
-        return h
-
-    def _post(self, method: str, params: dict) -> dict:
-        payload = {"jsonrpc": "2.0", "id": self._next_id(), "method": method, "params": params}
-        resp = self._http.post(self.url, json=payload, headers=self._headers())
-        resp.raise_for_status()
-        if "Mcp-Session-Id" in resp.headers:
-            self.session_id = resp.headers["Mcp-Session-Id"]
-        ct = resp.headers.get("content-type", "")
-        if "text/event-stream" in ct:
-            return self._parse_sse(resp.text)
-        return resp.json()
-
-    def _notify(self, method: str, params: dict) -> None:
-        """Send a JSON-RPC notification (no id, no response expected)."""
-        payload = {"jsonrpc": "2.0", "method": method, "params": params}
-        try:
-            self._http.post(self.url, json=payload, headers=self._headers())
-        except Exception:
-            pass
-
-    @staticmethod
-    def _parse_sse(text: str) -> dict:
-        for line in text.splitlines():
-            if line.startswith("data: "):
-                try:
-                    data = json.loads(line[6:])
-                    if "result" in data or "error" in data:
-                        return data
-                except json.JSONDecodeError:
-                    pass
-        return {}
-
-    def initialize(self) -> None:
-        self._post("initialize", {
-            "protocolVersion": "2024-11-05",
-            "capabilities": {},
-            "clientInfo": {"name": "ringcentral-benchmark", "version": "1.0"},
-        })
-        self._notify("notifications/initialized", {})
-
-    def list_tools(self) -> list[dict]:
-        resp = self._post("tools/list", {})
-        return resp.get("result", {}).get("tools", [])
-
-    def call_tool(self, name: str, arguments: dict) -> str:
-        resp = self._post("tools/call", {"name": name, "arguments": arguments})
-        content = resp.get("result", {}).get("content", [])
-        parts = [c["text"] for c in content if c.get("type") == "text"]
-        return "\n".join(parts) if parts else str(resp.get("result", ""))
-
-    def close(self) -> None:
-        self._http.close()
-
-
-def _mcp_tools_to_anthropic(mcp_tools: list[dict]) -> list[dict]:
-    return [
-        {
-            "name": t["name"],
-            "description": t.get("description", ""),
-            "input_schema": t.get("inputSchema", {"type": "object", "properties": {}}),
-        }
-        for t in mcp_tools
-    ]
-
-
-# ---------------------------------------------------------------------------
-# Main entry point — uses live Mintlify MCP server
-# ---------------------------------------------------------------------------
-
-def run(question: str, model: str = "claude-haiku-4-5-20251001", verbose: bool = False) -> dict:
-    """Run the Mintlify MCP agent on a question.
-
-    Connects to the live Mintlify search MCP at ringcentral.mintlify.app/mcp,
-    fetches available tools, and uses the Anthropic SDK to answer the question.
+    Spins up a Cursor SDK agent in an empty working directory (so it has no
+    monorepo to read) and wires in the live Mintlify-hosted RingCentral docs
+    MCP server. The agent answers using only the docs portal's search/read
+    tools — the treatment condition for the benchmark.
 
     Returns:
         {answer: str, elapsed_s: float, response_length: int}
     """
-    import anthropic
+    from cursor_sdk import (
+        Agent,
+        AgentOptions,
+        HttpMcpServerConfig,
+        LocalAgentOptions,
+    )
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
-    client = anthropic.Anthropic(api_key=api_key)
-    mcp = _MCPClient(MCP_URL)
+    api_key = os.environ.get("CURSOR_API_KEY", "")
 
     t0 = time.time()
     answer = ""
     try:
-        mcp.initialize()
-        mcp_tools = mcp.list_tools()
-        tools = _mcp_tools_to_anthropic(mcp_tools)
-
-        if verbose:
-            print(f"  [mintlify] MCP ready — {len(tools)} tools: {[t['name'] for t in tools]}")
-
-        messages = [{"role": "user", "content": QUESTION_PREFIX + question}]
-        tool_call_count = 0
-
-        for _ in range(MAX_TOOL_CALLS + 1):
-            response = client.messages.create(
-                model=model,
-                max_tokens=1500,
-                system=SYSTEM_PROMPT,
-                tools=tools or anthropic.NOT_GIVEN,
-                messages=messages,
-            )
-            messages.append({"role": "assistant", "content": response.content})
-
-            if response.stop_reason == "end_turn":
-                answer = "".join(b.text for b in response.content if hasattr(b, "text"))
-                break
-
-            if response.stop_reason != "tool_use":
-                break
-
-            tool_results = []
-            for block in response.content:
-                if block.type != "tool_use":
-                    continue
-                tool_call_count += 1
-                if verbose:
-                    print(f"  [mintlify] → {block.name}({json.dumps(block.input)[:80]})")
-                result = mcp.call_tool(block.name, block.input)
-                tool_results.append({
-                    "type": "tool_result",
-                    "tool_use_id": block.id,
-                    "content": result,
-                })
-
-            messages.append({"role": "user", "content": tool_results})
-
-            if tool_call_count >= MAX_TOOL_CALLS:
-                messages.append({"role": "user", "content": "Please provide your final answer now."})
-                final = client.messages.create(
-                    model=model, max_tokens=800, system=SYSTEM_PROMPT, messages=messages
+        # Empty temp cwd: no local files to fall back on, forcing the agent to
+        # rely on the Mintlify docs MCP. setting_sources=[] keeps it from
+        # picking up the user's ambient MCP / project config.
+        with tempfile.TemporaryDirectory() as tmpdir:
+            with Agent.create(
+                AgentOptions(
+                    model=model,
+                    api_key=api_key,
+                    local=LocalAgentOptions(cwd=tmpdir, setting_sources=[]),
+                    mcp_servers={
+                        "ringcentral-docs": HttpMcpServerConfig(url=MCP_URL),
+                    },
                 )
-                answer = "".join(b.text for b in final.content if hasattr(b, "text"))
-                break
-
+            ) as agent:
+                if verbose:
+                    print(f"  [mintlify] agent created, MCP={MCP_URL}, sending question...")
+                run_result = agent.send(QUESTION_PREFIX + question)
+                answer = run_result.text()
     except Exception as e:
         answer = f"ERROR: {e}"
-    finally:
-        mcp.close()
 
     elapsed = time.time() - t0
     if verbose:

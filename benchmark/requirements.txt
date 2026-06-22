@@ -1,3 +1,7 @@
 cursor-sdk>=0.1.0
+python-dotenv>=1.0.0
+
+# Optional — only needed for autoresearch_loop.py (doc-structure optimizer),
+# which still runs against the Anthropic SDK. The main benchmark
+# (run_experiment.py) runs entirely on the Cursor SDK / CURSOR_API_KEY.
 anthropic>=0.40.0
-httpx>=0.27.0

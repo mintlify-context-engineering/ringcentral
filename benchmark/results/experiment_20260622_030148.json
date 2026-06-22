@@ -1,0 +1,189 @@
+{
+  "summary": {
+    "experiment_date": "2026-06-22T03:01:48.023276",
+    "model": "composer-2.5",
+    "n_questions": 7,
+    "total_elapsed_s": 452.5,
+    "raw": {
+      "avg_elapsed_s": 9.96,
+      "avg_response_length": 663.43,
+      "accuracy": {
+        "avg_score": 2.0,
+        "pct_correct": 100.0
+      }
+    },
+    "mintlify": {
+      "avg_elapsed_s": 48.23,
+      "avg_response_length": 399.29,
+      "accuracy": {
+        "avg_score": 1.71,
+        "pct_correct": 71.4
+      }
+    },
+    "time_reduction_pct": -384.2,
+    "score_improvement": -0.29
+  },
+  "results": [
+    {
+      "id": "T1-01",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the production base URL for the RingCentral REST API?",
+      "ground_truth": "https://platform.ringcentral.com/restapi/v1.0/ (or https://platform.ringcentral.com as the host, with /restapi/v1.0/ as the path prefix)",
+      "raw": {
+        "answer": "The production base URL for the RingCentral REST API is:\n\n**`https://platform.ringcentral.com/restapi/v1.0/`**\n\nThat breaks down as:\n\n- **Host (server):** `https://platform.ringcentral.com`\n- **API path prefix:** `/restapi/v1.0/`\n\nExample endpoint:\n\n`https://platform.ringcentral.com/restapi/v1.0/account/~/extension/~/call-log`\n\nThis is documented in `docs/basics/uris.mdx`, which states that RingCentral production servers are at `https://platform.ringcentral.com`, and that most API resources use paths starting with `/restapi` followed by the major version number.\n\nFor comparison, the sandbox server is `https://platform.devtest.ringcentral.com`, with the same `/restapi/v1.0/` path prefix. SDKs typically take the host (`https://platform.ringcentral.com`) as the server URL and append API paths themselves.",
+        "elapsed_s": 15.46,
+        "response_length": 812
+      },
+      "mintlify": {
+        "answer": "The production base URL for the RingCentral REST API is:\n\n**`https://platform.ringcentral.com`**\n\nRingCentral\u2019s docs describe this as the main entry point for production API access over HTTPS (port 443). REST endpoints are built on that host under the `/restapi` path \u2014 for example:\n\n`https://platform.ringcentral.com/restapi/v1.0/...`\n\nFor comparison, the sandbox environment uses **`https://platform.devtest.ringcentral.com`**.",
+        "elapsed_s": 19.36,
+        "response_length": 429
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Answer A gives the full production REST API base URL https://platform.ringcentral.com/restapi/v1.0/, correctly separates host and /restapi/v1.0/ path prefix, and includes both required key facts with no errors.",
+        "mintlify_score": 1,
+        "mintlify_reasoning": "Answer B correctly identifies platform.ringcentral.com and shows /restapi/v1.0/ in an example, but states the base URL as only the host without explicitly including the restapi/v1.0 path prefix as part of the answer."
+      }
+    },
+    {
+      "id": "T1-02",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What HTTP status code does RingCentral return when a rate limit is exceeded?",
+      "ground_truth": "HTTP 429 Too Many Requests",
+      "raw": {
+        "answer": "RingCentral returns **HTTP 429 Too Many Requests** when a rate limit is exceeded.\n\nThe response also includes a **`Retry-After`** header (seconds to wait before retrying). Sending more requests during the penalty window can reset that timer and keep you in a 429 loop, so clients should wait for the full `Retry-After` interval before retrying.\n\nOn successful responses, RingCentral also sends rate-limit headers such as `X-Rate-Limit-Group`, `X-Rate-Limit-Limit`, `X-Rate-Limit-Remaining`, and `X-Rate-Limit-Window` so you can monitor usage proactively and avoid hitting 429 in the first place.",
+        "elapsed_s": 8.05,
+        "response_length": 595
+      },
+      "mintlify": {
+        "answer": "RingCentral returns **HTTP 429 (Too Many Requests)** when a rate limit is exceeded.\n\nThe docs describe this as throttling: the server rejects requests that exceed the allowed rate. The response includes a `Retry-After` header indicating how long to wait before sending more requests. Related error codes (CMN-301, CMN-302, CMN-310, etc.) also use status **429**.",
+        "elapsed_s": 59.42,
+        "response_length": 362
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Correctly states HTTP 429 Too Many Requests for rate limit exceeded, with accurate supplementary details and no significant errors.",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Correctly states HTTP 429 Too Many Requests for rate limit exceeded, with accurate supplementary details and no significant errors."
+      }
+    },
+    {
+      "id": "T1-03",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What response header tells you how long to wait after receiving a 429 rate limit error?",
+      "ground_truth": "The Retry-After header contains the recommended retry interval in seconds.",
+      "raw": {
+        "answer": "The **`Retry-After`** header tells you how long to wait after a **429 Too Many Requests** response.\n\nExample from the docs:\n\n```http\nHTTP/1.1 429 Too Many Requests\nRetry-After: 30\n```\n\nThat value is in seconds. Wait the full `Retry-After` period before retrying \u2014 retrying early can reset the penalty window.\n\nOn normal (non-429) responses, the `X-Rate-Limit-*` headers (`X-Rate-Limit-Remaining`, `X-Rate-Limit-Window`, etc.) help you avoid hitting the limit in the first place, but **`Retry-After`** is the one to use after a 429.",
+        "elapsed_s": 3.23,
+        "response_length": 531
+      },
+      "mintlify": {
+        "answer": "The **`Retry-After`** response header tells you how long to wait after a 429 rate limit error.\n\nRingCentral\u2019s docs say that when you exceed rate limits and get HTTP **429 Too Many Requests**, the server usually returns `Retry-After` with the recommended retry interval in **seconds**. You should not send another request until that interval has passed.\n\nIf `Retry-After` is not present, the docs recommend waiting at least **30 seconds** before retrying.",
+        "elapsed_s": 8.95,
+        "response_length": 454
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Correctly identifies Retry-After as the header for 429 responses and states the value is in seconds, matching the ground truth with no significant errors.",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Correctly identifies Retry-After with the recommended retry interval in seconds for 429 errors, fully covering the key fact with only helpful additional guidance."
+      }
+    },
+    {
+      "id": "T1-04",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What are the four rate limit usage plan groups in RingCentral?",
+      "ground_truth": "Light (50 req/user/min), Medium (40 req/user/min), Heavy (10 req/user/min), Auth (5 req/user/min)",
+      "raw": {
+        "answer": "RingCentral assigns every API endpoint to one of four **usage plan groups**, which set default user-level rate limits per `(user, application)` pair:\n\n| Usage Plan Group | Default Rate Limit | Default Penalty Interval |\n|------------------|--------------------|--------------------------|\n| **Light** | 50 requests/user/minute | 60 seconds |\n| **Medium** | 40 requests/user/minute | 60 seconds |\n| **Heavy** | 10 requests/user/minute | 60 seconds |\n| **Auth** | 5 requests/user/minute | 60 seconds |\n\nThe four groups are **Light**, **Medium**, **Heavy**, and **Auth**. The **Auth** group applies to authentication/token endpoints (e.g. `POST /restapi/oauth/token`).\n\nYou can see which group an endpoint uses in the [API Reference](https://developers.ringcentral.com/api-reference) under **Usage Plan Group**, or in the `X-Rate-Limit-Group` response header (`light`, `medium`, `heavy`, or `auth`).\n\nThese defaults are examples and can be customized per app in the Developer Console. Source: `docs/basics/rate-limits.mdx`.",
+        "elapsed_s": 7.56,
+        "response_length": 1020
+      },
+      "mintlify": {
+        "answer": "The four **rate limit usage plan groups** in RingCentral are:\n\n1. **Light** \u2014 default: 50 requests/user/minute  \n2. **Medium** \u2014 default: 40 requests/user/minute  \n3. **Heavy** \u2014 default: 10 requests/user/minute  \n4. **Auth** \u2014 default: 5 requests/user/minute  \n\nEach API is assigned to one of these groups, which sets its default rate limit. The default penalty interval for all four is **60 seconds** when a limit is exceeded. These defaults can vary by app.\n\nYou can see which group an API belongs to in the [API Reference](https://developers.ringcentral.com/api-reference) under **Usage Plan Group**.",
+        "elapsed_s": 7.22,
+        "response_length": 604
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Answer A correctly names all four usage plan groups (Light, Medium, Heavy, Auth) with the exact default rate limits from the ground truth.",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Answer B correctly lists all four groups with accurate default limits (50, 40, 10, and 5 requests/user/min) and no significant errors."
+      }
+    },
+    {
+      "id": "T1-05",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the sandbox base URL for RingCentral API testing?",
+      "ground_truth": "https://platform.devtest.ringcentral.com",
+      "raw": {
+        "answer": "The sandbox base URL for RingCentral API testing is:\n\n**`https://platform.devtest.ringcentral.com`**\n\nThat is the sandbox counterpart to production\u2019s `https://platform.ringcentral.com`. REST API calls use the same path prefix as production: `/restapi/v1.0/`.\n\n**Full sandbox REST API base URL:** `https://platform.devtest.ringcentral.com/restapi/v1.0/`\n\nExample endpoint:\n\n`https://platform.devtest.ringcentral.com/restapi/v1.0/account/~/extension/~/call-log`\n\nIn SDKs and sample apps in the monorepo, this is typically set via `RINGCENTRAL_SERVER`, `RINGCENTRAL_SERVER_URL`, or `RC_SERVER_URL`.",
+        "elapsed_s": 20.38,
+        "response_length": 595
+      },
+      "mintlify": {
+        "answer": "The **sandbox base URL** for RingCentral API testing is:\n\n**`https://platform.devtest.ringcentral.com`**\n\nUse this instead of the production server (`https://platform.ringcentral.com`) when calling the API from a sandbox/developer account. In sample apps, set it via the `RC_SERVER_URL` environment variable or your SDK\u2019s server setting.",
+        "elapsed_s": 225.45,
+        "response_length": 337
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Correctly identifies https://platform.devtest.ringcentral.com as the sandbox base URL with accurate supplementary context and no errors.",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Correctly identifies https://platform.devtest.ringcentral.com as the sandbox base URL with accurate context and no errors."
+      }
+    },
+    {
+      "id": "T1-06",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What grant_type value is used in the RingCentral JWT OAuth flow?",
+      "ground_truth": "urn:ietf:params:oauth:grant-type:jwt-bearer",
+      "raw": {
+        "answer": "The RingCentral JWT OAuth flow uses this `grant_type`:\n\n**`urn:ietf:params:oauth:grant-type:jwt-bearer`**\n\nThat is the standard OAuth 2.0 JWT Bearer grant type (RFC 7523). You send it in the body of `POST /restapi/oauth/token` together with your JWT in the `assertion` parameter.\n\nFrom the official docs:\n\n```83:84:docs/authentication/jwt-flow.mdx\n| `grant_type`        | string   | Required. Must be set to `urn:ietf:params:oauth:grant-type:jwt-bearer`. |\n| `assertion`         | string   | Required. Provide your JWT token.                                       |\n```\n\nIn the request body it appears URL-encoded as `urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer`.",
+        "elapsed_s": 7.65,
+        "response_length": 673
+      },
+      "mintlify": {
+        "answer": "In the RingCentral JWT OAuth flow, the `grant_type` must be:\n\n**`urn:ietf:params:oauth:grant-type:jwt-bearer`**\n\nThat value is sent in the POST body to `/restapi/oauth/token` along with the JWT in the `assertion` parameter. It follows [RFC 7523](https://datatracker.ietf.org/doc/html/rfc7523) (JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants).",
+        "elapsed_s": 6.62,
+        "response_length": 368
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Correctly identifies urn:ietf:params:oauth:grant-type:jwt-bearer and adds accurate context about the token endpoint, assertion parameter, RFC 7523, and official documentation.",
+        "mintlify_score": 2,
+        "mintlify_reasoning": "Correctly states urn:ietf:params:oauth:grant-type:jwt-bearer with accurate supporting details about the POST /restapi/oauth/token request and RFC 7523."
+      }
+    },
+    {
+      "id": "T1-07",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What pip command installs the RingCentral Python SDK?",
+      "ground_truth": "pip3 install ringcentral",
+      "raw": {
+        "answer": "The RingCentral Python SDK is installed from PyPI with:\n\n```bash\npip install ringcentral\n```\n\nThe SDK README in `sdks/ringcentral-python/` uses the same package with `pip3`:\n\n```bash\npip3 install ringcentral\n```\n\nThe PyPI package name is **`ringcentral`**. Many docs quick-starts also install `python-dotenv` alongside it for loading credentials from a `.env` file, but that is optional and not part of the SDK itself.",
+        "elapsed_s": 7.37,
+        "response_length": 418
+      },
+      "mintlify": {
+        "answer": "The RingCentral Python SDK is installed with:\n\n```bash\npip install ringcentral\n```\n\nSome quick-start guides also install `python-dotenv` alongside it (`pip install ringcentral python-dotenv`), but the SDK itself is the `ringcentral` package.",
+        "elapsed_s": 10.61,
+        "response_length": 241
+      },
+      "scores": {
+        "raw_score": 2,
+        "raw_reasoning": "Answer A gives the correct `ringcentral` package and explicitly includes `pip3 install ringcentral`, matching the ground truth.",
+        "mintlify_score": 1,
+        "mintlify_reasoning": "Answer B correctly identifies the `ringcentral` package and a valid `pip install ringcentral` command, but omits the `pip3` form specified in the ground truth."
+      }
+    }
+  ]
+}

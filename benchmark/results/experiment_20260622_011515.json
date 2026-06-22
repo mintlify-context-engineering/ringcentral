@@ -1,0 +1,67 @@
+{
+  "summary": {
+    "experiment_date": "2026-06-22T01:15:15.549090",
+    "model": "composer-2.5",
+    "n_questions": 2,
+    "total_elapsed_s": 0.0,
+    "raw": {
+      "avg_elapsed_s": 0,
+      "avg_response_length": 0,
+      "accuracy": {
+        "avg_score": 0.0,
+        "pct_correct": 0.0
+      }
+    },
+    "mintlify": {
+      "avg_elapsed_s": 0,
+      "avg_response_length": 0,
+      "accuracy": {
+        "avg_score": 0.0,
+        "pct_correct": 0.0
+      }
+    },
+    "score_improvement": 0.0
+  },
+  "results": [
+    {
+      "id": "T1-01",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the production base URL for the RingCentral REST API?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    },
+    {
+      "id": "T1-02",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What HTTP status code does RingCentral return when a rate limit is exceeded?",
+      "raw": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "mintlify": {
+        "answer": "(dry run)",
+        "elapsed_s": 0,
+        "response_length": 0
+      },
+      "scores": {
+        "raw_score": 0,
+        "mintlify_score": 0
+      }
+    }
+  ]
+}

@@ -1,25 +1,27 @@
 # Authentication & OAuth
 
 **doc_id**: authentication  
-**tags**: auth, jwt, oauth, login, token, authorization, access_token, credential, bearer, grant_type
+**tags**: auth, jwt, oauth, login, token, authorization, access_token, credential, bearer, grant_type, refresh, pkce, authorization_code, sandbox, production, client_id, client_secret, multiple users, user-facing, server apps, per-user tokens, refresh tokens
 
-## Overview
+## Quick decision: which auth flow?
 
-RingCentral uses OAuth 2.0. Every API call requires a Bearer access token in the `Authorization` header.
+| Scenario | Use |
+|----------|-----|
+| Server script / cron job / no browser UI / **server apps** | **JWT** |
+| **Multiple users** log in individually / **user-facing apps** / CRM per-user | **Auth Code + PKCE** |
+| JWT is **not** suited for multiple users — use Auth Code for that |
 
-## Auth Flows
+**Reuse access tokens** — do NOT re-authenticate on every request. Call the token endpoint only when the current token has expired (~7200 seconds). Re-authenticating too often triggers the 5 req/min Auth rate limit.
 
-| Flow | When to Use |
-|------|-------------|
-| **JWT** | Server/script apps, no user UI, single service account |
-| **Auth Code + PKCE** | Frontend apps, multiple end-users log in individually |
-| **Auth Code** | Server-side web apps (older, less secure than PKCE) |
+**Error recovery**: On a `401` response → re-authenticate (`platform.login(jwt=...)`) then retry. On `429` → wait `Retry-After` seconds before retrying.
+
+- **Auth Code for user-facing apps** that need per-user tokens and individual consent
+- **JWT for server apps** with a single service account, no user interaction
 
 ## JWT Authentication (most common for automation)
 
-**Best for**: scripts, cron jobs, server-to-server, chatbots, call log downloaders.
-
-### Step 1 — Exchange JWT for an access token
+**grant_type**: `urn:ietf:params:oauth:grant-type:jwt-bearer`  
+(URL-encoded form: `urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer`)
 
 ```http
 POST https://platform.ringcentral.com/restapi/oauth/token
@@ -29,19 +31,23 @@ Authorization: Basic <base64(clientId:clientSecret)>
 grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=<YOUR_JWT>
 ```
 
-Response:
-```json
-{
-  "access_token": "U1BCMDFUMDRKV1MwMX...",
-  "token_type": "bearer",
-  "expires_in": 7199,
-  "refresh_token": "U1BCMDFUMDRKV1MwMX...",
-  "refresh_token_expires_in": 604799,
-  "scope": "AccountInfo CallLog ExtensionInfo Messages SMS"
-}
-```
+Response contains `access_token`, `expires_in` (7199s), `refresh_token`, `refresh_token_expires_in` (604799s).
 
-### Python SDK (JWT)
+Refresh tokens expire in 7 days (604800 seconds).
+
+## Auth Flows — Detail
+
+| Flow | When to Use |
+|------|-------------|
+| **JWT** | Server/script apps, no user UI, single service account |
+| **Auth Code + PKCE** | Frontend apps, multiple end-users log in individually, per-user tokens |
+| **Auth Code** | Server-side web apps (older, less secure than PKCE) |
+
+**Not JWT**: If you need individual users to authenticate (multiple users, per-user tokens, refresh tokens per user) → use Auth Code + PKCE.
+
+## SDK Examples (JWT)
+
+### Python SDK
 
 ```python
 from ringcentral import SDK
@@ -50,7 +56,6 @@ sdk = SDK('CLIENT_ID', 'CLIENT_SECRET', 'https://platform.ringcentral.com')
 platform = sdk.platform()
 platform.login(jwt='YOUR_JWT_TOKEN')
 
-# Now call the API
 res = platform.get('/account/~/extension/~')
 ```
 
@@ -79,24 +84,12 @@ $platform->login(['jwt' => 'YOUR_JWT_TOKEN']);
 
 ## Token Refresh
 
-Access tokens expire in ~7200 seconds. Use the refresh token to get a new one:
+Use refresh_token to get a new access token before expiry:
 
 ```http
 POST https://platform.ringcentral.com/restapi/oauth/token
-Content-Type: application/x-www-form-urlencoded
-Authorization: Basic <base64(clientId:clientSecret)>
-
 grant_type=refresh_token&refresh_token=<REFRESH_TOKEN>
 ```
-
-Refresh tokens expire in 7 days (604800 seconds).
-
-## Important Notes
-
-- JWTs themselves do not expire by default (configurable). Access tokens always expire.
-- JWT is **not** designed for authenticating many individual users — use Auth Code for that.
-- Auth API calls are rate-limited to **5 requests/user/minute** (Auth group).
-- Re-use access tokens until they expire; do not re-authenticate on every request.
 
 ## Sandbox vs Production
 
@@ -104,5 +97,11 @@ Refresh tokens expire in 7 days (604800 seconds).
 |-------------|-----------|
 | Production | `https://platform.ringcentral.com/restapi/oauth/token` |
 | Sandbox | `https://platform.devtest.ringcentral.com/restapi/oauth/token` |
+
+## Important Notes
+
+- JWTs themselves do not expire by default (configurable). Access tokens always expire (~7200s).
+- **Auth API rate limit: 5 requests/user/minute** (Auth group, 60-second penalty window).
+- Cache and reuse access tokens — do not re-authenticate on every request.
 
 → See also: [api-basics](api-basics.md) for base URLs, [rate-limits](rate-limits.md) for Auth group limits

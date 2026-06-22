@@ -1,23 +1,33 @@
 # SDKs — Installation & Quick Start
 
 **doc_id**: sdks  
-**tags**: sdk, install, npm, pip, gem, composer, maven, gradle, package, python, javascript, node, ruby, php, java, go, dotnet, csharp, swift, chatbot, quick start, getting started
+**tags**: sdk, install, npm, pip, gem, composer, maven, gradle, package, python, javascript, node, ruby, php, java, go, dotnet, csharp, swift, chatbot, quick start, sms, send sms, call log, websocket subscriptions, ringcentral-chatbot-js, routing, skill, higher-level, same platform apis, pagination, nextPage, navigation
 
 ## SDK Matrix
 
-| Language | Package | Install |
-|----------|---------|---------|
+**All 7 major SDKs support JWT authentication**: Python, JavaScript, PHP, Ruby, Java, Go, .NET.
+
+| Language | Package | Install command |
+|----------|---------|----------------|
 | **Python** | `ringcentral` | `pip3 install ringcentral` |
 | **JavaScript/Node** | `@ringcentral/sdk` | `npm install @ringcentral/sdk` |
 | **JavaScript Subscriptions** | `@ringcentral/subscriptions` | `npm install @ringcentral/subscriptions` |
 | **PHP** | `ringcentral/ringcentral-php` | `composer require ringcentral/ringcentral-php` |
 | **Ruby** | `ringcentral_sdk` | `gem install ringcentral_sdk` |
-| **Java** | `com.ringcentral:ringcentral` | Maven/Gradle (see below) |
+| **Java** | `com.ringcentral:ringcentral` | Maven: `com.ringcentral:ringcentral` |
 | **Go** | `github.com/ringcentral/ringcentral-go` | `go get github.com/ringcentral/ringcentral-go` |
 | **.NET/C#** | `RingCentral.Net` | `dotnet add package RingCentral.Net` |
 | **Swift (iOS)** | `ringcentral-swift` | Swift Package Manager |
 
-All SDKs support JWT authentication.
+## Chatbot Framework (JavaScript)
+
+The **`ringcentral-chatbot-js`** framework is a higher-level wrapper around `@ringcentral/sdk` that adds skill routing, state management, and webhook handling for Team Messaging bots. It uses the same platform APIs underneath as the core SDK.
+
+```bash
+npm install ringcentral-chatbot
+```
+
+Key concepts: **skill** (a handler for a specific command/intent), **routing** (matching messages to skills), state persistence. The chatbot framework uses the same platform APIs as `@ringcentral/sdk` — it just adds the higher-level bot infrastructure on top.
 
 ---
 
@@ -36,7 +46,6 @@ platform.login(jwt='YOUR_JWT_TOKEN')
 
 # Get account info
 res = platform.get('/account/~/extension/~')
-print(res.json().name)
 
 # Send SMS
 platform.post('/restapi/v1.0/account/~/extension/~/sms', {
@@ -45,11 +54,19 @@ platform.post('/restapi/v1.0/account/~/extension/~/sms', {
     'text': 'Hello from RingCentral!'
 })
 
-# Get call log
-res = platform.get('/restapi/v1.0/account/~/extension/~/call-log', {
-    'dateFrom': '2024-01-01T00:00:00Z',
-    'perPage': 100
-})
+# Paginate all call log records (handle nextPage / navigation)
+# Error recovery: on 401 re-authenticate; on 429 wait Retry-After
+page = 1
+all_records = []
+while True:
+    res = platform.get('/restapi/v1.0/account/~/extension/~/call-log',
+                       {'page': page, 'perPage': 100, 'dateFrom': '2024-01-01T00:00:00Z'})
+    data = res.json()
+    all_records.extend(data['records'])
+    # navigation object contains nextPage when more pages exist
+    if 'nextPage' not in data.get('navigation', {}):
+        break
+    page += 1
 ```
 
 ---
@@ -182,18 +199,6 @@ var rc = new RestClient("CLIENT_ID", "CLIENT_SECRET", new Uri("https://platform.
 await rc.Authorize("YOUR_JWT_TOKEN");
 var ext = await rc.Restapi().Account().Extension().Get();
 ```
-
----
-
-## Chatbot Framework (JavaScript)
-
-The chatbot framework (`ringcentral-chatbot-js`) wraps the main JS SDK with skill routing, state management, and webhook handling for Team Messaging bots.
-
-```bash
-npm install ringcentral-chatbot
-```
-
-It's separate from `@ringcentral/sdk` but uses the same platform APIs underneath.
 
 ---
 

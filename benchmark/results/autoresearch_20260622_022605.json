@@ -1,0 +1,1209 @@
+{
+  "configs_evaluated": [
+    "minimal",
+    "summary-only",
+    "standard",
+    "answer-first",
+    "full-doc"
+  ],
+  "evals": [
+    {
+      "config_name": "minimal",
+      "config": {
+        "name": "minimal",
+        "description": "600-char chunks, no code blocks stripped \u2014 lowest chars/call",
+        "chunk_size": 600,
+        "strip_code": true,
+        "max_results": 2
+      },
+      "avg_chars_read": 1020,
+      "avg_fact_coverage_pct": 51.5,
+      "questions_fully_covered": 6,
+      "questions_total": 20,
+      "coverage_rate": 30.0,
+      "results": [
+        {
+          "id": "T1-01",
+          "tier": 1,
+          "structured_chars": 600,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-02",
+          "tier": 1,
+          "structured_chars": 600,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-03",
+          "tier": 1,
+          "structured_chars": 600,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-04",
+          "tier": 1,
+          "structured_chars": 600,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-05",
+          "tier": 1,
+          "structured_chars": 600,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-06",
+          "tier": 1,
+          "structured_chars": 1200,
+          "structured_coverage": 0,
+          "structured_total_facts": 1,
+          "structured_complete": false,
+          "structured_missing": [
+            "urn:ietf:params:oauth:grant-type:jwt-bearer"
+          ]
+        },
+        {
+          "id": "T1-07",
+          "tier": 1,
+          "structured_chars": 600,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-01",
+          "tier": 2,
+          "structured_chars": 1200,
+          "structured_coverage": 1,
+          "structured_total_facts": 3,
+          "structured_complete": false,
+          "structured_missing": [
+            "from ringcentral import SDK",
+            "platform.login(jwt="
+          ]
+        },
+        {
+          "id": "T2-02",
+          "tier": 2,
+          "structured_chars": 1200,
+          "structured_coverage": 1,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "POST /restapi/v1.0/subscription",
+            "3000ms",
+            "1024 bytes",
+            "deliveryMode"
+          ]
+        },
+        {
+          "id": "T2-03",
+          "tier": 2,
+          "structured_chars": 1200,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "X-Rate-Limit-Remaining",
+            "X-Rate-Limit-Window",
+            "reset the clock"
+          ]
+        },
+        {
+          "id": "T2-04",
+          "tier": 2,
+          "structured_chars": 1200,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "JWT for server apps",
+            "Auth Code for user-facing apps",
+            "multiple users"
+          ]
+        },
+        {
+          "id": "T2-05",
+          "tier": 2,
+          "structured_chars": 1200,
+          "structured_coverage": 2,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "~",
+            "authenticated user"
+          ]
+        },
+        {
+          "id": "T2-06",
+          "tier": 2,
+          "structured_chars": 1200,
+          "structured_coverage": 0,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "page",
+            "perPage",
+            "navigation",
+            "nextPage",
+            "call-log"
+          ]
+        },
+        {
+          "id": "T2-07",
+          "tier": 2,
+          "structured_chars": 1200,
+          "structured_coverage": 1,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "/restapi/v1.0/account/~/extension/~/sms",
+            "from",
+            "text",
+            "phoneNumber"
+          ]
+        },
+        {
+          "id": "T3-01",
+          "tier": 3,
+          "structured_chars": 1200,
+          "structured_coverage": 2,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "composer require",
+            "gem install ringcentral_sdk",
+            "dotnet add package RingCentral.Net"
+          ]
+        },
+        {
+          "id": "T3-02",
+          "tier": 3,
+          "structured_chars": 1200,
+          "structured_coverage": 4,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "@ringcentral/subscriptions"
+          ]
+        },
+        {
+          "id": "T3-03",
+          "tier": 3,
+          "structured_chars": 1200,
+          "structured_coverage": 1,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "ringcentral-chatbot-js",
+            "skill",
+            "routing",
+            "higher-level",
+            "same platform APIs"
+          ]
+        },
+        {
+          "id": "T3-04",
+          "tier": 3,
+          "structured_chars": 1200,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reuse access tokens"
+          ]
+        },
+        {
+          "id": "T3-05",
+          "tier": 3,
+          "structured_chars": 1200,
+          "structured_coverage": 2,
+          "structured_total_facts": 7,
+          "structured_complete": false,
+          "structured_missing": [
+            "platform.login(jwt=",
+            "pagination",
+            "nextPage",
+            "X-Rate-Limit-Remaining",
+            "401 re-authenticate"
+          ]
+        },
+        {
+          "id": "T3-06",
+          "tier": 3,
+          "structured_chars": 1200,
+          "structured_coverage": 1,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "multiple users",
+            "per-user tokens",
+            "refresh tokens",
+            "~/extension/~/call-log",
+            "not JWT"
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "summary-only",
+      "config": {
+        "name": "summary-only",
+        "description": "Index summaries only, no doc body \u2014 agent would need a follow-up read",
+        "chunk_size": 0,
+        "strip_code": true,
+        "max_results": 5
+      },
+      "avg_chars_read": 731,
+      "avg_fact_coverage_pct": 27.4,
+      "questions_fully_covered": 3,
+      "questions_total": 20,
+      "coverage_rate": 15.0,
+      "results": [
+        {
+          "id": "T1-01",
+          "tier": 1,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 2,
+          "structured_complete": false,
+          "structured_missing": [
+            "platform.ringcentral.com",
+            "restapi/v1.0"
+          ]
+        },
+        {
+          "id": "T1-02",
+          "tier": 1,
+          "structured_chars": 153,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-03",
+          "tier": 1,
+          "structured_chars": 153,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-04",
+          "tier": 1,
+          "structured_chars": 153,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-05",
+          "tier": 1,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 1,
+          "structured_complete": false,
+          "structured_missing": [
+            "platform.devtest.ringcentral.com"
+          ]
+        },
+        {
+          "id": "T1-06",
+          "tier": 1,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 1,
+          "structured_complete": false,
+          "structured_missing": [
+            "urn:ietf:params:oauth:grant-type:jwt-bearer"
+          ]
+        },
+        {
+          "id": "T1-07",
+          "tier": 1,
+          "structured_chars": 833,
+          "structured_coverage": 1,
+          "structured_total_facts": 2,
+          "structured_complete": false,
+          "structured_missing": [
+            "pip3 install ringcentral"
+          ]
+        },
+        {
+          "id": "T2-01",
+          "tier": 2,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 3,
+          "structured_complete": false,
+          "structured_missing": [
+            "from ringcentral import SDK",
+            "platform.login(jwt=",
+            "pip3 install ringcentral"
+          ]
+        },
+        {
+          "id": "T2-02",
+          "tier": 2,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "POST /restapi/v1.0/subscription",
+            "Validation-Token",
+            "3000ms",
+            "1024 bytes",
+            "deliveryMode"
+          ]
+        },
+        {
+          "id": "T2-03",
+          "tier": 2,
+          "structured_chars": 833,
+          "structured_coverage": 2,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "X-Rate-Limit-Window",
+            "reset the clock"
+          ]
+        },
+        {
+          "id": "T2-04",
+          "tier": 2,
+          "structured_chars": 833,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "JWT for server apps",
+            "Auth Code for user-facing apps",
+            "multiple users"
+          ]
+        },
+        {
+          "id": "T2-05",
+          "tier": 2,
+          "structured_chars": 833,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "accountId",
+            "extensionId",
+            "authenticated user"
+          ]
+        },
+        {
+          "id": "T2-06",
+          "tier": 2,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "page",
+            "perPage",
+            "navigation",
+            "nextPage",
+            "call-log"
+          ]
+        },
+        {
+          "id": "T2-07",
+          "tier": 2,
+          "structured_chars": 833,
+          "structured_coverage": 1,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "/restapi/v1.0/account/~/extension/~/sms",
+            "from",
+            "text",
+            "phoneNumber"
+          ]
+        },
+        {
+          "id": "T3-01",
+          "tier": 3,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "pip3 install ringcentral",
+            "npm install @ringcentral/sdk",
+            "composer require",
+            "gem install ringcentral_sdk",
+            "dotnet add package RingCentral.Net"
+          ]
+        },
+        {
+          "id": "T3-02",
+          "tier": 3,
+          "structured_chars": 833,
+          "structured_coverage": 1,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "low-latency",
+            "no public server",
+            "mobile",
+            "@ringcentral/subscriptions"
+          ]
+        },
+        {
+          "id": "T3-03",
+          "tier": 3,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "ringcentral-chatbot-js",
+            "@ringcentral/sdk",
+            "skill",
+            "routing",
+            "higher-level",
+            "same platform APIs"
+          ]
+        },
+        {
+          "id": "T3-04",
+          "tier": 3,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "Auth group",
+            "5 requests/user/minute",
+            "60 seconds",
+            "reuse access tokens"
+          ]
+        },
+        {
+          "id": "T3-05",
+          "tier": 3,
+          "structured_chars": 833,
+          "structured_coverage": 4,
+          "structured_total_facts": 7,
+          "structured_complete": false,
+          "structured_missing": [
+            "platform.login(jwt=",
+            "nextPage",
+            "401 re-authenticate"
+          ]
+        },
+        {
+          "id": "T3-06",
+          "tier": 3,
+          "structured_chars": 833,
+          "structured_coverage": 0,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "Auth Code + PKCE",
+            "multiple users",
+            "per-user tokens",
+            "refresh tokens",
+            "~/extension/~/call-log",
+            "not JWT"
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "standard",
+      "config": {
+        "name": "standard",
+        "description": "2000-char chunks with code \u2014 current Mintlify baseline",
+        "chunk_size": 2000,
+        "strip_code": false,
+        "max_results": 3
+      },
+      "avg_chars_read": 4100,
+      "avg_fact_coverage_pct": 74.1,
+      "questions_fully_covered": 11,
+      "questions_total": 20,
+      "coverage_rate": 55.0,
+      "results": [
+        {
+          "id": "T1-01",
+          "tier": 1,
+          "structured_chars": 2000,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-02",
+          "tier": 1,
+          "structured_chars": 2000,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-03",
+          "tier": 1,
+          "structured_chars": 2000,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-04",
+          "tier": 1,
+          "structured_chars": 2000,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-05",
+          "tier": 1,
+          "structured_chars": 2000,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-06",
+          "tier": 1,
+          "structured_chars": 6000,
+          "structured_coverage": 0,
+          "structured_total_facts": 1,
+          "structured_complete": false,
+          "structured_missing": [
+            "urn:ietf:params:oauth:grant-type:jwt-bearer"
+          ]
+        },
+        {
+          "id": "T1-07",
+          "tier": 1,
+          "structured_chars": 2000,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-01",
+          "tier": 2,
+          "structured_chars": 4000,
+          "structured_coverage": 3,
+          "structured_total_facts": 3,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-02",
+          "tier": 2,
+          "structured_chars": 6000,
+          "structured_coverage": 4,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "POST /restapi/v1.0/subscription"
+          ]
+        },
+        {
+          "id": "T2-03",
+          "tier": 2,
+          "structured_chars": 6000,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reset the clock"
+          ]
+        },
+        {
+          "id": "T2-04",
+          "tier": 2,
+          "structured_chars": 6000,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "JWT for server apps",
+            "Auth Code for user-facing apps",
+            "multiple users"
+          ]
+        },
+        {
+          "id": "T2-05",
+          "tier": 2,
+          "structured_chars": 2000,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-06",
+          "tier": 2,
+          "structured_chars": 6000,
+          "structured_coverage": 1,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "page",
+            "perPage",
+            "navigation",
+            "nextPage"
+          ]
+        },
+        {
+          "id": "T2-07",
+          "tier": 2,
+          "structured_chars": 2000,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-01",
+          "tier": 3,
+          "structured_chars": 2000,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-02",
+          "tier": 3,
+          "structured_chars": 6000,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-03",
+          "tier": 3,
+          "structured_chars": 6000,
+          "structured_coverage": 1,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "ringcentral-chatbot-js",
+            "skill",
+            "routing",
+            "higher-level",
+            "same platform APIs"
+          ]
+        },
+        {
+          "id": "T3-04",
+          "tier": 3,
+          "structured_chars": 6000,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reuse access tokens"
+          ]
+        },
+        {
+          "id": "T3-05",
+          "tier": 3,
+          "structured_chars": 6000,
+          "structured_coverage": 4,
+          "structured_total_facts": 7,
+          "structured_complete": false,
+          "structured_missing": [
+            "pagination",
+            "nextPage",
+            "401 re-authenticate"
+          ]
+        },
+        {
+          "id": "T3-06",
+          "tier": 3,
+          "structured_chars": 6000,
+          "structured_coverage": 2,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "multiple users",
+            "per-user tokens",
+            "refresh tokens",
+            "not JWT"
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "answer-first",
+      "config": {
+        "name": "answer-first",
+        "description": "2500-char chunks, code included \u2014 designed for key-fact-first structure",
+        "chunk_size": 2500,
+        "strip_code": false,
+        "max_results": 3
+      },
+      "avg_chars_read": 5125,
+      "avg_fact_coverage_pct": 76.1,
+      "questions_fully_covered": 11,
+      "questions_total": 20,
+      "coverage_rate": 55.0,
+      "results": [
+        {
+          "id": "T1-01",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-02",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-03",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-04",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-05",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-06",
+          "tier": 1,
+          "structured_chars": 7500,
+          "structured_coverage": 0,
+          "structured_total_facts": 1,
+          "structured_complete": false,
+          "structured_missing": [
+            "urn:ietf:params:oauth:grant-type:jwt-bearer"
+          ]
+        },
+        {
+          "id": "T1-07",
+          "tier": 1,
+          "structured_chars": 2500,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-01",
+          "tier": 2,
+          "structured_chars": 5000,
+          "structured_coverage": 3,
+          "structured_total_facts": 3,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-02",
+          "tier": 2,
+          "structured_chars": 7500,
+          "structured_coverage": 4,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "POST /restapi/v1.0/subscription"
+          ]
+        },
+        {
+          "id": "T2-03",
+          "tier": 2,
+          "structured_chars": 7500,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reset the clock"
+          ]
+        },
+        {
+          "id": "T2-04",
+          "tier": 2,
+          "structured_chars": 7500,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "JWT for server apps",
+            "Auth Code for user-facing apps",
+            "multiple users"
+          ]
+        },
+        {
+          "id": "T2-05",
+          "tier": 2,
+          "structured_chars": 2500,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-06",
+          "tier": 2,
+          "structured_chars": 7500,
+          "structured_coverage": 3,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "navigation",
+            "nextPage"
+          ]
+        },
+        {
+          "id": "T2-07",
+          "tier": 2,
+          "structured_chars": 2500,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-01",
+          "tier": 3,
+          "structured_chars": 2500,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-02",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-03",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 1,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "ringcentral-chatbot-js",
+            "skill",
+            "routing",
+            "higher-level",
+            "same platform APIs"
+          ]
+        },
+        {
+          "id": "T3-04",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reuse access tokens"
+          ]
+        },
+        {
+          "id": "T3-05",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 4,
+          "structured_total_facts": 7,
+          "structured_complete": false,
+          "structured_missing": [
+            "pagination",
+            "nextPage",
+            "401 re-authenticate"
+          ]
+        },
+        {
+          "id": "T3-06",
+          "tier": 3,
+          "structured_chars": 7500,
+          "structured_coverage": 2,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "multiple users",
+            "per-user tokens",
+            "refresh tokens",
+            "not JWT"
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "full-doc",
+      "config": {
+        "name": "full-doc",
+        "description": "Entire doc per result \u2014 maximum coverage, maximum chars",
+        "chunk_size": 99999,
+        "strip_code": false,
+        "max_results": 5
+      },
+      "avg_chars_read": 10828,
+      "avg_fact_coverage_pct": 85.0,
+      "questions_fully_covered": 13,
+      "questions_total": 20,
+      "coverage_rate": 65.0,
+      "results": [
+        {
+          "id": "T1-01",
+          "tier": 1,
+          "structured_chars": 4139,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-02",
+          "tier": 1,
+          "structured_chars": 2843,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-03",
+          "tier": 1,
+          "structured_chars": 2843,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-04",
+          "tier": 1,
+          "structured_chars": 2843,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-05",
+          "tier": 1,
+          "structured_chars": 4139,
+          "structured_coverage": 1,
+          "structured_total_facts": 1,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T1-06",
+          "tier": 1,
+          "structured_chars": 20335,
+          "structured_coverage": 0,
+          "structured_total_facts": 1,
+          "structured_complete": false,
+          "structured_missing": [
+            "urn:ietf:params:oauth:grant-type:jwt-bearer"
+          ]
+        },
+        {
+          "id": "T1-07",
+          "tier": 1,
+          "structured_chars": 5297,
+          "structured_coverage": 2,
+          "structured_total_facts": 2,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-01",
+          "tier": 2,
+          "structured_chars": 8978,
+          "structured_coverage": 3,
+          "structured_total_facts": 3,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-02",
+          "tier": 2,
+          "structured_chars": 20335,
+          "structured_coverage": 4,
+          "structured_total_facts": 5,
+          "structured_complete": false,
+          "structured_missing": [
+            "POST /restapi/v1.0/subscription"
+          ]
+        },
+        {
+          "id": "T2-03",
+          "tier": 2,
+          "structured_chars": 20335,
+          "structured_coverage": 3,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "reset the clock"
+          ]
+        },
+        {
+          "id": "T2-04",
+          "tier": 2,
+          "structured_chars": 20335,
+          "structured_coverage": 1,
+          "structured_total_facts": 4,
+          "structured_complete": false,
+          "structured_missing": [
+            "JWT for server apps",
+            "Auth Code for user-facing apps",
+            "multiple users"
+          ]
+        },
+        {
+          "id": "T2-05",
+          "tier": 2,
+          "structured_chars": 4139,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-06",
+          "tier": 2,
+          "structured_chars": 17492,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T2-07",
+          "tier": 2,
+          "structured_chars": 5297,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-01",
+          "tier": 3,
+          "structured_chars": 5297,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-02",
+          "tier": 3,
+          "structured_chars": 4375,
+          "structured_coverage": 5,
+          "structured_total_facts": 5,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-03",
+          "tier": 3,
+          "structured_chars": 20335,
+          "structured_coverage": 5,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "higher-level"
+          ]
+        },
+        {
+          "id": "T3-04",
+          "tier": 3,
+          "structured_chars": 6524,
+          "structured_coverage": 4,
+          "structured_total_facts": 4,
+          "structured_complete": true,
+          "structured_missing": []
+        },
+        {
+          "id": "T3-05",
+          "tier": 3,
+          "structured_chars": 20335,
+          "structured_coverage": 6,
+          "structured_total_facts": 7,
+          "structured_complete": false,
+          "structured_missing": [
+            "401 re-authenticate"
+          ]
+        },
+        {
+          "id": "T3-06",
+          "tier": 3,
+          "structured_chars": 20335,
+          "structured_coverage": 3,
+          "structured_total_facts": 6,
+          "structured_complete": false,
+          "structured_missing": [
+            "multiple users",
+            "per-user tokens",
+            "not JWT"
+          ]
+        }
+      ]
+    }
+  ]
+}

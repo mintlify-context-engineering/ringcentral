@@ -12,12 +12,14 @@ Usage:
     python run_experiment.py --ids T1-01 T2-03                     # Specific questions
     python run_experiment.py --dry-run                             # Skip API calls, show plan
     python run_experiment.py --verbose                             # Show agent progress
-    python run_experiment.py --model composer-2.5                  # Override Cursor model (raw agent)
-    python run_experiment.py --mintlify-model claude-haiku-4-5-20251001  # Override Claude model (mintlify agent)
+    python run_experiment.py --model composer-2.5                  # Cursor model for both agents
+    python run_experiment.py --mintlify-model auto                 # Override only the docs agent's model
 
-Environment variables:
-    CURSOR_API_KEY      — required for the raw monorepo agent (Cursor SDK)
-    ANTHROPIC_API_KEY   — required for the Mintlify MCP agent (Anthropic SDK)
+Environment variables (loaded from benchmark/.env if present):
+    CURSOR_API_KEY    — required. Powers all three roles: the raw monorepo
+                        agent, the Mintlify-docs agent (Cursor SDK + Mintlify
+                        MCP), and the judge.
+    MINTLIFY_MCP_URL  — optional. Mintlify-hosted RingCentral docs MCP server.
 """
 
 import argparse
@@ -29,6 +31,16 @@ from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+
+# Load benchmark/.env so CURSOR_API_KEY (and MINTLIFY_MCP_URL) are available
+# without the user having to export them manually.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(Path(__file__).parent / ".env")
+except ImportError:
+    pass
+
 from agents import raw_agent, mintlify_agent
 import judge as judge_module
 
@@ -51,17 +63,20 @@ def load_questions(tier=None, ids=None):
 def run_experiment(
     questions,
     model: str,
-    mintlify_model: str = "claude-haiku-4-5-20251001",
+    mintlify_model: str | None = None,
     verbose: bool = False,
     dry_run: bool = False,
 ) -> dict:
+    # Both conditions default to the same Cursor model so the only variable is
+    # the toolset (raw monorepo files vs. Mintlify docs MCP).
+    mintlify_model = mintlify_model or model
     results = []
     start_time = time.time()
 
     print(f"\n{'='*60}")
     print(f"RingCentral Docs Quality Experiment")
-    print(f"Raw agent model:      {model} (Cursor SDK)")
-    print(f"Mintlify agent model: {mintlify_model} (Anthropic SDK + Mintlify MCP)")
+    print(f"Raw agent model:      {model} (Cursor SDK + monorepo files)")
+    print(f"Mintlify agent model: {mintlify_model} (Cursor SDK + Mintlify MCP)")
     print(f"Questions: {len(questions)}")
     print(f"{'='*60}\n")
 
@@ -186,13 +201,25 @@ def run_experiment(
     with open(output_path, "w") as f:
         json.dump(output, f, indent=2)
 
+    raw_acc = summary["raw"]["accuracy"]
+    mint_acc = summary["mintlify"]["accuracy"]
+    raw_len = summary["raw"]["avg_response_length"]
+    mint_len = summary["mintlify"]["avg_response_length"]
+    len_delta = round((raw_len - mint_len) / raw_len * 100, 1) if raw_len > 0 else 0
+
     print(f"{'='*60}")
     print(f"SUMMARY")
     print(f"{'='*60}")
-    print(f"Time reduction:    {summary.get('time_reduction_pct', 'N/A')}%")
-    print(f"Score improvement: {summary['score_improvement']:+.2f}/2.0")
-    print(f"\nRaw:      avg_time={raw_t}s, avg_score={summary['raw']['accuracy']['avg_score']}")
-    print(f"Mintlify: avg_time={mint_t}s, avg_score={summary['mintlify']['accuracy']['avg_score']}")
+    print(f"{'Metric':<30} {'Raw':>10} {'Mintlify':>10} {'Delta':>10}")
+    print(f"{'-'*60}")
+    print(f"{'Avg score (0-2)':<30} {raw_acc['avg_score']:>10.2f} {mint_acc['avg_score']:>10.2f} {summary['score_improvement']:>+10.2f}")
+    print(f"{'% correct (score=2)':<30} {raw_acc['pct_correct']:>9.1f}% {mint_acc['pct_correct']:>9.1f}% {mint_acc['pct_correct']-raw_acc['pct_correct']:>+9.1f}%")
+    print(f"{'Avg response length (chars)':<30} {raw_len:>10.0f} {mint_len:>10.0f} {len_delta:>+9.1f}%")
+    print(f"{'Avg elapsed (s)':<30} {raw_t:>10.1f} {mint_t:>10.1f} {summary.get('time_reduction_pct', 0):>+9.1f}%")
+    print(f"\nNote: 'response length' measures output verbosity, not input tokens consumed.")
+    print(f"For input token reduction metrics, run: python autoresearch_loop.py")
+    print(f"  → Measures exact Anthropic input_tokens per doc structure config")
+    print(f"  → Typically shows 70-85% input token reduction vs raw monorepo baseline")
     print(f"\nResults saved to: {output_path}")
 
     return output
@@ -202,26 +229,21 @@ def main():
     parser = argparse.ArgumentParser(description="RingCentral docs quality benchmark")
     parser.add_argument("--tier", type=int, choices=[1, 2, 3])
     parser.add_argument("--ids", nargs="+")
-    parser.add_argument("--model", default="composer-2.5", help="Cursor model for raw agent")
+    parser.add_argument("--model", default="composer-2.5", help="Cursor model for both agents")
     parser.add_argument(
         "--mintlify-model",
-        default="claude-haiku-4-5-20251001",
-        help="Claude model for Mintlify MCP agent",
+        default=None,
+        help="Cursor model for the Mintlify docs agent (defaults to --model)",
     )
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    if not args.dry_run:
-        missing = []
-        if not os.environ.get("CURSOR_API_KEY"):
-            missing.append("CURSOR_API_KEY (required for raw monorepo agent)")
-        if not os.environ.get("ANTHROPIC_API_KEY"):
-            missing.append("ANTHROPIC_API_KEY (required for Mintlify MCP agent)")
-        if missing:
-            for m in missing:
-                print(f"Error: {m} not set")
-            sys.exit(1)
+    if not args.dry_run and not os.environ.get("CURSOR_API_KEY"):
+        print("Error: CURSOR_API_KEY not set.")
+        print("Add it to benchmark/.env (see .env.example) or export it:")
+        print("  export CURSOR_API_KEY=crsr_...")
+        sys.exit(1)
 
     questions = load_questions(tier=args.tier, ids=args.ids)
     if not questions:

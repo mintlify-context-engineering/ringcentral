@@ -12,17 +12,21 @@
 | **Protocol** | HTTPS POST to your URL | WebSocket connection |
 | **Offline handling** | Events queue and deliver when server returns | Lost if connection drops |
 
-**Rule of thumb**: Use WebSocket for real-time client notifications (e.g., incoming call alerts on mobile). Use webhooks for server-side event processing (e.g., logging all calls to a database).
+**Rule of thumb**: Use WebSocket for real-time, low-latency client notifications on mobile (e.g., incoming call alerts) — no public server required. Use webhooks for server-side event processing (e.g., logging all calls to a database).
+
+The `@ringcentral/subscriptions` npm package handles WebSocket subscriptions for JavaScript/Node apps — no public server needed, ideal for mobile and browser clients.
 
 ## Creating a Webhook Subscription
 
 ### API Endpoint
 
 ```
-POST https://platform.ringcentral.com/restapi/v1.0/subscription
+POST /restapi/v1.0/subscription
 Authorization: Bearer <access_token>
 Content-Type: application/json
 ```
+
+Full URL: `POST https://platform.ringcentral.com/restapi/v1.0/subscription`
 
 ### Request Body
 

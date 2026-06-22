@@ -5,10 +5,13 @@
 
 ## Base URLs
 
-| Environment | Base URL |
-|-------------|----------|
-| **Production** | `https://platform.ringcentral.com` |
-| **Sandbox** | `https://platform.devtest.ringcentral.com` |
+**Full production REST API base URL:** `https://platform.ringcentral.com/restapi/v1.0/`  
+**Full sandbox base URL:** `https://platform.devtest.ringcentral.com/restapi/v1.0/`
+
+| Environment | Host | Full REST API prefix |
+|-------------|------|---------------------|
+| **Production** | `https://platform.ringcentral.com` | `https://platform.ringcentral.com/restapi/v1.0/` |
+| **Sandbox** | `https://platform.devtest.ringcentral.com` | `https://platform.devtest.ringcentral.com/restapi/v1.0/` |
 
 All REST API paths begin with `/restapi/v1.0/`.
 
@@ -104,14 +107,14 @@ while True:
 
 ## Error Codes
 
-| HTTP Code | Meaning |
-|-----------|---------|
-| 400 | Bad request — check parameters |
-| 401 | Unauthorized — token expired or invalid |
-| 403 | Forbidden — insufficient permissions/scope |
-| 404 | Resource not found |
-| 429 | Rate limit exceeded — see [rate-limits](rate-limits.md) |
-| 503 | Service unavailable — retry with backoff |
+| HTTP Code | Meaning | Action |
+|-----------|---------|--------|
+| 400 | Bad request — check parameters | Fix request params |
+| 401 | Unauthorized — token expired or invalid | **401: re-authenticate** — call `platform.login(jwt=...)` again to get a fresh token |
+| 403 | Forbidden — insufficient permissions/scope | Check app scopes |
+| 404 | Resource not found | Check path/IDs |
+| 429 | Rate limit exceeded | Wait `Retry-After` seconds — see [rate-limits](rate-limits.md) |
+| 503 | Service unavailable | Retry with exponential backoff |
 
 ## User-Agent Header
 
