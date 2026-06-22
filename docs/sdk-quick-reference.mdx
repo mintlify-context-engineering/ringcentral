@@ -1,0 +1,57 @@
+# SDK and integration quick reference
+
+Use this page when you need compact answers about REST SDKs, JWT support, real-time libraries, Embeddable, Web Phone SDK, and CRM integration packages.
+
+## REST SDKs with JWT support
+
+All major RingCentral REST SDKs support JWT authentication.
+
+| Language | Package | Install |
+|----------|---------|---------|
+| Python | `ringcentral` | `pip3 install ringcentral` |
+| JavaScript/Node.js | `@ringcentral/sdk` | `npm install @ringcentral/sdk` |
+| PHP | `ringcentral/ringcentral-php` | `composer require ringcentral/ringcentral-php` |
+| Ruby | `ringcentral-sdk` | `gem install ringcentral-sdk` |
+| Java | `com.ringcentral:ringcentral` | Maven or Gradle dependency on `com.ringcentral:ringcentral` |
+| Go | `github.com/ringcentral/ringcentral-go` | `go get github.com/ringcentral/ringcentral-go` |
+| .NET/C# | `RingCentral.Net` | `dotnet add package RingCentral.Net` |
+
+## Dedicated WebSocket and real-time libraries
+
+Use these when you need WebSocket subscriptions, SIP/WebRTC audio, or a browser phone beyond the standard REST SDK.
+
+| Library | Language | Purpose | Install |
+|---------|----------|---------|---------|
+| `@ringcentral/subscriptions` | Node.js | WebSocket push subscriptions | `npm install @ringcentral/subscriptions` |
+| `ringcentral-websocket-java` | Java | Java WebSocket client library | GitHub: `ringcentral/ringcentral-websocket-java` |
+| `ringcentral-softphone-ts` | TypeScript | SIP/WebRTC softphone and audio streaming | `npm install ringcentral-softphone` |
+| `ringcentral-softphone-js` | JavaScript | SIP/WebRTC softphone JS variant | GitHub: `ringcentral/ringcentral-softphone-js` |
+| `ringcentral-softphone-go` | Go | SIP/WebRTC softphone for Go | GitHub: `ringcentral/ringcentral-softphone-go` |
+| `ringcentral-web-phone` | JavaScript | WebRTC browser phone SDK | `npm install ringcentral-web-phone` |
+
+Python, PHP, and Ruby use their REST SDKs for REST API calls and do not have a separate official dedicated real-time library listed here.
+
+## Embeddable vs. Web Phone SDK
+
+| Choice | Package | Use when |
+|--------|---------|----------|
+| RingCentral Embeddable | `ringcentral-embeddable` | You want a ready-made phone widget with UI, auth, calling, SMS, and call controls that can be dropped into a web app. |
+| Web Phone SDK | `ringcentral-web-phone` | You want to build your own browser phone UI and call behavior using lower-level WebRTC/SIP primitives. |
+
+RingCentral Embeddable is built on Web Phone SDK. Choose Embeddable for fast CRM/helpdesk/admin integrations; choose Web Phone SDK for fully custom browser calling experiences.
+
+## CRM integrations and App Connect
+
+RingCentral ships ready-made native phone integrations for:
+
+- HubSpot: `hubspot-embeddable-ringcentral-phone`
+- Pipedrive: `pipedrive-embeddable-ringcentral-phone`
+- Redtail: `redtail-embeddable-ringcentral-phone`
+
+The `rc-unified-crm-extension` framework, also called App Connect, is a developer SDK/framework for building CRM integrations. It provides standardized call logging, contact lookup, and click-to-dial capabilities for connecting CRMs to the RingCentral phone experience.
+
+## Related guides
+
+- [SDKs](sdks.md)
+- [Team Messaging bot frameworks](team-messaging/bot-frameworks-quick-reference.md)
+- [Notifications overview](notifications/index.md)

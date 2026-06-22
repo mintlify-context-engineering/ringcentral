@@ -1,0 +1,80 @@
+# SMS API quick reference
+
+Use this page when you need the SMS REST endpoint, request fields, and compact JavaScript/Node.js and Ruby examples.
+
+## Endpoint and fields
+
+Send a person-to-person SMS from the authenticated user's extension:
+
+```http
+POST /restapi/v1.0/account/~/extension/~/sms
+Authorization: Bearer {access_token}
+Content-Type: application/json
+```
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `from.phoneNumber` | Yes | SMS-enabled phone number owned by, or assigned for use by, the authenticated extension. |
+| `to[].phoneNumber` | Yes | One or more recipient phone numbers. |
+| `text` | Yes | SMS message body. |
+
+## JavaScript / Node.js
+
+Install:
+
+```bash
+npm install @ringcentral/sdk dotenv --save
+```
+
+Send:
+
+```js
+const SDK = require('@ringcentral/sdk').SDK
+
+const rcsdk = new SDK({
+  server: process.env.RC_SERVER_URL,
+  clientId: process.env.RC_APP_CLIENT_ID,
+  clientSecret: process.env.RC_APP_CLIENT_SECRET,
+})
+
+const platform = rcsdk.platform()
+await platform.login({ jwt: process.env.RC_USER_JWT })
+
+await platform.post('/restapi/v1.0/account/~/extension/~/sms', {
+  from: { phoneNumber: process.env.SMS_SENDER },
+  to: [{ phoneNumber: process.env.SMS_RECIPIENT }],
+  text: 'Hello from RingCentral SMS',
+})
+```
+
+## Ruby
+
+Install:
+
+```bash
+gem install ringcentral-sdk dotenv
+```
+
+Send:
+
+```ruby
+require 'ringcentral'
+require 'dotenv/load'
+
+rc = RingCentral.new(
+  ENV['RC_APP_CLIENT_ID'],
+  ENV['RC_APP_CLIENT_SECRET'],
+  ENV['RC_SERVER_URL']
+)
+rc.authorize(jwt: ENV['RC_USER_JWT'])
+
+rc.post('/restapi/v1.0/account/~/extension/~/sms', payload: {
+  from: { phoneNumber: ENV['SMS_SENDER'] },
+  to: [{ phoneNumber: ENV['SMS_RECIPIENT'] }],
+  text: 'Hello from RingCentral SMS'
+})
+```
+
+## Related guide
+
+- [Sending SMS](sending-sms.md)

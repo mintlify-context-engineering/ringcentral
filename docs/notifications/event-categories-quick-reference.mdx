@@ -1,0 +1,35 @@
+# Push notification event categories quick reference
+
+Use this page when you need the major RingCentral event categories supported by the push notification service.
+
+All subscriptions are created with:
+
+```http
+POST /restapi/v1.0/subscription
+```
+
+Set `eventFilters` to the event filter strings you want to receive. Delivery can use webhooks or WebSockets.
+
+## Major event categories
+
+| Category | Examples |
+|----------|----------|
+| Telephony / call events | Active call sessions, call state changes, ringing, answered, ended, missed calls. |
+| Message store events | SMS, MMS, fax, voicemail, and message-store updates. |
+| Presence events | User presence, availability, and telephony status changes. |
+| Extension and account events | Extension profile changes, account configuration, directory or user changes. |
+| Call queue events | Queue membership, queue state, and call queue activity. |
+| AI Conversation Expert events | ACE analysis complete events after recorded calls are processed. |
+| Meeting / video events | RingCentral Video meeting or session lifecycle events. |
+
+## WebSocket vs webhook delivery
+
+Use **WebSockets** for mobile or client-side apps that need low-latency notifications without hosting a public HTTPS endpoint. The Node package is `@ringcentral/subscriptions`.
+
+Use **webhooks** for always-on server-side processing where RingCentral can send HTTPS POST callbacks to a public endpoint.
+
+## Related guides
+
+- [Notifications overview](index.md)
+- [Creating webhooks](webhooks/creating-webhooks.md)
+- [Subscribing with WebSockets](websockets/subscribing.md)

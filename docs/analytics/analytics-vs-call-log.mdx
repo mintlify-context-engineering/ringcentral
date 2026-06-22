@@ -1,0 +1,39 @@
+# Analytics API vs. Call Log API
+
+Use the **Analytics API** for historical aggregate reporting. Use the **Call Log API** for individual call records.
+
+## Choose the right API
+
+| Need | Use | Why |
+|------|-----|-----|
+| Call counts, durations, handle time, hold time, abandon rate, or other aggregate metrics | Analytics API | Returns grouped reporting metrics for managers and dashboards. |
+| Trends by hour, day, week, or month | Analytics API | Timeline reports are built for time-series analysis. |
+| Grouping by queues, users, IVRs, departments, or similar reporting dimensions | Analytics API | Aggregate reports support grouped performance analysis. |
+| One record per call | Call Log API | Returns per-call metadata such as caller, callee, direction, result, duration, and timestamps. |
+| CRM call history sync | Call Log API | CRMs usually need one activity record per call. |
+| Recording metadata and recording content links | Call Log API | Recording references are attached to call log records. |
+| Real-time call state | Neither | Use push notifications, webhooks, or WebSockets. |
+
+## Analytics API endpoints
+
+```http
+POST /analytics/calls/v1/accounts/~/aggregation/fetch
+POST /analytics/calls/v1/accounts/~/timeline/fetch
+```
+
+Analytics data is historical and supports custom date ranges up to the past 184 days.
+
+## Call Log API endpoint
+
+```http
+GET /restapi/v1.0/account/~/extension/~/call-log
+```
+
+The Call Log API is better for operational workflows, auditing, CRM sync, and downloading or locating recordings.
+
+## Related guides
+
+- [Analytics overview](index.md)
+- [Aggregate reports](aggregate.md)
+- [Timeline reports](timeline.md)
+- [Call Log overview](../voice/call-log/index.md)

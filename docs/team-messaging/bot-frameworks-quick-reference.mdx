@@ -1,0 +1,36 @@
+# Team Messaging bot frameworks quick reference
+
+RingCentral provides three official frameworks for building Team Messaging bots. Use this page when you need the language, package, and primary purpose without the longer bot guide.
+
+## Official frameworks
+
+| Framework | Language | Primary purpose |
+|-----------|----------|-----------------|
+| `ringcentral-chatbot-js` | JavaScript/Node.js | Full-featured Team Messaging bot framework with skill routing, webhook handling, auth token management, state persistence, and bot installation structure. Recommended starting point for most JavaScript bot projects. |
+| `ringcentral-chatbot-python` | Python | Python framework for Team Messaging bots with event handling and deployment-friendly bot structure. |
+| `ringcentral-chatbot-core` | TypeScript | Shared core abstractions for bot events, routing, messaging, and persistence when you want reusable primitives without the full JS framework. |
+
+## Relationship to `@ringcentral/sdk`
+
+`ringcentral-chatbot-js` sits above the core RingCentral REST SDK layer. It uses the same RingCentral platform APIs as `@ringcentral/sdk`, but adds bot-specific infrastructure:
+
+- skill routing for commands and intents
+- webhook event handling
+- installation and authorization flow support
+- token management
+- state and persistence helpers
+- Team Messaging message handling
+
+Use the core SDK when you only need direct REST API calls. Use a chatbot framework when you are building a bot that receives Team Messaging events and routes messages to skills.
+
+## Common install commands
+
+```bash
+npm install ringcentral-chatbot
+pip install ringcentral-chatbot
+```
+
+## Related guides
+
+- [Bot frameworks](manual/frameworks.md)
+- [Build a bot walkthrough](bots/walkthrough.md)

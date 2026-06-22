@@ -1,0 +1,74 @@
+# Webinar API quick reference
+
+Use this page when you need the shortest path for creating a RingCentral Webinar, scheduling a session, and adding registrants.
+
+## Create a marketing webinar with registrants
+
+Required app permissions: `EditWebinars` and `ReadWebinars`.
+
+1. Create the webinar: `POST /webinar/v1/accounts/{accountId}/webinars`.
+2. Create a session: `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions`.
+3. Add each registrant: `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants`.
+
+For a marketing webinar, set `registrationEnabled` to `true`. Each registrant receives a unique registration record and join URL, which lets you track attendance and campaign attribution.
+
+For an internal all-hands webinar, set `registrationEnabled` to `false`. Attendees use one shared join URL and do not need individual registration records.
+
+## Key webinar settings
+
+| Setting | Use |
+|---------|-----|
+| `registrationEnabled` | `true` for marketing webinars with unique registrant join URLs; `false` for internal webinars with one shared join URL. |
+| `recordingEnabled` | Enables recording. |
+| `autoRecord` | Starts recording automatically when the webinar goes live. |
+| `attendeeAuthentication` | Controls attendee authentication, such as `Guest`, `AuthenticatedUser`, or `AuthenticatedCoworker`. |
+| `password` | Requires a password to join. |
+| `qnaEnabled` | Enables Q&A. |
+| `pollsEnabled` | Enables polls. |
+| `panelistWaitingRoom` | Places panelists in a waiting room after joining. |
+| `postWebinarRedirectUri` | Redirects attendees after the webinar ends. |
+
+## Minimal create request
+
+```http
+POST /webinar/v1/accounts/{accountId}/webinars
+Authorization: Bearer {access_token}
+Content-Type: application/json
+
+{
+  "title": "Quarterly Product Launch",
+  "description": "Customer-facing marketing webinar",
+  "settings": {
+    "registrationEnabled": true,
+    "recordingEnabled": true,
+    "autoRecord": true,
+    "qnaEnabled": true,
+    "pollsEnabled": true,
+    "password": "optional-password"
+  }
+}
+```
+
+## Minimal registrant request
+
+```http
+POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants
+Authorization: Bearer {access_token}
+Content-Type: application/json
+
+{
+  "firstName": "Ada",
+  "lastName": "Lovelace",
+  "email": "ada@example.com",
+  "externalId": "crmLeadId=12345",
+  "source": "spring-campaign"
+}
+```
+
+Use `externalId` to correlate the registrant with a CRM/contact/lead record. Use `source` to record the campaign or channel that produced the registration.
+
+## Related guides
+
+- [Creating webinars](creation.md)
+- [Registering attendees](registrants.md)
+- [Webinar events](events.md)

@@ -1,0 +1,43 @@
+# OAuth token lifecycle quick reference
+
+Use this page when you need the short answer for access token duration, refresh tokens, refresh expiry, JWT, and token endpoint rate limits.
+
+## Token lifetimes
+
+| Token | Typical lifetime | Renewal path |
+|-------|------------------|--------------|
+| Access token | About 1 hour, returned as `expires_in` | Use the cached access token until it is near expiration. |
+| Refresh token | About 7 days | Call `POST /restapi/oauth/token` with `grant_type=refresh_token`. |
+| JWT credential | Does not use refresh tokens | Request a new access token with the JWT grant when needed. |
+
+## Refresh without forcing login
+
+For Auth Code or Auth Code + PKCE apps, store the user's access token and refresh token. Before the access token expires, call:
+
+```http
+POST /restapi/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token={refresh_token}
+```
+
+The response usually contains a new access token and a new refresh token. Store the new refresh token immediately because refresh tokens are single-use after the new access token is used.
+
+If the refresh token expires or is invalidated, the user must complete the OAuth authorization flow again.
+
+## JWT behavior
+
+JWT server-to-server apps do not use refresh tokens. When the short-lived access token expires, call the token endpoint again with the JWT grant to obtain a new access token.
+
+## Token endpoint rate limit
+
+`POST /restapi/oauth/token` belongs to the `Auth` usage plan group. The default limit is **5 requests per user per minute** with a **60 second** penalty interval.
+
+Cache and reuse access tokens. Do not call the token endpoint before every API request.
+
+## Related guides
+
+- [Using refresh tokens](refresh-tokens.md)
+- [Using access tokens](tokens.md)
+- [API rate limits](../basics/rate-limits.md)
+- [JWT flow](jwt-flow.md)

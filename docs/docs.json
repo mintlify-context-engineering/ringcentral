@@ -56,6 +56,7 @@
           "getting-started/register-app",
           "getting-started/create-credential",
           "getting-started/code-app",
+          "sdk-quick-reference",
           "getting-started/sms",
           "getting-started/promote-app"
         ]
@@ -82,6 +83,7 @@
             ]
           },
           "authentication/tokens",
+          "authentication/token-lifecycle-quick-reference",
           "authentication/refresh-tokens",
           "authentication/auth-code-flow",
           "authentication/auth-code-pkce-flow",
@@ -127,6 +129,7 @@
         "pages": [
           "messaging/index",
           "messaging/quick-start",
+          "messaging/sms/api-quick-reference",
           "messaging/sms/sending-sms",
           "messaging/sms/receiving-sms-mms",
           {
@@ -155,6 +158,7 @@
             "group": "Bots",
             "pages": [
               "team-messaging/bots/walkthrough",
+              "team-messaging/bot-frameworks-quick-reference",
               "team-messaging/manual/frameworks"
             ]
           },
@@ -181,6 +185,7 @@
         "pages": [
           "webinar/index",
           "webinar/quick-start",
+          "webinar/api-quick-reference",
           "webinar/creation",
           "webinar/registrants",
           "webinar/events"
@@ -190,6 +195,7 @@
         "group": "Analytics",
         "pages": [
           "analytics/index",
+          "analytics/analytics-vs-call-log",
           "analytics/aggregate",
           "analytics/timeline"
         ]
@@ -234,6 +240,7 @@
         "group": "Events and Notifications",
         "pages": [
           "notifications/index",
+          "notifications/event-categories-quick-reference",
           {
             "group": "Webhooks",
             "pages": [
