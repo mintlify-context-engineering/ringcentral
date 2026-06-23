@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RingCentral MCP Run Compare</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="topbar" aria-label="Run controls">
+        <div class="brand">
+          <img src="/assets/rc-logo.svg" alt="" />
+          <div>
+            <h1>Run Compare</h1>
+            <p>RingCentral context benchmark</p>
+          </div>
+        </div>
+        <div class="control-grid">
+          <label class="prompt-box">
+            <span>Prompt</span>
+            <textarea id="prompt" rows="3">How do I authenticate to the RingCentral API with JWT, and which SDK package should I install for Node.js?</textarea>
+          </label>
+          <label class="model-box">
+            <span>Model</span>
+            <input id="model" autocomplete="off" spellcheck="false" />
+          </label>
+          <div class="button-row">
+            <button id="run" type="button">Run</button>
+            <button id="stop" type="button" disabled>Stop</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="comparison" aria-label="Side by side results">
+        <article class="run-pane" data-pane="raw">
+          <header class="pane-header">
+            <div>
+              <p class="eyebrow">Without MCP</p>
+              <h2>Local repo tools</h2>
+            </div>
+            <span class="status" id="raw-status">Idle</span>
+          </header>
+          <dl class="metrics" id="raw-metrics">
+            <div><dt>Prompt</dt><dd data-metric="prompt">0</dd></div>
+            <div><dt>Completion</dt><dd data-metric="completion">0</dd></div>
+            <div><dt>Total</dt><dd data-metric="total">0</dd></div>
+            <div><dt>Tools</dt><dd data-metric="tools">0</dd></div>
+            <div><dt>Bytes</dt><dd data-metric="bytes">0</dd></div>
+            <div><dt>Cost</dt><dd data-metric="cost">$0.0000</dd></div>
+          </dl>
+          <div class="streams">
+            <section>
+              <h3>Output</h3>
+              <div class="output" id="raw-output"></div>
+            </section>
+            <section>
+              <h3>Tool calls</h3>
+              <ol class="tool-log" id="raw-tools"></ol>
+            </section>
+          </div>
+        </article>
+
+        <article class="run-pane accent" data-pane="mcp">
+          <header class="pane-header">
+            <div>
+              <p class="eyebrow">With MCP</p>
+              <h2>Mintlify docs tools</h2>
+            </div>
+            <span class="status" id="mcp-status">Idle</span>
+          </header>
+          <dl class="metrics" id="mcp-metrics">
+            <div><dt>Prompt</dt><dd data-metric="prompt">0</dd></div>
+            <div><dt>Completion</dt><dd data-metric="completion">0</dd></div>
+            <div><dt>Total</dt><dd data-metric="total">0</dd></div>
+            <div><dt>Tools</dt><dd data-metric="tools">0</dd></div>
+            <div><dt>Bytes</dt><dd data-metric="bytes">0</dd></div>
+            <div><dt>Cost</dt><dd data-metric="cost">$0.0000</dd></div>
+          </dl>
+          <div class="streams">
+            <section>
+              <h3>Output</h3>
+              <div class="output" id="mcp-output"></div>
+            </section>
+            <section>
+              <h3>Tool calls</h3>
+              <ol class="tool-log" id="mcp-tools"></ol>
+            </section>
+          </div>
+        </article>
+      </section>
+    </main>
+    <script src="/static/app.js" type="module"></script>
+  </body>
+</html>

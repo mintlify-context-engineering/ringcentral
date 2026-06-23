@@ -75,6 +75,25 @@ python run_experiment.py --tier 1 --verbose
 python run_experiment.py --dry-run
 ```
 
+## Local Side-by-Side Demo
+
+The demo runs a single prompt through two live OpenRouter tool loops in parallel:
+
+- **Without MCP**: sanitized local RingCentral repo tools (`list_files`, `search_files`, `read_file`, etc.)
+- **With MCP**: live Mintlify RingCentral docs MCP tools
+
+It streams output, tool calls, tool-result previews, elapsed time, and token/cost counters into a localhost UI.
+
+```bash
+# From the repo root
+benchmark/.venv/bin/python benchmark/demo/server.py
+
+# Then open:
+# http://127.0.0.1:8787
+```
+
+The server loads `benchmark/.env`, so make sure `OPENROUTER_API_KEY` is set there. You can optionally set `OPENROUTER_MODEL`; otherwise the demo defaults to `~openai/gpt-latest`.
+
 ## Generate the Dashboard
 
 ```bash
