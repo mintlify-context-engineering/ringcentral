@@ -10,6 +10,16 @@ POST /restapi/v1.0/subscription
 
 Set `eventFilters` to the event filter strings you want to receive. Delivery can use webhooks or WebSockets.
 
+## High-value event filters
+
+| Need | Event filter |
+|------|--------------|
+| Presence updates | `/restapi/v1.0/account/~/extension/~/presence` |
+| Inbound SMS | `/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS` |
+| Subscription expiration reminders | `/restapi/v1.0/subscription/~?threshold=3600&interval=3600` |
+
+When the expiration reminder arrives, renew with `PUT /restapi/v1.0/subscription/{subscriptionId}`.
+
 ## Major event categories
 
 | Category | Examples |
@@ -31,5 +41,6 @@ Use **webhooks** for always-on server-side processing where RingCentral can send
 ## Related guides
 
 - [Notifications overview](index.md)
+- [Subscription lifecycle and renewal](subscription-lifecycle.md)
 - [Creating webhooks](webhooks/creating-webhooks.md)
 - [Subscribing with WebSockets](websockets/subscribing.md)

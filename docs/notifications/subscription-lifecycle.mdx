@@ -1,0 +1,113 @@
+# Subscription lifecycle and renewal
+
+Use this page when building webhook or WebSocket subscriptions that must stay healthy over time. It collects the exact endpoints, event filters, and renewal behavior in one place.
+
+## Canonical lifecycle endpoints
+
+| Action | Endpoint |
+|--------|----------|
+| Create a subscription | `POST /restapi/v1.0/subscription` |
+| List subscriptions | `GET /restapi/v1.0/subscription` |
+| Read one subscription | `GET /restapi/v1.0/subscription/{subscriptionId}` |
+| Renew or update a subscription | `PUT /restapi/v1.0/subscription/{subscriptionId}` |
+| Delete a subscription | `DELETE /restapi/v1.0/subscription/{subscriptionId}` |
+
+All subscriptions use an `eventFilters` array. Delivery can be via webhook or WebSocket.
+
+## Expiration reminders
+
+Subscribe to this event filter when you want RingCentral to notify your app before a subscription expires:
+
+```text
+/restapi/v1.0/subscription/~?threshold=3600&interval=3600
+```
+
+This filter asks for reminder notifications beginning 3600 seconds before expiration and repeating every 3600 seconds. When your app receives a reminder, renew the subscription:
+
+```http
+PUT /restapi/v1.0/subscription/{subscriptionId}
+Authorization: Bearer {access_token}
+Content-Type: application/json
+
+{
+  "eventFilters": [
+    "/restapi/v1.0/account/~/extension/~/presence",
+    "/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS",
+    "/restapi/v1.0/subscription/~?threshold=3600&interval=3600"
+  ],
+  "deliveryMode": {
+    "transportType": "WebSocket"
+  }
+}
+```
+
+Include the same event filters you still want to receive when renewing or updating the subscription.
+
+## Browser app pattern: presence, SMS, and renewal
+
+For browser and client-side apps, use WebSockets because they provide low-latency push without requiring a public HTTPS server.
+
+1. Install the JavaScript subscription package.
+
+```bash
+npm install @ringcentral/sdk @ringcentral/subscriptions --save
+```
+
+2. Create a WebSocket subscription with these filters:
+
+```js
+const filters = [
+  '/restapi/v1.0/account/~/extension/~/presence',
+  '/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS',
+  '/restapi/v1.0/subscription/~?threshold=3600&interval=3600'
+]
+```
+
+3. Listen for notifications:
+
+```js
+subscription.on(subscription.events.notification, async event => {
+  const filter = event.body?.event
+
+  if (filter?.includes('/presence')) {
+    // Update presence UI.
+  }
+
+  if (filter?.includes('/message-store/instant')) {
+    // Handle inbound SMS. Check event.body.body.direction === 'Inbound'.
+  }
+
+  if (filter?.includes('/subscription/')) {
+    await platform.put(`/restapi/v1.0/subscription/${subscription.id()}`, {
+      eventFilters: filters,
+      deliveryMode: { transportType: 'WebSocket' }
+    })
+  }
+})
+```
+
+## WebSocket URL
+
+The production WebSocket URL is:
+
+```text
+wss://platform.ringcentral.com/restapi/ws/net/v1.0/
+```
+
+If you use `@ringcentral/subscriptions`, the package handles the WebSocket connection details. If you implement the protocol manually, request a WebSocket access token, connect to the server URL, then register your event filters over that connection.
+
+## Webhooks versus WebSockets
+
+| Requirement | Choose |
+|-------------|--------|
+| Browser, desktop, or mobile client without public HTTPS endpoint | WebSockets |
+| Low-latency client-side presence or SMS updates | WebSockets |
+| Always-on server-side processing | Webhooks |
+| Durable callbacks while users are offline | Webhooks |
+
+## Related guides
+
+- [Notifications overview](index.md)
+- [Subscribing with WebSockets](websockets/subscribing.md)
+- [Creating webhooks](webhooks/creating-webhooks.md)
+- [Push notification event categories](event-categories-quick-reference.md)

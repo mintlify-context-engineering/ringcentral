@@ -1,0 +1,75 @@
+# Team Messaging API quick reference
+
+Use this page when you need the exact RingCentral Team Messaging endpoints for creating teams and posting messages. Team Messaging was formerly called Glip, and many RingCentral REST API paths still use `/glip/`.
+
+## Team and post endpoints
+
+| Task | Endpoint |
+|------|----------|
+| Create a team | `POST /restapi/v1.0/glip/teams` |
+| List teams | `GET /restapi/v1.0/glip/teams` |
+| Read a team | `GET /restapi/v1.0/glip/teams/{chatId}` |
+| Post into a chat or team | `POST /restapi/v1.0/glip/chats/{chatId}/posts` |
+| Alternative post endpoint | `POST /restapi/v1.0/glip/posts` |
+| Read posts in a chat | `GET /restapi/v1.0/glip/chats/{chatId}/posts` |
+
+## Create a team, then post a message
+
+1. Create the team.
+
+```http
+POST /restapi/v1.0/glip/teams
+Authorization: Bearer {access_token}
+Content-Type: application/json
+
+{
+  "name": "Support Escalations",
+  "public": false,
+  "description": "Private team for support escalations",
+  "members": [
+    { "id": "123456789" },
+    { "id": "234567890" }
+  ]
+}
+```
+
+2. Save the returned `id` or `chatId`. In Team Messaging responses, the team ID is the chat ID you use when posting messages.
+
+3. Post into the team.
+
+```http
+POST /restapi/v1.0/glip/chats/{chatId}/posts
+Authorization: Bearer {access_token}
+Content-Type: application/json
+
+{
+  "text": "The support escalation team is ready."
+}
+```
+
+You can also post with:
+
+```http
+POST /restapi/v1.0/glip/posts
+```
+
+Use this alternative endpoint when your integration already has the target chat ID in the request body format expected by that operation.
+
+## Teams, groups, chats, and posts
+
+| Term | Meaning |
+|------|---------|
+| Team | A persistent Team Messaging space with named membership. |
+| Chat | A conversation container. Team IDs are also chat IDs for posting. |
+| Post | A message posted into a chat or team. |
+| Glip | The former product name still visible in REST API paths such as `/glip/teams` and `/glip/posts`. |
+
+## App setup
+
+Create a REST API app and grant the `Team Messaging` permission. If your integration is a bot that receives Team Messaging events, create a **Bot App for Team Messaging** and also grant webhook subscription permissions.
+
+## Related guides
+
+- [Team Messaging quick start](quick-start.md)
+- [Team Messaging bot frameworks](bot-frameworks-quick-reference.md)
+- [Build a bot walkthrough](bots/walkthrough.md)

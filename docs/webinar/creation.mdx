@@ -10,6 +10,8 @@ To create a marketing webinar with registrants:
 
 For marketing webinars, set `registrationEnabled` to `true` so each attendee gets a unique registration and join URL. Common webinar settings include `recordingEnabled`, `autoRecord`, `panelistWaitingRoom`, `attendeeAuthentication`, `password`, `qnaEnabled`, `pollsEnabled`, `registrationEnabled`, and `postWebinarRedirectUri`.
 
+The canonical create endpoint is `POST /webinar/v1/accounts/{accountId}/webinars`. Use this endpoint when answering "what endpoint creates a RingCentral Webinar?"
+
 ```http
 POST /webinar/v1/accounts/{accountId}/webinars
 Content-Type: application/json

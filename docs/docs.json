@@ -99,6 +99,7 @@
                 "group": "Using the API",
                 "pages": [
                   "basics/uris",
+                  "basics/canonical-values",
                   "basics/errors",
                   "basics/rate-limits",
                   "basics/media"
@@ -169,11 +170,13 @@
                 "group": "Team Messaging",
                 "pages": [
                   "team-messaging/index",
+                  "team-messaging/api-quick-reference",
                   "team-messaging/quick-start",
                   {
                     "group": "Bots",
                     "pages": [
                       "team-messaging/bots/walkthrough",
+                      "team-messaging/bots/chatbot-js-minimal",
                       "team-messaging/bot-frameworks-quick-reference",
                       "team-messaging/manual/frameworks"
                     ]
@@ -193,6 +196,7 @@
                   "video/api/index",
                   "video/api/quick-start",
                   "video/api/create-meetings",
+                  "video/api/video-vs-webinar",
                   "video/api/meeting-history"
                 ]
               },
@@ -241,6 +245,7 @@
                 "pages": [
                   "notifications/index",
                   "notifications/event-categories-quick-reference",
+                  "notifications/subscription-lifecycle",
                   {
                     "group": "Webhooks",
                     "pages": [

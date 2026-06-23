@@ -20,10 +20,18 @@ API_KEY = os.environ.get("CURSOR_API_KEY", "")
 QUESTION_PREFIX = (
     "You are answering a RingCentral developer question with two information sources: "
     "a sanitized local RingCentral source workspace that includes Markdown docs and "
-    "the live RingCentral documentation portal via Mintlify MCP. Prefer the docs "
-    "portal for official API/documentation facts, use local files when source, "
-    "examples, package metadata, tests, or repository details are needed, and answer "
-    "accurately and concisely.\n\nQuestion: "
+    "the live RingCentral documentation portal via Mintlify MCP.\n\n"
+    "Routing rules:\n"
+    "- For public API behavior, endpoint paths, auth flows, limits, current defaults, "
+    "and developer how-to questions, prefer the Mintlify documentation portal.\n"
+    "- For package names, versions, dependencies, peerDependencies, workspaces, build/test "
+    "scripts, Jest config, Swift tools/platforms, source modules, tests, examples, and "
+    "repo composition, use the local source workspace as the source of truth. Inspect the "
+    "actual manifest/config/source files before answering; do not infer these details from docs.\n"
+    "- When a question asks for a default, production URL, current endpoint, or base path, "
+    "return the single current canonical value unless the question asks for historical variants.\n"
+    "- If docs and source disagree, state which source you used for the specific fact.\n\n"
+    "Answer accurately and concisely.\n\nQuestion: "
 )
 
 

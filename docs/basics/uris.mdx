@@ -12,6 +12,8 @@
 
 All REST API paths begin with `/restapi/v1.0/`. Example: `https://platform.ringcentral.com/restapi/v1.0/account/~/extension/~/call-log`
 
+For exact endpoint lookup questions, see [Canonical API values quick reference](canonical-values.md). It includes the current WebSocket URL, Video base path, Webinar endpoints, Team Messaging `/glip/` paths, subscription renewal filter, and common messaging limits.
+
 This guide describes the fundamentals of the RingCentral API and is useful to developers wishing to understand its conventions and usage guidelines.
 
 ## Resources and parameters
@@ -157,6 +159,7 @@ We recommend using a short application name and version delimited by a forward s
 
 For example:
 
+* `MyApp/1.0 (Linux; Python/3.9)`
 * `RCMobile/3.6.0 (RingCentral; Android/2.6; rev.12345)`
 * `RCMobile/3.6.1 (OfficeAtHand; iOS/6.0; rev.987654)`
 * `Softphone/6.2.0.11632`
@@ -164,4 +167,3 @@ For example:
 The `User-Agent` string format is described in <a target="_new" href="https://tools.ietf.org/html/rfc1945">RFC 1945</a> and <a target="_new" href="https://tools.ietf.org/html/rfc2068">RFC 2068</a>.
 
 For browser-based (JavaScript) applications, it is usually not possible to override the browser's user agent string. In this case, our recommendation is to send a user agent string in the `X-User-Agent` request header.
-

@@ -3,6 +3,7 @@
 A RingCentral Team Messaging bot provides a conversational interface for performing common tasks. In this guide, you will learn how to build a simple ping-pong bot from scratch, giving you a closer look at the bot design pattern.
 
 <Tip title="Try the [RingCentral bot framework](https://ringcentral.github.io/ringcentral-chatbot-js/) to get up and running faster and with less code.">
+For a compact `ringcentral-chatbot-js` example that uses `dotenv`, `createApp`, `Message4Bot`, `bot.sendMessage(...)`, `RINGCENTRAL_CHATBOT_EXPRESS_PORT`, and the `/bot/oauth` redirect route, see [Minimal bot with ringcentral-chatbot-js](chatbot-js-minimal.md).
 </Tip>
 
 Before you begin, make sure you have logged into your RingCentral developer account via the [RingCentral Developer Console](https://developers.ringcentral.com/my-account.html#/applications).
@@ -59,7 +60,13 @@ Throughout this walkthrough we will highlight key differences between how you co
 
 ### Set your OAuth redirect URL
 
-Before you create your bot app, you will need to set the OAuth redirect URL. Into that URL enter in the ngrok URL from above, with `/oauth` appended to the end. For example:
+Before you create your bot app, you will need to set the OAuth redirect URL. If you are using `ringcentral-chatbot-js`, append `/bot/oauth` to your ngrok URL. If you are following the older sample application in this walkthrough, append `/oauth` as shown by that sample.
+
+For the framework route:
+
+> https://77c83694.ngrok.io/bot/oauth
+
+For the older sample application route:
 
 > https://77c83694.ngrok.io/oauth
 
@@ -247,5 +254,4 @@ This guide has walked you through the creation of a simple bot server using Java
 ## Up next: adaptive cards
 
 In part two of this developer's guide, we will extend this basic bot to include the functionality of posting adaptive cards and responding to interactive messaging events.
-
 

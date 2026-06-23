@@ -27,6 +27,8 @@ By default, all conditions use the **same Cursor model** and the **same `CURSOR_
 
 Token estimates are captured automatically in Cursor mode: each agent measures the bytes of tool results (file reads, grep, MCP search results) returned by the **same** run it already makes, so there is no extra API cost. In OpenRouter mode, the runner stores OpenRouter's native `prompt_tokens`, `completion_tokens`, `total_tokens`, `openrouter_cost`, and `openrouter_generation_ids` in the result JSON. The standalone `measure_context.py` reports the exact byte breakdown by tool type for the Cursor SDK path. For deterministic structured-doc literal key-fact coverage and character-count checks, run `autoresearch_loop.py`.
 
+Rows are scored whenever at least one condition returns an answer. If a single condition times out or errors, that condition receives a score of `0` with the error recorded in its reasoning field, while the other successful conditions are still judged and included. Judge parse/provider failures are retried before a row is marked invalid.
+
 ## Setup
 
 Requires Python 3.10+ and either a [Cursor API key](https://cursor.com/dashboard/integrations) or an OpenRouter API key. No Anthropic key is needed for the main benchmark.
@@ -71,9 +73,23 @@ python run_experiment.py --ids T1-01 T2-01 T3-05 T4-02
 # Verbose mode (shows agent progress in real time)
 python run_experiment.py --tier 1 --verbose
 
+# Retry judge scoring after transient provider/JSON failures
+python run_experiment.py --provider openrouter --judge-retries 3
+
 # Dry run (no API calls, just show the plan)
 python run_experiment.py --dry-run
 ```
+
+If a run still has invalid rows, rerun only those question IDs, then merge the replacement rows with provenance:
+
+```bash
+python merge_rerun.py \
+  --base results/failed_experiment_20260623_090301.json \
+  --rerun results/experiment_20260623_105721.json \
+  --out results/experiment_20260623_090301_complete.json
+```
+
+The merged JSON records the base/rerun files, SHA-256 checksums, replaced IDs, and merge timestamp under `summary.merge`.
 
 ## Local Side-by-Side Demo
 

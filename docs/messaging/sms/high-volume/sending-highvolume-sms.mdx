@@ -5,6 +5,13 @@ The High Volume SMS API provides a very flexible way to send multiple SMS messag
 <Note title="There is no limit of number of recipients in a batch. However, the maximum size of each batch is about 50MB.">
 </Note>
 
+Key limitations to remember:
+
+- The maximum size of a High Volume SMS batch payload is about 50 MB.
+- High Volume SMS is designed for large batches of SMS messages, not MMS.
+- Check your account, brand, campaign, number type, and regional eligibility before sending large A2P traffic.
+- For US/Canada traffic, 10DLC and toll-free messaging rules can affect which numbers and destinations are supported.
+
 ### Sample codes
 
 Simple request to broadcast the same message to multiple recipients.

@@ -1,5 +1,12 @@
 # Scheduling and creating a meeting bridge
 
+Create a RingCentral Video meeting bridge with:
+
+```http
+POST /rcvideo/v2/bridges/
+```
+
+The RingCentral Video REST API base path is `/rcvideo/v2/`.
 
 ## What is difference between a meeting and a bridge?
 
@@ -26,6 +33,8 @@ The `type` parameter can take one of three values and impacts the longevity and 
 | `Instant` | A value of "Instant" means the bridge will be retained for three days and then deleted. This is the default value. |
 | `Scheduled` | A value of "Scheduled" means that the birdge will persist for a long time and can be used more than once. Bridges of type "Scheduled" will be deleted after a prolonged period of inactivity. |
 | `PMI` | A value of "PMI" will result in the bridge utilizing the associated user's personal bridge ID. |
+
+Use `Instant` when you want a default one-time bridge. Instant bridges are retained for three days before deletion.
 
 #### Setting the bridge's security parameters
 

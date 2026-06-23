@@ -12,6 +12,14 @@ Before any application that wishes to subscribe to an event via WebSockets, the 
 
 If you are using one of [RingCentral's officially supported SDKs](../../sdks.md), then subscribing to events couldn't be easier as the SDKs manage much of the complexity for you. All you need to do is process events as they come in over the WebSocket. To learn how to subscribe to events using the SDKs, checkout our [WebSockets Quick Start guide](quick-start.md).
 
+For JavaScript and Node.js apps, use `@ringcentral/subscriptions`:
+
+```bash
+npm install @ringcentral/sdk @ringcentral/subscriptions --save
+```
+
+The production WebSocket URL is `wss://platform.ringcentral.com/restapi/ws/net/v1.0/`. The SDK handles the connection details for you.
+
 ## Subscribing to events manually
 
 If you need to implement your own subscription layer for WebSockets, or if you simply want to better understand what is happening behind the scenes, then the follow material will help you. 
@@ -69,6 +77,6 @@ To subscribe to events, you will need to transmit a `ClientRequest` specifying t
 It is important to bear in mind that any given WebSocket server can only have a single active subscription. If you transmit a second subscription request, presumably with a different set of event filters, then any other subscriptions will be cancelled and replaced with the new subscription request. 
 </Warning>
 
-<Tip title="There is no need to refresh WebSocket subscriptions">
-You may notice that in the event subscription response fields relating to the expiration of the subscription. You can safely ignore these fields as WebSocket event subscriptions renew automatically on the backend. 
+<Tip title="Renewal handling">
+For simple SDK-based WebSocket apps, the client library handles connection management. For apps that need explicit lifecycle visibility, include the expiration reminder event filter `/restapi/v1.0/subscription/~?threshold=3600&interval=3600` and renew with `PUT /restapi/v1.0/subscription/{subscriptionId}` when the reminder arrives. See [Subscription lifecycle and renewal](../subscription-lifecycle.md).
 </Tip>

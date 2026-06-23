@@ -1,0 +1,96 @@
+# Minimal bot with ringcentral-chatbot-js
+
+Use `ringcentral-chatbot-js` when you want a higher-level Team Messaging bot framework instead of wiring OAuth, webhook handling, event parsing, routing, and persistence yourself.
+
+The framework uses the same RingCentral platform APIs underneath as the core JavaScript SDK, but adds bot-specific infrastructure:
+
+- bot app installation handling
+- OAuth redirect handling
+- webhook event verification
+- `Message4Bot` event wrappers
+- skill and command routing
+- `bot.sendMessage(...)` helpers
+- token and state persistence helpers
+
+## Create the app
+
+In the Developer Console, create a **Bot App for Team Messaging**.
+
+Grant these permissions:
+
+- `Team Messaging`
+- `Webhook Subscriptions`
+- `Read Accounts`
+
+Set the OAuth redirect URI to your public bot server URL with `/bot/oauth` appended:
+
+```text
+https://example.ngrok.app/bot/oauth
+```
+
+When developing locally, expose your bot server with a tunneling tool such as ngrok.
+
+## Install packages
+
+```bash
+npm install ringcentral-chatbot dotenv --save
+```
+
+## Environment variables
+
+Create `.env`:
+
+```bash
+RINGCENTRAL_CLIENT_ID=your-client-id
+RINGCENTRAL_CLIENT_SECRET=your-client-secret
+RINGCENTRAL_SERVER_URL=https://platform.devtest.ringcentral.com
+RINGCENTRAL_CHATBOT_EXPRESS_PORT=3000
+RINGCENTRAL_CHATBOT_DATABASE_CONNECTION_URI=sqlite://./bot.sqlite
+RINGCENTRAL_CHATBOT_ADMIN_USERNAME=admin
+RINGCENTRAL_CHATBOT_ADMIN_PASSWORD=change-me
+```
+
+Use the production server URL, `https://platform.ringcentral.com`, when deploying against production credentials.
+
+## Minimal app
+
+```js
+require('dotenv').config()
+
+const { createApp, Message4Bot } = require('ringcentral-chatbot')
+
+const app = createApp()
+
+app.on(Message4Bot, async event => {
+  const { text, bot } = event
+
+  if (text && text.trim().toLowerCase() === 'ping') {
+    await bot.sendMessage('pong')
+  }
+})
+
+app.listen(process.env.RINGCENTRAL_CHATBOT_EXPRESS_PORT || 3000)
+```
+
+## What each piece does
+
+| Piece | Purpose |
+|-------|---------|
+| `dotenv` | Loads local development settings from `.env`. |
+| `createApp()` | Creates the Express-based bot application with the framework's routes installed. |
+| `/bot/oauth` | OAuth redirect route used when the bot is installed. |
+| `Message4Bot` | Event wrapper for Team Messaging messages sent to the bot. |
+| `bot.sendMessage(...)` | Sends a reply into the chat where the message was received. |
+| `RINGCENTRAL_CHATBOT_EXPRESS_PORT` | Port used by the bot server. |
+
+## When to use this framework
+
+Use `ringcentral-chatbot-js` for bots that need to receive Team Messaging events, route user messages to commands or skills, and reply in chats.
+
+Use `@ringcentral/sdk` directly when you only need low-level REST API calls and do not need bot installation, event routing, or framework-managed persistence.
+
+## Related guides
+
+- [Team Messaging bot frameworks](../bot-frameworks-quick-reference.md)
+- [Build a bot walkthrough](walkthrough.md)
+- [Team Messaging API quick reference](../api-quick-reference.md)

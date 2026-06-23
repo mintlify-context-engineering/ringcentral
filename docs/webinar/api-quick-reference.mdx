@@ -2,6 +2,14 @@
 
 Use this page when you need the shortest path for creating a RingCentral Webinar, scheduling a session, and adding registrants.
 
+Canonical endpoints:
+
+| Task | Endpoint |
+|------|----------|
+| Create a webinar | `POST /webinar/v1/accounts/{accountId}/webinars` |
+| Create a session | `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions` |
+| Add a registrant | `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants` |
+
 ## Create a marketing webinar with registrants
 
 Required app permissions: `EditWebinars` and `ReadWebinars`.
@@ -72,3 +80,4 @@ Use `externalId` to correlate the registrant with a CRM/contact/lead record. Use
 - [Creating webinars](creation.md)
 - [Registering attendees](registrants.md)
 - [Webinar events](events.md)
+- [Video meetings versus Webinar](../video/api/video-vs-webinar.md)

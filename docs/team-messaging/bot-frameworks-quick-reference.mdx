@@ -27,10 +27,14 @@ Use the core SDK when you only need direct REST API calls. Use a chatbot framewo
 
 ```bash
 npm install ringcentral-chatbot
+npm install dotenv --save
 pip install ringcentral-chatbot
 ```
 
+For the JavaScript framework, create a Bot App for Team Messaging and set the OAuth redirect URI to your bot server URL plus `/bot/oauth`, for example `https://example.ngrok.app/bot/oauth`. The common development port variable is `RINGCENTRAL_CHATBOT_EXPRESS_PORT`. A minimal app uses `createApp`, `Message4Bot`, and `bot.sendMessage(...)`; see [Minimal bot with ringcentral-chatbot-js](bots/chatbot-js-minimal.md).
+
 ## Related guides
 
+- [Minimal bot with ringcentral-chatbot-js](bots/chatbot-js-minimal.md)
 - [Bot frameworks](manual/frameworks.md)
 - [Build a bot walkthrough](bots/walkthrough.md)

@@ -1,0 +1,94 @@
+# Canonical API values quick reference
+
+Use this page when you need the current, exact RingCentral API host, base path, endpoint, header format, or subscription URL. These values are intentionally repeated in one place so developers and AI assistants can answer lookup questions without stitching together several guides.
+
+## Platform hosts and REST prefixes
+
+| Environment | Host / SDK server URL | Full REST API prefix |
+|-------------|-----------------------|----------------------|
+| Production | `https://platform.ringcentral.com` | `https://platform.ringcentral.com/restapi/v1.0/` |
+| Sandbox | `https://platform.devtest.ringcentral.com` | `https://platform.devtest.ringcentral.com/restapi/v1.0/` |
+
+Use the host value, not the REST prefix, when configuring most SDK clients. Use the full REST prefix when composing raw HTTP URLs.
+
+## WebSocket subscriptions
+
+| Value | Canonical string |
+|-------|------------------|
+| Production WebSocket URL | `wss://platform.ringcentral.com/restapi/ws/net/v1.0/` |
+| Create a subscription | `POST /restapi/v1.0/subscription` |
+| Renew a subscription | `PUT /restapi/v1.0/subscription/{subscriptionId}` |
+| Expiration reminder event filter | `/restapi/v1.0/subscription/~?threshold=3600&interval=3600` |
+| JavaScript package | `@ringcentral/subscriptions` |
+
+Use WebSockets for browser, desktop, or mobile apps that need low-latency push notifications without hosting a public HTTPS webhook endpoint.
+
+## Common notification event filters
+
+| Use case | Event filter |
+|----------|--------------|
+| Presence updates for current extension | `/restapi/v1.0/account/~/extension/~/presence` |
+| Inbound SMS notifications | `/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS` |
+| Subscription expiration reminders | `/restapi/v1.0/subscription/~?threshold=3600&interval=3600` |
+
+For a browser app that needs presence, inbound SMS, and renewal handling, create a WebSocket subscription with all three filters, listen for notifications using `@ringcentral/subscriptions`, and renew with `PUT /restapi/v1.0/subscription/{subscriptionId}` when the expiration reminder arrives.
+
+## RingCentral Video
+
+| Value | Canonical string |
+|-------|------------------|
+| Video REST API base path | `/rcvideo/v2/` |
+| Create a meeting bridge | `POST /rcvideo/v2/bridges/` |
+| List meeting bridges | `GET /rcvideo/v2/bridges/` |
+| Look up bridge by web PIN | `GET /rcvideo/v2/bridges/pin/web/{pin}` |
+| Look up bridge by PSTN PIN | `GET /rcvideo/v2/bridges/pin/pstn/{pin}` |
+
+An `Instant` bridge is the default bridge type. Instant bridges are retained for 3 days before deletion.
+
+## RingCentral Webinar
+
+| Value | Canonical string |
+|-------|------------------|
+| Create a webinar | `POST /webinar/v1/accounts/{accountId}/webinars` |
+| Create a session | `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions` |
+| Add a registrant | `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants` |
+| Required permissions | `EditWebinars`, `ReadWebinars` |
+
+Set `registrationEnabled=true` for marketing webinars so each registrant receives a unique join URL. Set `registrationEnabled=false` for internal all-hands webinars that use one shared join URL.
+
+## Team Messaging
+
+| Use case | Endpoint |
+|----------|----------|
+| Create a team | `POST /restapi/v1.0/glip/teams` |
+| Read a team | `GET /restapi/v1.0/glip/teams/{chatId}` |
+| Post into a chat or team | `POST /restapi/v1.0/glip/chats/{chatId}/posts` |
+| Alternative post endpoint | `POST /restapi/v1.0/glip/posts` |
+
+Team Messaging was formerly called Glip, so many REST API paths still use `/glip/`.
+
+## User-Agent header
+
+Send a `User-Agent` header with every backend API request. Use this format:
+
+```http
+User-Agent: MyApp/1.0 (Linux; Python/3.9)
+```
+
+For browser apps that cannot override the browser-controlled `User-Agent` header, send the same application identifier in `X-User-Agent`.
+
+## Messaging limits
+
+| API | Limit |
+|-----|-------|
+| Fax attachments | Combined attachment size must not exceed 50 MB. |
+| Fax pages | Attachments must not exceed 200 pages. |
+| High Volume SMS batch | Batch payload size is about 50 MB. |
+
+## Related guides
+
+- [Methods, endpoints and parameters](uris.md)
+- [Push notification event categories](../notifications/event-categories-quick-reference.md)
+- [WebSocket subscriptions](../notifications/websockets/subscribing.md)
+- [Video meetings and Webinar comparison](../video/api/video-vs-webinar.md)
+- [Team Messaging API quick reference](../team-messaging/api-quick-reference.md)

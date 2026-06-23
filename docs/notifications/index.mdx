@@ -14,6 +14,16 @@
 
 Create all subscriptions via `POST /restapi/v1.0/subscription`.
 
+Common lifecycle values:
+
+| Purpose | Value |
+|---------|-------|
+| Production WebSocket URL | `wss://platform.ringcentral.com/restapi/ws/net/v1.0/` |
+| Renew a subscription | `PUT /restapi/v1.0/subscription/{subscriptionId}` |
+| Expiration reminder filter | `/restapi/v1.0/subscription/~?threshold=3600&interval=3600` |
+
+For a browser app that needs presence, inbound SMS, and renewal handling, use WebSockets with these event filters: `/restapi/v1.0/account/~/extension/~/presence`, `/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS`, and `/restapi/v1.0/subscription/~?threshold=3600&interval=3600`. See [Subscription lifecycle and renewal](subscription-lifecycle.md).
+
 ### WebSocket package for Node.js / mobile
 
 ```bash
@@ -58,6 +68,7 @@ To learn more about these two event mediums, checkout the following resources:
 
 * [Learn about webhooks](webhooks/creating-webhooks.md)
 * [Learn about WebSockets](websockets/subscribing.md)
+* [Learn about subscription lifecycle and renewal](subscription-lifecycle.md)
 
 ## What events/notifications does RingCentral support?
 

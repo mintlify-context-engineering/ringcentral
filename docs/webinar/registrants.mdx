@@ -13,6 +13,14 @@ One can disable/enable registration via the `registrationEnabled` webinar settin
 
 To register a person for a webinar, one would need to create the webinar registrant via the Webinar API. The code and logic for this is relatively straight-forward and is done by calling the [create registrant](https://developers.ringcentral.com/api-reference/Registrants/rcwRegCreateRegistrant) operation shown below. 
 
+Canonical registrant endpoint:
+
+```http
+POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants
+```
+
+Registrants are attached to a webinar session. For marketing webinars with `registrationEnabled=true`, each registrant receives a unique join URL. For internal all-hands webinars with `registrationEnabled=false`, attendees use a shared join URL and do not need individual registrant records.
+
 **Javascript**
     ```js
     

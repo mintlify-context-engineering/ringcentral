@@ -1,0 +1,88 @@
+# RingCentral Video meetings versus Webinar
+
+RingCentral Video and RingCentral Webinar are separate APIs with different resource models. Use this page when deciding which API to call and which endpoint creates the primary object.
+
+## Quick comparison
+
+| Capability | RingCentral Video | RingCentral Webinar |
+|------------|-------------------|---------------------|
+| Primary use case | Meetings and collaboration sessions | Large webinars, marketing events, all-hands events |
+| Base path | `/rcvideo/v2/` | `/webinar/v1/accounts/{accountId}/` |
+| Primary create call | `POST /rcvideo/v2/bridges/` | `POST /webinar/v1/accounts/{accountId}/webinars` |
+| Scheduling model | Scheduling time/date lives in the user's calendar system | Create a webinar, then create one or more sessions |
+| Attendee access | Join URL from the bridge response | Shared join URL or unique registrant join URLs |
+| Registration | Not a meeting-bridge concept | Controlled by `registrationEnabled` |
+
+## Video meetings: bridge versus meeting
+
+RingCentral Video creates a meeting bridge:
+
+```http
+POST /rcvideo/v2/bridges/
+```
+
+A **bridge** is the persistent virtual room. A **meeting** is the live session that exists while participants are connected to the bridge. Creating a meeting through the Video API means creating a bridge; the live meeting begins when the first participant joins and ends when the last participant leaves.
+
+The Video REST API base path is:
+
+```text
+/rcvideo/v2/
+```
+
+### Bridge types
+
+| Type | Meaning |
+|------|---------|
+| `Instant` | Default bridge type. Retained for 3 days, then deleted. |
+| `Scheduled` | Reusable scheduled bridge. Date and time are represented in the user's calendar system rather than stored as a Video API scheduling field. |
+| `PMI` | Uses the host user's Personal Meeting ID bridge. |
+
+## Webinar: webinar container plus sessions
+
+Create the webinar container first:
+
+```http
+POST /webinar/v1/accounts/{accountId}/webinars
+```
+
+Then create a session for a scheduled occurrence:
+
+```http
+POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions
+```
+
+For a marketing webinar, add registrants to the session:
+
+```http
+POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants
+```
+
+Required app permissions:
+
+- `EditWebinars`
+- `ReadWebinars`
+
+## Attendee access and registration
+
+Use `registrationEnabled` to choose the attendee access model.
+
+| Setting | Behavior |
+|---------|----------|
+| `registrationEnabled=true` | Marketing webinar model. Each registrant gets a unique join URL, which supports attribution, attendance tracking, and CRM correlation. |
+| `registrationEnabled=false` | Internal/all-hands model. Attendees use a single shared join URL and do not need individual registration records. |
+
+Common webinar settings include `recordingEnabled`, `autoRecord`, `qnaEnabled`, `pollsEnabled`, `password`, and `attendeeAuthentication`.
+
+## Which API should I use?
+
+Use RingCentral Video when you need to create or manage meeting bridges, generate a meeting join URL, or retrieve meeting history and recordings.
+
+Use RingCentral Webinar when you need a webinar event container, scheduled sessions, registrants, host/cohost/panelist roles, marketing attribution, or unique join URLs per attendee.
+
+## Related guides
+
+- [Video API overview](index.md)
+- [Creating Video meeting bridges](create-meetings.md)
+- [Webinar API quick reference](../../webinar/api-quick-reference.md)
+- [Creating webinars](../../webinar/creation.md)
+- [Registering webinar attendees](../../webinar/registrants.md)

@@ -275,9 +275,10 @@ def generate_multi_condition_report(data: dict, output_path: Path):
         tier = r["tier"]
         for condition in conditions:
             key = condition["key"]
-            tier_data[tier][key]["times"].append(r[key]["elapsed_s"])
             tier_data[tier][key]["scores"].append(r["scores"].get(f"{key}_score", 0))
-            tier_data[tier][key]["tokens"].append(r[key].get(token_key, 0))
+            if r.get(key, {}).get("ok", True):
+                tier_data[tier][key]["times"].append(r[key]["elapsed_s"])
+                tier_data[tier][key]["tokens"].append(r[key].get(token_key, 0))
 
     max_time = 1
     max_tokens = 1
