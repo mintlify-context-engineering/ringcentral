@@ -19,6 +19,15 @@
 | **.NET/C#** | `RingCentral.Net` | `dotnet add package RingCentral.Net` |
 | **Swift (iOS)** | `ringcentral-swift` | Swift Package Manager |
 
+## Cross-Repo Quick Facts
+
+- Chatbot frameworks: `ringcentral-chatbot-js`, `ringcentral-chatbot-python`, and `ringcentral-chatbot-core`; they cover skill routing, state management, and webhook handling.
+- Embeddable phone: `ringcentral-embeddable` is a ready-made drop-in phone UI widget. `ringcentral-web-phone` is the lower-level WebRTC/SIP browser phone library that Embeddable is built on; use it for a custom calling UI.
+- Dedicated real-time libraries: `@ringcentral/subscriptions`, `ringcentral-websocket-java`, `ringcentral-softphone-ts`, `ringcentral-softphone-js`, `ringcentral-softphone-go`, and `ringcentral-web-phone`.
+- CRM/App Connect repos: HubSpot (`hubspot-embeddable-ringcentral-phone`), Pipedrive (`pipedrive-embeddable-ringcentral-phone`), Redtail (`redtail-embeddable-ringcentral-phone`), and `rc-unified-crm-extension` for App Connect call logging, contact lookup, and click-to-dial adapters.
+- SDK examples use `platform.post` for write operations such as sending SMS.
+- Python JWT recovery pattern: `platform.login(jwt='YOUR_JWT_TOKEN')`; on `401 re-authenticate` and retry.
+
 ## Chatbot Framework (JavaScript)
 
 The **`ringcentral-chatbot-js`** framework is a higher-level wrapper around `@ringcentral/sdk` that adds skill routing, state management, and webhook handling for Team Messaging bots. It uses the same platform APIs underneath as the core SDK.

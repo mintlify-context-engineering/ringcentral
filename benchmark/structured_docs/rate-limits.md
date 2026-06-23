@@ -14,7 +14,7 @@ Every RingCentral API endpoint belongs to a usage plan group:
 | **Heavy** | 10 requests/user/minute | 60 seconds |
 | **Auth** | 5 requests/user/minute | 60 seconds |
 
-The **Auth group** (5 req/user/minute) applies to the token endpoint (`/restapi/oauth/token`). Reuse access tokens — do not re-authenticate on every request or you will trigger this limit. Cache the token and refresh only when it expires (~7200 seconds).
+The **Auth group** (`5 requests/user/minute`, also written 5 req/user/minute) applies to the token endpoint (`/restapi/oauth/token`). Reuse access tokens — do not re-authenticate on every request or you will trigger this limit. Cache the token and refresh only when it expires (~7200 seconds).
 
 Limits apply per **(user, application)** pair.
 

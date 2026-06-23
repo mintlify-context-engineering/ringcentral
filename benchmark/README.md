@@ -56,7 +56,7 @@ python run_experiment.py --provider openrouter --model "~openai/gpt-latest"
 # Cursor explicitly, matching the default behavior
 python run_experiment.py --provider cursor --model composer-2.5
 
-# Quick smoke test — Tier 1 only (7 questions, ~10 min)
+# Quick smoke test — Tier 1 only (20 questions)
 python run_experiment.py --tier 1
 
 # Quick OpenRouter smoke test
@@ -155,14 +155,14 @@ See [`DOC_STRUCTURE_GUIDE.md`](DOC_STRUCTURE_GUIDE.md) for the generalizable pri
 
 ## Benchmark Questions
 
-36 questions across 4 tiers:
+80 questions across 4 tiers:
 
 | Tier | Count | What It Tests |
 |------|-------|---------------|
-| **Tier 1** | 7 | Single-fact lookups (base URL, status codes, install commands) |
-| **Tier 2** | 7 | Multi-step how-tos (JWT auth flow, webhook creation, pagination) |
-| **Tier 3** | 16 | Cross-repo synthesis (SDK matrix, auth flow choice, full implementation) |
-| **Tier 4** | 6 | Source-only cross-repo questions whose answers live in package manifests, source modules, tests, or config rather than docs |
+| **Tier 1** | 20 | Single-fact lookups (base URLs, status codes, install commands, endpoint paths, limits) |
+| **Tier 2** | 20 | Multi-step how-tos (JWT/auth flows, webhook creation, pagination, messaging, video, webinar, bot setup) |
+| **Tier 3** | 20 | Cross-repo and cross-doc synthesis (SDK matrix, auth flow choice, full implementation, product/API comparisons) |
+| **Tier 4** | 20 | Source-only cross-repo questions whose answers live in package manifests, source modules, tests, or config rather than docs |
 
 Tier 3 is where the gap is largest — raw monorepo agents often give partial answers or get lost across repos.
 Tier 4 is intentionally harder for docs-only retrieval: it asks implementation and repo-composition questions that are not expected to be present in the public docs layer.

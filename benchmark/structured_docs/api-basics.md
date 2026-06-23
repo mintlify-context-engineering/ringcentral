@@ -10,6 +10,16 @@
 **Full production REST API prefix:** `https://platform.ringcentral.com/restapi/v1.0/`  
 **Full sandbox REST API prefix:** `https://platform.devtest.ringcentral.com/restapi/v1.0/`
 
+## Quick Facts for Retrieval
+
+- OAuth token endpoint path: `/restapi/oauth/token`.
+- Account extension list endpoint: `/restapi/v1.0/account/{accountId}/extension`.
+- Directory entries endpoint: `/restapi/v1.0/account/~/directory/entries`; filter by site with `siteId`.
+- Current extension phone numbers endpoint: `/restapi/v1.0/account/~/extension/~/phone-number`.
+- P2P SMS endpoint: `/restapi/v1.0/account/~/extension/~/sms`.
+- Recommended header example: `User-Agent: MyApp/1.0 (Linux; Python/3.9)`.
+- Error recovery: `401` means re-authenticate; `403` means check permissions/scopes; `429` means wait `Retry-After`; `503` means retry with exponential backoff.
+
 When asked for the **sandbox base URL**, answer with the host only: `https://platform.devtest.ringcentral.com`. Add `/restapi/v1.0/` only when the question asks for the full REST API prefix or a complete endpoint URL.
 
 | Environment | Host | Full REST API prefix |

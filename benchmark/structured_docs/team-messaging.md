@@ -23,6 +23,15 @@
 **Auth flow**: JWT (recommended for server apps), OAuth 2.0 Authorization Code for user-context apps  
 **App type for bots**: Must be created as a **Bot** app type in the RingCentral Developer Portal (not a plain REST API app)
 
+## Team Messaging Quick Facts
+
+- Bots receive `Message4Bot` events and respond with `bot.sendMessage(group.id, { text: 'pong' })`.
+- Install the JavaScript bot framework with `npm install ringcentral-chatbot dotenv`.
+- Minimal apps import/use `createApp` from `ringcentral-chatbot/dist/apps`.
+- The JavaScript bot framework listens on `RINGCENTRAL_CHATBOT_EXPRESS_PORT`.
+- Team creation uses `POST /restapi/v1.0/glip/teams` with `public`, `name`, `description`, and `members`.
+- Posting to a chat uses `POST /restapi/v1.0/glip/chats/{chatId}/posts`; posting generally can also use `POST /restapi/v1.0/glip/posts`.
+
 ## Bots vs Regular API Apps
 
 Bots require a dedicated **Bot** app type selected in the Developer Portal. This is the critical difference from standard REST API apps:

@@ -22,6 +22,14 @@ The RingCentral Video REST API lets developers create and schedule meetings, joi
 
 A **bridge** is a persistent virtual meeting room. A **meeting** is the live session that exists while at least one person is connected to a bridge. Creating a meeting means creating a bridge; the meeting begins when the first participant connects and ends when the last disconnects.
 
+## Video Quick Facts
+
+- RingCentral Video base path: `/rcvideo/v2/`.
+- Create a meeting bridge with `POST /rcvideo/v2/bridges/`.
+- Bridge types are `Instant`, `Scheduled`, and `PMI`.
+- Waiting room setting field: `join.waitingRoomRequired`.
+- RingCentral Video does not store meeting time/date/location; scheduling is left to the user's calendar system.
+
 ## Bridge Types (`type` parameter)
 
 | Type | Behavior |

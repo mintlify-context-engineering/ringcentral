@@ -12,6 +12,16 @@
 | **Protocol** | HTTPS POST to your URL | WebSocket connection |
 | **Offline handling** | Events queue and deliver when server returns | Lost if connection drops |
 
+## Subscription Quick Facts
+
+- Production WebSocket URL: `wss://platform.ringcentral.com/restapi/ws/net/v1.0/`.
+- WebSockets are best for browser/mobile clients because they need no public HTTPS server.
+- Create subscriptions with `POST /restapi/v1.0/subscription`.
+- Webhook validation must return within 3000ms and keep the response under `1024 bytes`.
+- Renewal reminder event filter: `/restapi/v1.0/subscription/~?threshold=3600&interval=3600`.
+- Renew an existing subscription with `PUT /restapi/v1.0/subscription/{subscriptionId}`.
+- Common event filters include `/restapi/v1.0/account/~/extension/~/presence`, `/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS`, `/restapi/v1.0/account/~/telephony/sessions`, and `/restapi/v1.0/account/~/extension/~/missed-calls`.
+
 **Rule of thumb**: Use WebSocket for real-time, low-latency client notifications on mobile (e.g., incoming call alerts) — no public server required. Use webhooks for server-side event processing (e.g., logging all calls to a database).
 
 The `@ringcentral/subscriptions` npm package handles WebSocket subscriptions for JavaScript/Node apps — no public server needed, ideal for mobile and browser clients.

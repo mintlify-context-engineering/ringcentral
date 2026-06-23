@@ -65,6 +65,123 @@
       "expected_source": "sdks.md or python README"
     },
     {
+      "id": "T1-08",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the RingCentral OAuth token endpoint path?",
+      "ground_truth": "/restapi/oauth/token",
+      "key_facts": ["/restapi/oauth/token"],
+      "expected_source": "api-basics.md or authentication.md"
+    },
+    {
+      "id": "T1-09",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What User-Agent header format does RingCentral recommend for API calls?",
+      "ground_truth": "Use a product/version plus runtime/platform string, for example: User-Agent: MyApp/1.0 (Linux; Python/3.9).",
+      "key_facts": ["User-Agent", "MyApp/1.0", "Python/3.9"],
+      "expected_source": "api-basics.md"
+    },
+    {
+      "id": "T1-10",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What permission is required to use the Team Messaging API?",
+      "ground_truth": "TeamMessaging",
+      "key_facts": ["TeamMessaging"],
+      "expected_source": "team-messaging.md"
+    },
+    {
+      "id": "T1-11",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What RingCentral Developer Portal app type is required for Team Messaging bots?",
+      "ground_truth": "Bots must be created as a Bot app type, not a plain REST API app.",
+      "key_facts": ["Bot app type", "REST API app"],
+      "expected_source": "team-messaging.md"
+    },
+    {
+      "id": "T1-12",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the production WebSocket URL for RingCentral push subscriptions?",
+      "ground_truth": "wss://platform.ringcentral.com/restapi/ws/net/v1.0/",
+      "key_facts": ["wss://platform.ringcentral.com/restapi/ws/net/v1.0/"],
+      "expected_source": "webhooks.md"
+    },
+    {
+      "id": "T1-13",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What endpoint sends a person-to-person SMS from the authenticated extension?",
+      "ground_truth": "POST /restapi/v1.0/account/~/extension/~/sms",
+      "key_facts": ["POST", "/restapi/v1.0/account/~/extension/~/sms"],
+      "expected_source": "messaging.md or api-basics.md"
+    },
+    {
+      "id": "T1-14",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What endpoint sends High Volume SMS batches?",
+      "ground_truth": "POST /restapi/v1.0/account/~/a2p-sms/batches",
+      "key_facts": ["POST", "/restapi/v1.0/account/~/a2p-sms/batches"],
+      "expected_source": "messaging.md"
+    },
+    {
+      "id": "T1-15",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What endpoint sends a fax from the authenticated extension?",
+      "ground_truth": "POST /restapi/v1.0/account/~/extension/~/fax",
+      "key_facts": ["POST", "/restapi/v1.0/account/~/extension/~/fax"],
+      "expected_source": "messaging.md"
+    },
+    {
+      "id": "T1-16",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the maximum total attachment size for a RingCentral fax?",
+      "ground_truth": "50 MB",
+      "key_facts": ["50 MB"],
+      "expected_source": "messaging.md"
+    },
+    {
+      "id": "T1-17",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What base path do RingCentral Video REST API endpoints use?",
+      "ground_truth": "/rcvideo/v2/",
+      "key_facts": ["/rcvideo/v2/"],
+      "expected_source": "video.md"
+    },
+    {
+      "id": "T1-18",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What is the default RingCentral Video bridge type, and how long is it retained?",
+      "ground_truth": "Instant bridges are the default and are retained for 3 days before deletion.",
+      "key_facts": ["Instant", "3 days"],
+      "expected_source": "video.md"
+    },
+    {
+      "id": "T1-19",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What endpoint creates a RingCentral Webinar?",
+      "ground_truth": "POST /webinar/v1/accounts/{accountId}/webinars",
+      "key_facts": ["POST", "/webinar/v1/accounts/{accountId}/webinars"],
+      "expected_source": "webinar.md"
+    },
+    {
+      "id": "T1-20",
+      "tier": 1,
+      "category": "lookup",
+      "question": "What ACE domains can be used when retrieving AI Conversation Expert insights?",
+      "ground_truth": "pbx, rcv, rcx, nice-incontact, and ms-teams.",
+      "key_facts": ["pbx", "rcv", "rcx", "nice-incontact", "ms-teams"],
+      "expected_source": "ai.md"
+    },
+    {
       "id": "T2-01",
       "tier": 2,
       "category": "how-to",
@@ -126,6 +243,123 @@
       "ground_truth": "platform.post('/restapi/v1.0/account/~/extension/~/sms', {'from': {'phoneNumber': '+15551234567'}, 'to': [{'phoneNumber': '+15559876543'}], 'text': 'Hello!'})",
       "key_facts": ["/restapi/v1.0/account/~/extension/~/sms", "from", "to", "text", "phoneNumber"],
       "expected_source": "sdks.md or python README"
+    },
+    {
+      "id": "T2-08",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How does the Authorization Code + PKCE flow work in RingCentral?",
+      "ground_truth": "Redirect the user to /restapi/oauth/authorize with response_type=code, client_id, redirect_uri, code_challenge, and code_challenge_method=S256. After login, RingCentral redirects back with ?code=AUTHCODE. Exchange that code at POST /restapi/oauth/token using grant_type=authorization_code, code=AUTHCODE, and the original code_verifier.",
+      "key_facts": ["/restapi/oauth/authorize", "response_type=code", "code_challenge", "S256", "grant_type=authorization_code", "code_verifier"],
+      "expected_source": "authentication.md"
+    },
+    {
+      "id": "T2-09",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How should my app recover from common RingCentral API errors like 401, 403, 429, and 503?",
+      "ground_truth": "For 401, re-authenticate or refresh the expired/invalid token and retry. For 403, check app permissions/scopes and user authorization. For 429, wait the full Retry-After interval before retrying. For 503, retry with exponential backoff.",
+      "key_facts": ["401", "re-authenticate", "403", "permissions", "429", "Retry-After", "503", "exponential backoff"],
+      "expected_source": "api-basics.md + rate-limits.md"
+    },
+    {
+      "id": "T2-10",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I receive real-time inbound SMS notifications?",
+      "ground_truth": "Authenticate the extension that owns the phone number, create a subscription with event filter /restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS, and receive events through a Webhook endpoint or WebSocket connection. The inbound payload includes from.phoneNumber, to.phoneNumber, subject, direction=Inbound, type=SMS, readStatus=Unread, and messageStatus=Received.",
+      "key_facts": ["/message-store/instant?type=SMS", "Webhook", "WebSocket", "from.phoneNumber", "to.phoneNumber", "subject", "Inbound", "Received"],
+      "expected_source": "messaging.md + webhooks.md"
+    },
+    {
+      "id": "T2-11",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I send a High Volume SMS batch, and what limitations should I remember?",
+      "ground_truth": "POST to /restapi/v1.0/account/~/a2p-sms/batches with a from number and a messages array containing recipient lists and text. It supports local 10DLC and toll-free numbers in the US and Canada, has an approximate 50 MB batch size limit, and does not support MMS, group messaging, international SMS from US numbers, scheduled SMS, or 10DLC US-to-Canada traffic.",
+      "key_facts": ["/restapi/v1.0/account/~/a2p-sms/batches", "from", "messages", "50 MB", "MMS", "US and Canada", "10DLC", "toll-free"],
+      "expected_source": "messaging.md"
+    },
+    {
+      "id": "T2-12",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I send a fax with attachments using the RingCentral API?",
+      "ground_truth": "POST /restapi/v1.0/account/~/extension/~/fax as multipart/form-data or multipart/mixed. Include a JSON root attachment with recipients, quality, cover page text, and optional sendTime, then attach the documents in order. The from fax number comes from the extension's outbound fax settings. The total attachment size limit is 50 MB and the max page count is 200.",
+      "key_facts": ["/restapi/v1.0/account/~/extension/~/fax", "multipart/form-data", "multipart/mixed", "root attachment", "sendTime", "50 MB", "200"],
+      "expected_source": "messaging.md"
+    },
+    {
+      "id": "T2-13",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I create a secure RingCentral Video meeting bridge?",
+      "ground_truth": "Create a bridge with POST /rcvideo/v2/bridges/. Choose a type such as Instant, Scheduled, or PMI, and set security parameters like passwordProtected/password, noGuests, sameAccount, and e2ee. Preferences such as join.audioMuted, join.videoMuted, join.waitingRoomRequired, recordingsMode, and transcriptionsMode control the attendee experience.",
+      "key_facts": ["/rcvideo/v2/bridges/", "Instant", "Scheduled", "PMI", "passwordProtected", "noGuests", "sameAccount", "e2ee", "waitingRoomRequired"],
+      "expected_source": "video.md"
+    },
+    {
+      "id": "T2-14",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I renew a RingCentral webhook or WebSocket subscription before it expires?",
+      "ground_truth": "Add the expiration reminder event filter /restapi/v1.0/subscription/~?threshold=3600&interval=3600. When the reminder event arrives, call PUT https://platform.ringcentral.com/restapi/v1.0/subscription/{subscriptionId} to renew the subscription.",
+      "key_facts": ["/restapi/v1.0/subscription/~?threshold=3600&interval=3600", "PUT", "/restapi/v1.0/subscription/{subscriptionId}", "renew"],
+      "expected_source": "webhooks.md"
+    },
+    {
+      "id": "T2-15",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I create a minimal Team Messaging bot with ringcentral-chatbot-js?",
+      "ground_truth": "Create a Bot app type in the Developer Portal, install ringcentral-chatbot and dotenv, import createApp from ringcentral-chatbot/dist/apps, implement a handle(event) function, check for type === 'Message4Bot' and text such as 'ping', respond with bot.sendMessage(group.id, { text: 'pong' }), then listen on RINGCENTRAL_CHATBOT_EXPRESS_PORT.",
+      "key_facts": ["Bot app type", "npm install ringcentral-chatbot dotenv", "createApp", "Message4Bot", "bot.sendMessage", "RINGCENTRAL_CHATBOT_EXPRESS_PORT"],
+      "expected_source": "team-messaging.md"
+    },
+    {
+      "id": "T2-16",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I create a RingCentral Team Messaging team and then post a message to it?",
+      "ground_truth": "Use POST /restapi/v1.0/glip/teams with public, name, description, and members to create the team. The response includes the team's id, which can be used as groupId/chatId. Then post using POST /restapi/v1.0/glip/chats/{chatId}/posts or POST /restapi/v1.0/glip/posts with the message body. The app needs TeamMessaging permission.",
+      "key_facts": ["/restapi/v1.0/glip/teams", "members", "id", "/restapi/v1.0/glip/chats/{chatId}/posts", "/restapi/v1.0/glip/posts", "TeamMessaging"],
+      "expected_source": "team-messaging.md"
+    },
+    {
+      "id": "T2-17",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How can I list company directory entries and restrict the results to a specific site?",
+      "ground_truth": "Call GET /restapi/v1.0/account/~/directory/entries to list company directory entries. To filter by site, add the siteId query parameter: GET /restapi/v1.0/account/~/directory/entries?siteId={site}. Use the tilde account shortcut for the authenticated account.",
+      "key_facts": ["/restapi/v1.0/account/~/directory/entries", "siteId", "authenticated account", "~"],
+      "expected_source": "account.md + api-basics.md"
+    },
+    {
+      "id": "T2-18",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I initiate, poll, and cancel a RingOut call?",
+      "ground_truth": "Initiate with POST /restapi/v1.0/account/~/extension/~/ring-out using from.phoneNumber, to.phoneNumber, optional playPrompt, and optional callerId.phoneNumber. Poll status with GET /restapi/v1.0/account/~/extension/~/ring-out/{ringOutId}. Cancel before both legs connect with DELETE /restapi/v1.0/account/~/extension/~/ring-out/{ringOutId}, which returns 204 No Content on success.",
+      "key_facts": ["/restapi/v1.0/account/~/extension/~/ring-out", "from.phoneNumber", "to.phoneNumber", "playPrompt", "callerId.phoneNumber", "GET", "DELETE", "204 No Content"],
+      "expected_source": "voice.md"
+    },
+    {
+      "id": "T2-19",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I set up a marketing webinar with unique join URLs for attendees?",
+      "ground_truth": "Create the webinar with POST /webinar/v1/accounts/{accountId}/webinars and settings.registrationEnabled=true, then create a session with POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions. Add attendees through POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants so each registrant receives a unique join URL.",
+      "key_facts": ["registrationEnabled", "/webinar/v1/accounts/{accountId}/webinars", "/sessions", "/registrants", "unique join URL"],
+      "expected_source": "webinar.md"
+    },
+    {
+      "id": "T2-20",
+      "tier": 2,
+      "category": "how-to",
+      "question": "How do I use the legacy asynchronous AI APIs and know when a job is complete?",
+      "ground_truth": "Submit a request such as POST /ai/audio/v1/async/speech-to-text?webhook=<url>. The immediate response returns a jobId. Poll GET /ai/status/v1/jobs/{jobId} until status equals Completed, or receive the results posted to your webhook when processing finishes. Job IDs expire after 1 week. For new recorded-call insights, use ACE instead because the legacy AI async endpoints are deprecated.",
+      "key_facts": ["/ai/audio/v1/async/speech-to-text", "webhook", "jobId", "/ai/status/v1/jobs/{jobId}", "Completed", "1 week", "deprecated", "ACE"],
+      "expected_source": "ai.md"
     },
     {
       "id": "T3-01",
@@ -272,6 +506,42 @@
       "expected_source": "sdks.mdx + sdks/ WebSocket and softphone READMEs"
     },
     {
+      "id": "T3-17",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Compare P2P SMS, High Volume SMS, and Fax in RingCentral. Which endpoint should I use for each and what are the key constraints?",
+      "ground_truth": "Use P2P SMS for person-to-person text from an extension: POST /restapi/v1.0/account/~/extension/~/sms with from.phoneNumber, to[].phoneNumber, and text; the sending number must belong to the authenticated user extension and include SmsSender. Use High Volume SMS for A2P/bulk messages: POST /restapi/v1.0/account/~/a2p-sms/batches with from and messages; it supports local 10DLC and toll-free numbers in the US/Canada, but not MMS, group messaging, international SMS from US numbers, scheduled SMS, or 10DLC US-to-Canada. Use Fax for document transmission: POST /restapi/v1.0/account/~/extension/~/fax as multipart/form-data or multipart/mixed; total attachment size is 50 MB and max pages is 200.",
+      "key_facts": ["/restapi/v1.0/account/~/extension/~/sms", "SmsSender", "/restapi/v1.0/account/~/a2p-sms/batches", "10DLC", "toll-free", "MMS", "/restapi/v1.0/account/~/extension/~/fax", "multipart/form-data", "50 MB", "200"],
+      "expected_source": "messaging.md + account.md"
+    },
+    {
+      "id": "T3-18",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "Design a reliable notification setup for a browser app that needs presence, inbound SMS, and renewal handling. Should it use webhooks or WebSockets, and what event filters are needed?",
+      "ground_truth": "Use WebSockets for a browser/client app because they provide low-latency push without a public HTTPS server. Create a subscription with eventFilters for presence (/restapi/v1.0/account/~/extension/~/presence), inbound SMS (/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS), and subscription expiration reminders (/restapi/v1.0/subscription/~?threshold=3600&interval=3600). In JavaScript, @ringcentral/subscriptions can create/register the WebSocket subscription and listen for notification events. When the expiration reminder arrives, renew with PUT /restapi/v1.0/subscription/{subscriptionId}.",
+      "key_facts": ["WebSockets", "no public HTTPS server", "/presence", "/message-store/instant?type=SMS", "/restapi/v1.0/subscription/~?threshold=3600&interval=3600", "@ringcentral/subscriptions", "PUT", "/restapi/v1.0/subscription/{subscriptionId}"],
+      "expected_source": "webhooks.md + messaging.md + sdks.md"
+    },
+    {
+      "id": "T3-19",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "How do RingCentral Video meetings and RingCentral Webinars differ in API structure and attendee access?",
+      "ground_truth": "RingCentral Video creates a meeting bridge with POST /rcvideo/v2/bridges/. A bridge is the persistent virtual room, while a meeting is the live session that exists while participants are connected. Video bridge types include Instant, Scheduled, and PMI; scheduling time/date is left to a calendar system. RingCentral Webinar uses a webinar container plus sessions: POST /webinar/v1/accounts/{accountId}/webinars, then POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions. For attendee access, webinar registrationEnabled=true creates unique join URLs for registrants; registrationEnabled=false creates a single shared join URL for internal/all-hands events.",
+      "key_facts": ["/rcvideo/v2/bridges/", "bridge", "meeting", "Instant", "Scheduled", "PMI", "calendar", "/webinar/v1/accounts/{accountId}/webinars", "sessions", "registrationEnabled", "unique join URL", "single shared join URL"],
+      "expected_source": "video.md + webinar.md"
+    },
+    {
+      "id": "T3-20",
+      "tier": 3,
+      "category": "cross-repo",
+      "question": "For an app that displays organization users and lets the current user text only from eligible numbers, which RingCentral APIs and fields should it combine?",
+      "ground_truth": "List organization users/extensions with GET /restapi/v1.0/account/{accountId}/extension or directory entries with GET /restapi/v1.0/account/~/directory/entries, optionally filtering directory entries by siteId. For the current user's SMS sender choices, call GET /restapi/v1.0/account/~/extension/~/phone-number and keep numbers whose features include SmsSender. Send P2P SMS through POST /restapi/v1.0/account/~/extension/~/sms using from.phoneNumber, to[].phoneNumber, and text. A super admin cannot send P2P SMS on behalf of another extension, so the sending number must belong to the authenticated user extension.",
+      "key_facts": ["/restapi/v1.0/account/{accountId}/extension", "/restapi/v1.0/account/~/directory/entries", "siteId", "/restapi/v1.0/account/~/extension/~/phone-number", "features", "SmsSender", "/restapi/v1.0/account/~/extension/~/sms", "authenticated user extension", "super admin cannot send"],
+      "expected_source": "account.md + messaging.md + api-basics.md"
+    },
+    {
       "id": "T4-01",
       "tier": 4,
       "category": "source-only-cross-repo",
@@ -324,6 +594,132 @@
       "ground_truth": "notification-app-js publishes glip-integration-js v0.2.1, uses express 4.17.3 and jest 27.5.1, proxies with ngrok http 6066, starts through npm run dev, and its app source defines a /test health route. engage-digital-chatbot-js publishes ringcentral-engage-chatbot v1.2.0, uses express ^4.17.1 and jest ^26.6.3, proxies with ngrok http 3000, defines /test plus GET /rc/webhook for verification and POST /rc/webhook for initWebhook(conf), and run-bot listens using RINGCENTRAL_ENGAGE_CHATBOT_EXPRESS_PORT and RINGCENTRAL_ENGAGE_CHATBOT_EXPRESS_HOST.",
       "key_facts": ["glip-integration-js v0.2.1", "ngrok http 6066", "express 4.17.3", "jest 27.5.1", "ringcentral-engage-chatbot v1.2.0", "ngrok http 3000", "GET /rc/webhook", "POST /rc/webhook"],
       "expected_source": "source-only: integrations/notification-app-js/package.json + src/app.js, voice/engage-digital-chatbot-js/package.json + src/app.js + src/run-bot.js"
+    },
+    {
+      "id": "T4-07",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "In the ringcentral-js monorepo, what root workspaces are declared and how do the root scripts delegate build, test, browser-test, and docs generation?",
+      "ground_truth": "The root package @ringcentral/mono v5.0.0 declares workspaces api-test, demo, react, react-demo, redux, redux-demo, sdk, subscriptions, subscriptions-deprecated, and utils. Root build runs lerna run build --concurrency=1 --stream, test runs lerna run test --concurrency=1 --stream, test:browser runs lerna run jest:browser --concurrency=1 --stream, and docs runs typedoc with tsconfig.docs.json over ./sdk/src ./react/src ./redux/src ./subscriptions/src.",
+      "key_facts": ["@ringcentral/mono", "api-test", "react", "redux", "sdk", "subscriptions", "lerna run build", "lerna run test", "jest:browser", "typedoc", "tsconfig.docs.json"],
+      "expected_source": "source-only: sdks/ringcentral-js/package.json"
+    },
+    {
+      "id": "T4-08",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "How do the @ringcentral/sdk and @ringcentral/subscriptions packages inside ringcentral-js differ in dependencies, entry points, and build/test scripts?",
+      "ground_truth": "@ringcentral/sdk is version 0.0.0, depends on dom-storage, is-plain-object, and node-fetch, exposes main ./lib/index.js, module ./es6/index.js, types ./lib/SDK.d.ts, and browser ./lib/SDK.js. Its build runs clean, ES5 tsc, ES6 tsc, and webpack; tests run JEST_ENV=node jest --config jest.config.js, with a jsdom jest:browser variant. @ringcentral/subscriptions is also version 0.0.0, depends on @rc-ex/core 1.6.17, @rc-ex/rcsdk 1.3.13, @rc-ex/ws 1.3.17, and wait-for-async 0.7.13, exposes main/browser ./lib/Subscriptions.js and types ./lib/Subscriptions.d.ts, and has build/start scripts but no package-level test script.",
+      "key_facts": ["@ringcentral/sdk", "dom-storage", "node-fetch", "./lib/SDK.d.ts", "JEST_ENV=node", "jest:browser", "@ringcentral/subscriptions", "@rc-ex/core 1.6.17", "@rc-ex/ws 1.3.17", "./lib/Subscriptions.js"],
+      "expected_source": "source-only: sdks/ringcentral-js/sdk/package.json + sdks/ringcentral-js/subscriptions/package.json"
+    },
+    {
+      "id": "T4-09",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "What .NET RingCentral packages are declared in the ringcentral-net repo for the core SDK, WebSocket, rate limit, and auto-refresh extensions, and how are they wired together?",
+      "ground_truth": "RingCentral.Net targets netstandard2.0 and publishes PackageId RingCentral.Net version 6.5.0 with Microsoft.AspNet.WebApi.Client 6.0.0. RingCentral.Net.WebSocket targets netstandard2.0, version 2.3.4, references ../RingCentral.Net/RingCentral.Net.csproj, and depends on Microsoft.CSharp 4.7.0 and Websocket.Client 4.7.0. RingCentral.Net.RateLimit version 1.0.2 references ../RingCentral.Net.Retry/RingCentral.Net.Retry.csproj. RingCentral.Net.AutoRefresh version 1.0.0 references ../RingCentral.Net/RingCentral.Net.csproj.",
+      "key_facts": ["RingCentral.Net", "6.5.0", "netstandard2.0", "Microsoft.AspNet.WebApi.Client", "RingCentral.Net.WebSocket", "2.3.4", "Websocket.Client", "RingCentral.Net.RateLimit", "1.0.2", "RingCentral.Net.AutoRefresh", "1.0.0"],
+      "expected_source": "source-only: sdks/ringcentral-net/**/*.csproj"
+    },
+    {
+      "id": "T4-10",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "In ringcentral-extensible, what are the root package scripts and what versions/dependencies are declared for core, ws, rate-limit, retry, and rcsdk packages?",
+      "ground_truth": "The root ringcentral-extensible package is v0.1.0. build runs pnpm --filter @rc-ex/core run build && pnpm --filter './packages/extensions/**' -r run build; test runs pnpm --filter @rc-ex/test exec vitest; check/fix use biome; publish-changed publishes ./packages/**. @rc-ex/core v1.8.1 builds with tsdown and depends on axios ^1.14.0 and qs ^6.15.0. @rc-ex/ws v1.5.1 builds with tsdown and depends on isomorphic-ws ^5.0.0, ws ^8.20.0, wait-for-async ^0.8.0, hyperid, http-status-codes, and @types/ws. @rc-ex/rate-limit v1.4.1 depends on @rc-ex/retry workspace:^. @rc-ex/retry v1.4.1 depends on wait-for-async ^0.8.0. @rc-ex/rcsdk v1.5.1 dev-depends on @ringcentral/sdk ^5.0.6.",
+      "key_facts": ["ringcentral-extensible", "0.1.0", "pnpm --filter @rc-ex/core", "vitest", "biome", "@rc-ex/core", "1.8.1", "axios", "@rc-ex/ws", "1.5.1", "ws ^8.20.0", "@rc-ex/rate-limit", "@rc-ex/retry", "@ringcentral/sdk ^5.0.6"],
+      "expected_source": "source-only: sdks/ringcentral-extensible/package.json + packages/**/package.json"
+    },
+    {
+      "id": "T4-11",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Across the RingCentral Video SDK JavaScript samples, what common frontend stack is used and which integrated sample differs in SDK packages?",
+      "ground_truth": "The JavaScript video sample packages are named web-samples v0.1.0 and use a dev script of webpack serve --config ./webpack.config.babel.js. Most samples depend on @ringcentral/video-sdk ^0.12.0, React ^18.2.0, react-dom ^18.2.0, @emotion/react ^11.7.1, @emotion/styled ^11.6.0, MUI packages around 5.11.x, TypeScript ^4.7.4, webpack ^5.9.0, webpack-cli ^4.9.1, and webpack-dev-server ^4.4.0. The integrated-meeting-uikit sample differs by using @ringcentral/video-sdk ^0.11.3 and adding @ringcentral/video-sdk-react ^0.4.0.",
+      "key_facts": ["web-samples", "0.1.0", "webpack serve --config ./webpack.config.babel.js", "@ringcentral/video-sdk ^0.12.0", "react ^18.2.0", "@mui/material", "typescript ^4.7.4", "integrated-meeting-uikit", "@ringcentral/video-sdk ^0.11.3", "@ringcentral/video-sdk-react ^0.4.0"],
+      "expected_source": "source-only: video/ringcentral-videosdk-js-samples/*/package.json"
+    },
+    {
+      "id": "T4-12",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "What does the ringcentral-swift package declare for Swift tools, supported platforms, product/target names, dependencies, and README installation?",
+      "ground_truth": "Package.swift uses swift-tools-version 5.1, package name RingCentral, platforms macOS v10_12, iOS v10, tvOS v10, and watchOS v3. It exposes a library product named RingCentral targeting RingCentral. The package depends on Alamofire from https://github.com/Alamofire/Alamofire.git upToNextMajor from 5.4.0, and the target depends on Alamofire. The README tells users to install with Swift Package Manager by adding https://github.com/ringcentral/ringcentral-swift.git on the dev branch.",
+      "key_facts": ["swift-tools-version:5.1", "RingCentral", "macOS(.v10_12)", "iOS(.v10)", "tvOS(.v10)", "watchOS(.v3)", "Alamofire", "5.4.0", "ringcentral-swift.git", "branch(\"dev\")"],
+      "expected_source": "source-only: sdks/ringcentral-swift/Package.swift + README.md"
+    },
+    {
+      "id": "T4-13",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Compare the Python, PHP, Java, and Go SDK package metadata: versions/modules, test commands, and notable runtime dependencies.",
+      "ground_truth": "ringcentral-python setup.py declares VERSION 0.9.2 and package name ringcentral, loading install_requires from requirements.txt. ringcentral/ringcentral-php composer.json declares a library requiring php >=7.2 plus ext-curl, ext-json, guzzlehttp/psr7 ^2.1.0, guzzlehttp/guzzle ^6.3.3|^7.4.1, pubnub/pubnub ^4.7.0|^6.0, symfony/event-dispatcher ^2 through ^7, and ratchet/pawl ^0.4.1; its test script is phpunit --configuration phpunit.xml. ringcentral-java build.gradle uses group com.ringcentral, version 3.4.0, Java 11 source/target compatibility, dependencies gson 2.13.2 and okhttp 5.3.2, with junit 4.13.2 for tests. ringcentral-go go.mod declares module github.com/ringcentral/ringcentral-go and go 1.15.",
+      "key_facts": ["ringcentral-python", "0.9.2", "ringcentral/ringcentral-php", "phpunit --configuration phpunit.xml", "guzzlehttp/guzzle", "pubnub/pubnub", "com.ringcentral", "3.4.0", "JavaVersion.VERSION_11", "gson:2.13.2", "okhttp:5.3.2", "github.com/ringcentral/ringcentral-go"],
+      "expected_source": "source-only: sdks/ringcentral-python/setup.py + sdks/ringcentral-php/composer.json + sdks/ringcentral-java/build.gradle + sdks/ringcentral-go/go.mod"
+    },
+    {
+      "id": "T4-14",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "How do @ringcentral/react and @ringcentral/redux inside ringcentral-js differ in peer dependencies and build outputs?",
+      "ground_truth": "@ringcentral/react and @ringcentral/redux are both version 0.0.0 packages that build by cleaning then running ES5 tsc and ES6 tsc. Both output main ./lib/index.js, module ./es6/index.js, and types ./lib/index.d.ts. @ringcentral/react peer-depends on @ringcentral/sdk >=4, react *, and react-dom *. @ringcentral/redux peer-depends on @ringcentral/sdk >=4, react ^16.0.0, and redux *. The redux package's devDependencies include react-redux ^5.1.2 and redux ^4.0.1, while the react package includes react-dom and react-router-dom dev dependencies.",
+      "key_facts": ["@ringcentral/react", "@ringcentral/redux", "0.0.0", "build:tsc:es5", "build:tsc:es6", "./lib/index.js", "./es6/index.js", "@ringcentral/sdk >=4", "react-dom", "redux", "react-redux ^5.1.2"],
+      "expected_source": "source-only: sdks/ringcentral-js/react/package.json + sdks/ringcentral-js/redux/package.json"
+    },
+    {
+      "id": "T4-15",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Compare the root test/start/release workflow of embeddable/web-apps and embeddable/ringcentral-js-widgets.",
+      "ground_truth": "embeddable/web-apps publishes @ringcentral/web-apps v1.0.0. Its test script is PORT=3000 start-server-and-test serve http://localhost:3000 cypress:run; build uses SKIP_PREFLIGHT_CHECK=true NODE_ENV=production dotenv lerna run build -- --stream; start runs build:quick then start:quick; cypress:run runs cypress run; devDeps include cypress 4.8.0, lerna 3.15.0, serve 11.3.2, start-server-and-test 1.11.0, and typescript 3.8.3. embeddable/ringcentral-js-widgets root is named ringcentral-js-widgets, test runs ./scripts/runAllTests.sh, start runs yarn workspace @ringcentral-integration/widgets-demo start, release runs yarn workspace @ringcentral-integration/widgets release && yarn workspace @ringcentral-integration/commons release, docs/build are delegated to the ringcentral-widgets-docs workspace, and commit runs yarn git-cz.",
+      "key_facts": ["@ringcentral/web-apps", "1.0.0", "PORT=3000", "start-server-and-test", "cypress:run", "cypress 4.8.0", "ringcentral-js-widgets", "./scripts/runAllTests.sh", "@ringcentral-integration/widgets-demo", "ringcentral-widgets-docs", "yarn git-cz"],
+      "expected_source": "source-only: embeddable/web-apps/package.json + embeddable/ringcentral-js-widgets/package.json"
+    },
+    {
+      "id": "T4-16",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "How do ringcentral-c2d and create-rc-add-in differ as integration packages in package metadata and scripts?",
+      "ground_truth": "integrations/ringcentral-c2d is package ringcentral-c2d v2.0.5. It builds with webpack, test runs yarn run-test, pre-release runs gulp release, tsc-check runs yarn tsc --project tsconfig.lint.json --noEmit, and it depends on @ringcentral-integration/phone-number ^1.1.0, classnames ^2.2.5, and lodash ^4.17.21. integrations/ringcentral-add-in-framework-js is package create-rc-add-in v1.6.3. Its start script is node ./bin/index.js and it depends on @jsdevtools/npm-publish, @octokit/rest, commander, ejs, inquirer, simple-git, and rimraf.",
+      "key_facts": ["ringcentral-c2d", "2.0.5", "webpack", "yarn run-test", "gulp release", "tsconfig.lint.json", "@ringcentral-integration/phone-number", "create-rc-add-in", "1.6.3", "node ./bin/index.js", "commander", "simple-git"],
+      "expected_source": "source-only: integrations/ringcentral-c2d/package.json + integrations/ringcentral-add-in-framework-js/package.json"
+    },
+    {
+      "id": "T4-17",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Compare the VS Code OpenAPI linter package with the Engage Digital JS client package: names, versions, scripts, and core toolchains.",
+      "ground_truth": "integrations/vscode-openapi-linter is package openapi-linter v0.4.0. It has vscode:prepublish -> yarn run compile, compile/watch using tsc -b, lint over ./client/src ./server/src, postinstall that installs client and server dependencies, and test via sh ./scripts/e2e.sh. Its dev stack includes mocha ^10.0.0, typescript ^4.7.2, eslint ^8.16.0, and vsce ^2.8.0. voice/engage-digital-js is package ringcentral-engage-client v0.4.3. It tests with standard && jest --coverage, fixes with standard --fix, releases with webpack --progress, prepublishOnly runs npm run release, and it depends on axios * with dev tooling including jest ^26.6.3, webpack ^5.9.0, TypeScript ^4.1.2, ts-standard, babel-jest, and coveralls.",
+      "key_facts": ["openapi-linter", "0.4.0", "tsc -b", "sh ./scripts/e2e.sh", "mocha ^10.0.0", "vsce ^2.8.0", "ringcentral-engage-client", "0.4.3", "standard && jest --coverage", "webpack --progress", "axios", "jest ^26.6.3"],
+      "expected_source": "source-only: integrations/vscode-openapi-linter/package.json + voice/engage-digital-js/package.json"
+    },
+    {
+      "id": "T4-18",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "Compare ringcentral-web-phone and ringcentral-softphone-ts as modern TypeScript real-time calling packages: module format, exports, scripts, and major dependencies.",
+      "ground_truth": "ringcentral-web-phone v2.4.4 is type=module and publishes dist/index.mjs, dist/index.cjs, and dist/index.d.mts/d.cts via exports. Its build is tsdown, test runs NODE_OPTIONS=--require=dotenv-override-true/config playwright test --workers=1, serve uses parcel serve test/index.html --no-hmr, and dependencies include blueimp-md5, fast-xml-parser, and sdp-transform. ringcentral-softphone-ts v1.3.9 is also type=module and exports dist/index.mjs/cjs with declaration files. It has demo scripts in/out/join/multi-call/multi-inst using tsx with dotenv-override-true, test runs vitest run, typecheck:tests runs tsc -p tests/tsconfig.json, build is tsdown, and dependencies include @evan/opus, debug, wait-for-async, and werift-rtp.",
+      "key_facts": ["ringcentral-web-phone", "2.4.4", "type", "module", "dist/index.mjs", "playwright test --workers=1", "parcel serve", "fast-xml-parser", "ringcentral-softphone-ts", "1.3.9", "vitest run", "tsx", "@evan/opus", "werift-rtp"],
+      "expected_source": "source-only: embeddable/ringcentral-web-phone/package.json + sdks/ringcentral-softphone-ts/package.json"
+    },
+    {
+      "id": "T4-19",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "How do the legacy ringcentral-softphone-js package and the Go softphone module differ in runtime dependencies and developer commands?",
+      "ground_truth": "ringcentral-softphone-js publishes ringcentral-softphone v0.5.1, requires node >=12, starts a node audio demo with ts-node and dotenv-override-true, runs a browser demo with webpack-dev-server --progress --colors --open, tests with jest, and prepublishOnly runs tsc. Its runtime dependencies include blueimp-md5, core-js, isomorphic-webrtc, isomorphic-ws, uuid, and xmldom, and it peer-depends on @rc-ex/core ^0.14.0. ringcentral-softphone-go declares module github.com/ringcentral/ringcentral-softphone-go, go 1.15, and depends on github.com/pion/webrtc/v3 v3.0.11, github.com/ringcentral/ringcentral-go v0.8.0, github.com/gorilla/websocket v1.4.2, github.com/google/uuid v1.2.0, github.com/joho/godotenv v1.3.0, and github.com/zaf/g711. Its README points users to softphone_test.go and notes SIP/2.0 603 Too Many Contacts as a known issue when creating too many instances quickly.",
+      "key_facts": ["ringcentral-softphone", "0.5.1", "node >=12", "webpack-dev-server", "jest", "isomorphic-webrtc", "@rc-ex/core ^0.14.0", "github.com/ringcentral/ringcentral-softphone-go", "go 1.15", "pion/webrtc/v3", "ringcentral-go v0.8.0", "SIP/2.0 603 Too Many Contacts"],
+      "expected_source": "source-only: sdks/ringcentral-softphone-js/package.json + sdks/ringcentral-softphone-go/go.mod + README.md"
+    },
+    {
+      "id": "T4-20",
+      "tier": 4,
+      "category": "source-only-cross-repo",
+      "question": "What Jest configuration patterns do ringcentral-call-js and ringcentral-call-control-js declare in package.json, and where do their setup files and tests live?",
+      "ground_truth": "Both packages use Jest with ts-jest transforms for TypeScript, testEnvironment node for ringcentral-call-js, setupFiles pointing to <rootDir>/test/support/setup.js, setupFilesAfterEnv pointing to <rootDir>/test/support/jest.setup.js, default reporters, testMatch **/test/**/*.test.ts, collectCoverageFrom src/**/*.ts, and diagnostics disabled in ts-jest transform. ringcentral-call-js also declares preset ts-jest and its test script is jest; ringcentral-call-control-js has the same test script and similar transform/setup/testMatch coverage configuration.",
+      "key_facts": ["ts-jest", "test/support/setup.js", "test/support/jest.setup.js", "**/test/**/*.test.ts", "src/**/*.ts", "diagnostics", "false", "testEnvironment", "node", "jest"],
+      "expected_source": "source-only: sdks/ringcentral-call-js/package.json + sdks/ringcentral-call-control-js/package.json"
     }
   ]
 }

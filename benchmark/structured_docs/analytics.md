@@ -41,6 +41,12 @@ Host: `platform.ringcentral.com`
 Auth: `Authorization: Bearer {access_token}`  
 Content-Type: `application/json`
 
+## Analytics vs Call Log Quick Facts
+
+- Analytics API is for aggregate business metrics, timelines, groupBy reporting, queues, users, IVRs, departments, counters, and timers.
+- Analytics history covers up to `184 days`.
+- Call Log API is for per-call records such as duration, direction, result, recording links, and timestamps. Use Call Log when you need per-call detail.
+
 Pagination query params (append to URL):
 - Aggregate: `?page=1&perPage=200` (max perPage: 200)
 - Timeline: `?interval=Week&page=1&perPage=20` (max perPage: 20; interval values: `Hour`, `Day`, `Week`, `Month`)

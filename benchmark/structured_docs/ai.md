@@ -51,6 +51,12 @@ tags:
 - `nice-incontact` — Voice calls via RingCentral Nice CXone integration
 - `ms-teams` — Video conferences via MS Teams
 
+### ACE Insight Quick Facts
+
+ACE returns `Transcript`, `Summary`, `HighLights`, `NextSteps`, `AIScore`, `Sentiment`, and `BulletedSummary`. ACE requires an AI Conversation Expert license plus `ReadRingSenseInsights`. Legacy async AI endpoints are deprecated for new recorded-call insights.
+
+Legacy async AI job IDs expire after `1 week`.
+
 ---
 
 ## Async Job Pattern (Legacy AI API)

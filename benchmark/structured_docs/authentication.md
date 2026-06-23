@@ -11,6 +11,18 @@
 | **Multiple users** log in individually / **user-facing apps** / CRM per-user | **Auth Code + PKCE** |
 | JWT is **not** suited for multiple users — use Auth Code for that |
 
+## OAuth Endpoint Quick Facts
+
+- Authorization URL path: `/restapi/oauth/authorize`.
+- Auth Code + PKCE redirect params: `response_type=code`, `code_challenge`, `code_challenge_method=S256`.
+- Token exchange params: `grant_type=authorization_code`, `code`, and `code_verifier`.
+- Refresh token exchange: `grant_type=refresh_token` with `refresh_token`.
+- Access token lifetime is commonly described as about `3600` seconds to `7200` seconds depending on the app/token response; refresh tokens last 7 days for Auth Code flow.
+- Auth rate limit: `5 requests/user/minute`.
+- JWT Python SDK import/login pattern: `from ringcentral import SDK`; `platform.login(jwt='YOUR_JWT_TOKEN')`.
+- Error recovery shorthand: `401 re-authenticate`.
+- Multiple per-user apps are not JWT scenarios: use Auth Code + PKCE, not JWT.
+
 **Reuse access tokens** — do NOT re-authenticate on every request. Call the token endpoint only when the current token has expired (~7200 seconds). Re-authenticating too often triggers the 5 req/min Auth rate limit.
 
 **Error recovery**: On a `401` response → re-authenticate (`platform.login(jwt=...)`) then retry. On `429` → wait `Retry-After` seconds before retrying.

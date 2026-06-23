@@ -7,6 +7,16 @@ tags: [account, extension, phone-number, user, directory, address-book, internal
 
 The Account API provides access to account settings, extensions (users), phone numbers, and the company directory. Base path: `/restapi/v1.0/account/{accountId}/`. Use tilde (`~`) in place of `accountId` or `extensionId` to refer to the currently authenticated account/extension.
 
+## Account Quick Facts
+
+- List all account extensions/users: `GET /restapi/v1.0/account/{accountId}/extension`.
+- List company directory entries: `GET /restapi/v1.0/account/~/directory/entries`.
+- Filter directory entries by site: `GET /restapi/v1.0/account/~/directory/entries?siteId={site}`.
+- List the authenticated extension's phone numbers: `GET /restapi/v1.0/account/~/extension/~/phone-number`.
+- Phone number `features` can include `SmsSender` for SMS-capable sender numbers.
+- Send SMS from the authenticated extension with `POST /restapi/v1.0/account/~/extension/~/sms`.
+- A P2P SMS sender must belong to the authenticated user extension; a super admin cannot send from another user's direct number.
+
 ## Key Endpoints
 
 | Method | Endpoint | Description |

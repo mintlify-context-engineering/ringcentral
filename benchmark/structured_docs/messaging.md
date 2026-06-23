@@ -18,6 +18,15 @@
 | Subscribe to instant SMS events | `POST /restapi/v1.0/subscription` (eventFilter: `/restapi/v1.0/account/~/extension/~/message-store/instant?type=SMS`) |
 | Delete/cancel scheduled fax | `DELETE /restapi/v1.0/account/~/extension/~/message-store/{messageId}` |
 
+## Messaging Quick Facts
+
+- P2P SMS fields: `from.phoneNumber`, `to.phoneNumber` in the `to` array, and `text`.
+- SMS sender numbers must belong to the authenticated user extension and include the `SmsSender` feature; a super admin cannot send on behalf of another extension.
+- Inbound SMS event fields include `from.phoneNumber`, `to.phoneNumber`, `subject`, `direction=Inbound`, `type=SMS`, `readStatus=Unread`, and `messageStatus=Received`.
+- High Volume SMS batch endpoint: `POST /restapi/v1.0/account/~/a2p-sms/batches`; supports US and Canada local 10DLC and toll-free sending, with about `50 MB` max batch size.
+- A2P limitations: no MMS, no group messaging, no international SMS from US numbers, no scheduled SMS, and no 10DLC US-to-Canada.
+- Fax endpoint: `POST /restapi/v1.0/account/~/extension/~/fax` using `multipart/form-data` or `multipart/mixed`; include a JSON root attachment and optional `sendTime`. Fax limits: `50 MB` total attachments and `200` pages.
+
 ## SDK install commands
 
 | Language | Command |

@@ -42,6 +42,14 @@ tags:
 | Update registration preferences | `PUT /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registration` |
 | Create webhook subscription | `POST /webinar/v1/subscriptions` |
 
+## Webinar Quick Facts
+
+- Requires `EditWebinars` and `ReadWebinars` permissions.
+- Webinar settings include `recordingEnabled`, `autoRecord`, `qnaEnabled`, `pollsEnabled`, `password`, and `attendeeAuthentication`.
+- A marketing webinar usually sets `registrationEnabled=true`; each registrant gets a unique join URL.
+- Internal/all-hands webinars often set `registrationEnabled=false`; attendees use a single shared join URL.
+- Registrants are created with `POST /webinar/v1/accounts/{accountId}/webinars/{webinarId}/sessions/{sessionId}/registrants`.
+
 ## Webinar vs. session — key distinction
 
 A **webinar** is a top-level container (title, description, settings). A **session** is an individual scheduled occurrence of a webinar — it has a date/time and is what hosts, panelists, and registrants are associated with. One webinar can have multiple sessions.
