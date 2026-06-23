@@ -5,8 +5,12 @@
 
 ## Base URLs
 
-**Full production REST API base URL:** `https://platform.ringcentral.com/restapi/v1.0/`  
-**Full sandbox base URL:** `https://platform.devtest.ringcentral.com/restapi/v1.0/`
+**Production host / SDK server URL:** `https://platform.ringcentral.com`  
+**Sandbox host / SDK server URL:** `https://platform.devtest.ringcentral.com`  
+**Full production REST API prefix:** `https://platform.ringcentral.com/restapi/v1.0/`  
+**Full sandbox REST API prefix:** `https://platform.devtest.ringcentral.com/restapi/v1.0/`
+
+When asked for the **sandbox base URL**, answer with the host only: `https://platform.devtest.ringcentral.com`. Add `/restapi/v1.0/` only when the question asks for the full REST API prefix or a complete endpoint URL.
 
 | Environment | Host | Full REST API prefix |
 |-------------|------|---------------------|

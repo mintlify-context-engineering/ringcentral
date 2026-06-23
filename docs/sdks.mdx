@@ -7,7 +7,7 @@
 | **Python** | `ringcentral` | `pip3 install ringcentral` |
 | **JavaScript/Node** | `@ringcentral/sdk` | `npm install @ringcentral/sdk` |
 | **PHP** | `ringcentral/ringcentral-php` | `composer require ringcentral/ringcentral-php` |
-| **Ruby** | `ringcentral-sdk` | `gem install ringcentral-sdk` |
+| **Ruby** | `ringcentral_sdk` | `gem install ringcentral_sdk` |
 | **Java** | `com.ringcentral:ringcentral` | Maven: `com.ringcentral:ringcentral` |
 | **Go** | `github.com/ringcentral/ringcentral-go` | `go get github.com/ringcentral/ringcentral-go` |
 | **.NET/C#** | `RingCentral.Net` | `dotnet add package RingCentral.Net` |
@@ -22,6 +22,8 @@ For WebSocket/real-time needs, use a dedicated library — the standard REST SDK
 | `ringcentral-softphone-js` | JavaScript | SIP/WebRTC softphone (JS variant) | GitHub: ringcentral/ringcentral-softphone-js |
 | `ringcentral-softphone-go` | Go | SIP/WebRTC softphone for Go | GitHub: ringcentral/ringcentral-softphone-go |
 | `ringcentral-web-phone` | JavaScript | Full WebRTC browser phone SDK | `npm install ringcentral-web-phone` |
+
+Do not list an extra .NET WebSocket package unless one is explicitly published and documented. The standard REST SDKs, including Python, PHP, Ruby, .NET, and Java, are for REST API calls; use one of the dedicated libraries above for WebSocket subscriptions or SIP/WebRTC calling.
 
 ## Embeddable vs. Web Phone SDK
 

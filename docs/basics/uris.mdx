@@ -1,13 +1,14 @@
 # Methods, endpoints and parameters of the RingCentral API
 
-**Production base URL:** `https://platform.ringcentral.com/restapi/v1.0/`  
-**Sandbox base URL (for testing):** `https://platform.devtest.ringcentral.com/restapi/v1.0/`  
-**Sandbox hostname:** `platform.devtest.ringcentral.com`
+**Production host / SDK server URL:** `https://platform.ringcentral.com`  
+**Sandbox host / SDK server URL:** `https://platform.devtest.ringcentral.com`  
+**Production REST API prefix:** `https://platform.ringcentral.com/restapi/v1.0/`  
+**Sandbox REST API prefix:** `https://platform.devtest.ringcentral.com/restapi/v1.0/`
 
-| Environment | Base URL |
-|-------------|----------|
-| Production  | `https://platform.ringcentral.com/restapi/v1.0/` |
-| Sandbox     | `https://platform.devtest.ringcentral.com/restapi/v1.0/` |
+| Environment | Host / SDK server URL | Full REST API prefix |
+|-------------|-----------------------|----------------------|
+| Production  | `https://platform.ringcentral.com` | `https://platform.ringcentral.com/restapi/v1.0/` |
+| Sandbox     | `https://platform.devtest.ringcentral.com` | `https://platform.devtest.ringcentral.com/restapi/v1.0/` |
 
 All REST API paths begin with `/restapi/v1.0/`. Example: `https://platform.ringcentral.com/restapi/v1.0/account/~/extension/~/call-log`
 
@@ -163,5 +164,4 @@ For example:
 The `User-Agent` string format is described in <a target="_new" href="https://tools.ietf.org/html/rfc1945">RFC 1945</a> and <a target="_new" href="https://tools.ietf.org/html/rfc2068">RFC 2068</a>.
 
 For browser-based (JavaScript) applications, it is usually not possible to override the browser's user agent string. In this case, our recommendation is to send a user agent string in the `X-User-Agent` request header.
-
 

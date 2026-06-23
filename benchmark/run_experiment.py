@@ -333,6 +333,11 @@ def run_experiment(
 
     for condition in CONDITIONS:
         key = condition["key"]
+        score_key = f"{key}_score"
+        correct_count = sum(1 for r in valid_results if r["scores"][score_key] == 2)
+        total_tokens_est = sum(r[key]["total_tokens_est"] for r in valid_results)
+        total_tokens = sum(r[key]["total_tokens"] for r in valid_results)
+        openrouter_cost = round(sum(r[key].get("openrouter_cost", 0) for r in valid_results), 8)
         summary[key] = {
             "avg_elapsed_s": avg("elapsed_s", key),
             "avg_response_length": avg("response_length", key),
@@ -341,19 +346,43 @@ def run_experiment(
             "avg_context_tokens_est": avg("context_tokens_est", key),
             "avg_output_tokens_est": avg("output_tokens_est", key),
             "avg_total_tokens_est": avg("total_tokens_est", key),
-            "total_tokens_est": sum(r[key]["total_tokens_est"] for r in valid_results),
+            "total_tokens_est": total_tokens_est,
             "avg_prompt_tokens": avg("prompt_tokens", key),
             "avg_completion_tokens": avg("completion_tokens", key),
             "avg_total_tokens": avg("total_tokens", key),
-            "total_tokens": sum(r[key]["total_tokens"] for r in valid_results),
+            "total_tokens": total_tokens,
             "token_source": (
                 "openrouter_native_usage"
                 if provider == "openrouter"
                 else "cursor_tool_result_estimate"
             ),
-            "openrouter_cost": round(sum(r[key].get("openrouter_cost", 0) for r in valid_results), 8),
+            "openrouter_cost": openrouter_cost,
+            "correct_count": correct_count,
+            "tokens_per_correct_answer_est": round(total_tokens_est / correct_count, 2) if correct_count else None,
+            "tokens_per_correct_answer": round(total_tokens / correct_count, 2) if correct_count else None,
+            "openrouter_cost_per_correct_answer": round(openrouter_cost / correct_count, 8) if correct_count else None,
             "accuracy": accuracy(key),
         }
+
+    tiers = sorted({r["tier"] for r in valid_results})
+    for condition in CONDITIONS:
+        key = condition["key"]
+        tier_score_avgs = []
+        tier_correct_pcts = []
+        for tier in tiers:
+            tier_rows = [r for r in valid_results if r["tier"] == tier]
+            if not tier_rows:
+                continue
+            score_key = f"{key}_score"
+            tier_scores = [r["scores"][score_key] for r in tier_rows]
+            tier_score_avgs.append(sum(tier_scores) / len(tier_scores))
+            tier_correct_pcts.append(sum(1 for s in tier_scores if s == 2) / len(tier_scores) * 100)
+        summary[key]["tier_normalized_avg_score"] = (
+            round(sum(tier_score_avgs) / len(tier_score_avgs), 2) if tier_score_avgs else 0
+        )
+        summary[key]["tier_normalized_pct_correct"] = (
+            round(sum(tier_correct_pcts) / len(tier_correct_pcts), 1) if tier_correct_pcts else 0
+        )
 
     raw_t = summary["raw"]["avg_elapsed_s"]
     if raw_t > 0:
@@ -411,6 +440,8 @@ def run_experiment(
         prompt_or_context = summary[key]["avg_prompt_tokens"] if provider == "openrouter" else summary[key]["avg_context_tokens_est"]
         completion_or_output = summary[key]["avg_completion_tokens"] if provider == "openrouter" else summary[key]["avg_output_tokens_est"]
         total_tokens = summary[key]["avg_total_tokens"] if provider == "openrouter" else summary[key]["avg_total_tokens_est"]
+        tokens_per_correct = summary[key]["tokens_per_correct_answer"] if provider == "openrouter" else summary[key]["tokens_per_correct_answer_est"]
+        tokens_per_correct_text = f"{tokens_per_correct:,.0f}" if tokens_per_correct else "n/a"
         print(
             f"{condition['label']:<24} "
             f"{acc['avg_score']:>8.2f} "
@@ -421,6 +452,11 @@ def run_experiment(
             f"{total_tokens:>9,.0f} "
             f"{summary[key].get('token_delta_vs_raw_pct', 0):>+7.0f}% "
             f"{summary[key]['score_delta_vs_raw']:>+9.2f}"
+        )
+        print(
+            f"{'':<24} "
+            f"tier-norm={summary[key]['tier_normalized_avg_score']:.2f}/2, "
+            f"tokens/correct={tokens_per_correct_text}"
         )
     if provider == "openrouter":
         print("\nOpenRouter token counts are native usage totals aggregated across each tool loop.")

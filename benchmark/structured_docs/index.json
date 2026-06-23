@@ -27,14 +27,14 @@
       "title": "API Basics — URLs, Paths, Pagination",
       "file": "api-basics.md",
       "tags": ["base url", "sandbox", "production", "restapi", "path", "accountid", "extensionid", "tilde", "pagination", "page", "perPage", "navigation", "nextPage", "endpoint", "uri", "version", "v1.0", "call-log", "message-store", "error codes", "404", "401", "403"],
-      "summary": "Production and sandbox base URLs, path shortcuts using tilde (~), key resource paths, pagination with page/perPage/navigation/nextPage, HTTP methods, common query parameters, and error codes."
+      "summary": "Production and sandbox hosts versus full REST API prefixes. Sandbox base/SDK server URL is https://platform.devtest.ringcentral.com; add /restapi/v1.0/ only for full REST endpoints. Includes tilde (~), pagination with page/perPage/navigation/nextPage, HTTP methods, query parameters, and error codes."
     },
     {
       "id": "sdks",
       "title": "SDKs — Installation & Quick Start",
       "file": "sdks.md",
       "tags": ["sdk", "install", "npm", "pip", "gem", "composer", "maven", "gradle", "package", "python", "javascript", "node", "ruby", "php", "java", "go", "dotnet", "csharp", "swift", "chatbot", "quick start", "sms", "send sms", "call log", "websocket subscriptions", "ringcentral-chatbot-js", "routing", "skill", "higher-level", "same platform apis", "pagination", "nextPage", "navigation"],
-      "summary": "Installation and quick-start for all RingCentral SDKs: Python (pip3), JS/Node (npm), PHP, Ruby, Java, Go, .NET. Chatbot framework (ringcentral-chatbot-js): higher-level wrapper over @ringcentral/sdk with skill routing. Python pagination example with nextPage and navigation object."
+      "summary": "Installation and quick-start for all RingCentral SDKs: Python (pip3), JS/Node (npm), PHP, Ruby (gem install ringcentral_sdk), Java, Go, .NET. Dedicated real-time libraries: @ringcentral/subscriptions, ringcentral-websocket-java, ringcentral-softphone-ts/js/go, and ringcentral-web-phone; do not invent extra .NET/Python/PHP/Ruby WebSocket SDKs. Chatbot framework and Python pagination examples."
     },
     {
       "id": "voice",
@@ -68,15 +68,15 @@
       "id": "ai",
       "title": "AI APIs — Speech-to-Text, Transcription, ACE",
       "file": "ai.md",
-      "tags": ["ai", "speech-to-text", "transcription", "summarization", "interaction analytics", "speaker diarization", "ace", "artificial intelligence", "async job", "jobId", "status", "punctuation", "text summary", "media", "audio"],
-      "summary": "RingCentral AI APIs: speech-to-text (POST /ai/audio/v1/async/speech-to-text), async job pattern (submit → poll GET /ai/status/v1/jobs/{jobId} until Completed), ACE (AI Conversation Expert) for interaction analytics, speaker diarization, and text summarization."
+      "tags": ["ai", "speech-to-text", "transcription", "summarization", "interaction analytics", "speaker diarization", "ace", "artificial intelligence", "async job", "jobId", "status", "punctuation", "text summary", "media", "audio", "ReadRingSenseInsights", "AI Conversation Expert license", "deprecated"],
+      "summary": "RingCentral AI APIs: legacy speech-to-text (POST /ai/audio/v1/async/speech-to-text) is deprecated; use ACE (AI Conversation Expert) for transcript, summary, highlights, next steps, AI score, sentiment, and bulleted summaries. ACE requires an AI Conversation Expert license plus ReadRingSenseInsights permission."
     },
     {
       "id": "webinar",
       "title": "Webinar API — Creating and Managing Webinars",
       "file": "webinar.md",
       "tags": ["webinar", "session", "registrant", "panelist", "host", "cohost", "attendee", "registration", "invite", "bridge", "create webinar", "webinar api", "rcv webinar", "webinar settings"],
-      "summary": "Webinar API for creating webinars and sessions (POST /webinar/v1/...), inviting panelists and co-hosts, managing registrants, configuring settings (recording, registration, Q&A), and subscribing to webinar events."
+      "summary": "Webinar API for creating webinars and sessions with POST /webinar/v1/accounts/{accountId}/webinars, then /sessions, then /registrants. Requires EditWebinars and ReadWebinars. Use registrationEnabled=true for marketing webinars with unique join URLs; false for internal all-hands with one shared join URL."
     },
     {
       "id": "video",

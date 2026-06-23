@@ -22,6 +22,8 @@ By default, all conditions use the **same Cursor model** and the **same `CURSOR_
 | **Response time** | Elapsed wall-clock time per answer |
 | **Response length** | Output verbosity in characters |
 | **Token spend** | Cursor mode: estimated tokens per question — context (tool-result bytes ÷ 4) + output (answer chars ÷ 4). OpenRouter mode: native usage totals and cost returned by OpenRouter |
+| **Cost per correct answer** | Total condition tokens divided by fully correct answers; lower means the access layer produces correct answers more efficiently |
+| **Tier-normalized score** | Average of per-tier accuracy scores, giving each tier equal weight regardless of question count |
 
 Token estimates are captured automatically in Cursor mode: each agent measures the bytes of tool results (file reads, grep, MCP search results) returned by the **same** run it already makes, so there is no extra API cost. In OpenRouter mode, the runner stores OpenRouter's native `prompt_tokens`, `completion_tokens`, `total_tokens`, `openrouter_cost`, and `openrouter_generation_ids` in the result JSON. The standalone `measure_context.py` reports the exact byte breakdown by tool type for the Cursor SDK path. For deterministic structured-doc literal key-fact coverage and character-count checks, run `autoresearch_loop.py`.
 
@@ -81,6 +83,7 @@ python report.py results/experiment_20240101_120000.json --open
 
 This creates an HTML dashboard at the same path showing:
 - Accuracy, response time, and correctness KPIs
+- Tier-normalized score and token cost per correct answer
 - Per-tier bar charts
 - Per-question breakdown table
 

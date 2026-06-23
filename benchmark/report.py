@@ -211,6 +211,10 @@ def _condition_palette(index: int) -> str:
 CONDITION_ORDER = ["no_markdown", "raw", "mintlify", "raw_mintlify"]
 
 
+def _avg(values: list[float]) -> float:
+    return sum(values) / len(values) if values else 0
+
+
 def generate_multi_condition_report(data: dict, output_path: Path):
     summary = data["summary"]
     results = data["results"]
@@ -223,6 +227,46 @@ def generate_multi_condition_report(data: dict, output_path: Path):
         key=lambda c: CONDITION_ORDER.index(c["key"]) if c["key"] in CONDITION_ORDER else len(CONDITION_ORDER),
     )
     valid_results = [r for r in results if r.get("valid", r.get("scores") is not None)]
+
+    tiers = sorted({r["tier"] for r in valid_results})
+    for condition in conditions:
+        key = condition["key"]
+        metric = summary[key]
+        score_key = f"{key}_score"
+        correct_count = metric.get("correct_count")
+        if correct_count is None:
+            correct_count = sum(1 for r in valid_results if (r.get("scores") or {}).get(score_key) == 2)
+            metric["correct_count"] = correct_count
+
+        total_tokens_est = metric.get("total_tokens_est")
+        if total_tokens_est is None:
+            total_tokens_est = sum(r[key].get("total_tokens_est", 0) for r in valid_results)
+            metric["total_tokens_est"] = total_tokens_est
+        total_tokens = metric.get("total_tokens")
+        if total_tokens is None:
+            total_tokens = sum(r[key].get("total_tokens", r[key].get("total_tokens_est", 0)) for r in valid_results)
+            metric["total_tokens"] = total_tokens
+
+        if "tokens_per_correct_answer_est" not in metric:
+            metric["tokens_per_correct_answer_est"] = round(total_tokens_est / correct_count, 2) if correct_count else None
+        if "tokens_per_correct_answer" not in metric:
+            metric["tokens_per_correct_answer"] = round(total_tokens / correct_count, 2) if correct_count else None
+        if "openrouter_cost_per_correct_answer" not in metric:
+            cost = metric.get("openrouter_cost", 0)
+            metric["openrouter_cost_per_correct_answer"] = round(cost / correct_count, 8) if correct_count else None
+
+        if "tier_normalized_avg_score" not in metric:
+            tier_scores = []
+            tier_correct = []
+            for tier in tiers:
+                tier_rows = [r for r in valid_results if r["tier"] == tier]
+                if not tier_rows:
+                    continue
+                scores = [(r.get("scores") or {}).get(score_key, 0) for r in tier_rows]
+                tier_scores.append(_avg(scores))
+                tier_correct.append(sum(1 for s in scores if s == 2) / len(scores) * 100)
+            metric["tier_normalized_avg_score"] = round(_avg(tier_scores), 2) if tier_scores else 0
+            metric["tier_normalized_pct_correct"] = round(_avg(tier_correct), 1) if tier_correct else 0
 
     from collections import defaultdict
 
@@ -255,9 +299,13 @@ def generate_multi_condition_report(data: dict, output_path: Path):
         tok_delta = metric.get("token_delta_vs_raw_pct")
         tok_delta_text = f" · {tok_delta:+.0f}% tok vs raw" if tok_delta else ""
         tok_prefix = "" if native_tokens else "~"
+        cost_per_correct = metric.get("tokens_per_correct_answer") if native_tokens else metric.get("tokens_per_correct_answer_est")
+        cost_per_correct_text = f"{tok_prefix}{cost_per_correct:,.0f} tokens/correct" if cost_per_correct else "n/a tokens/correct"
         cost_text = (
-            f"<div class=\"sublabel\">{metric.get('openrouter_cost', 0):.6f} credits total</div>"
+            f"<div class=\"sublabel\">{metric.get('openrouter_cost', 0):.6f} credits total"
+            f" · {metric.get('openrouter_cost_per_correct_answer'):.6f} credits/correct</div>"
             if native_tokens
+            and metric.get("openrouter_cost_per_correct_answer") is not None
             else ""
         )
         kpi_cards += f"""
@@ -266,6 +314,7 @@ def generate_multi_condition_report(data: dict, output_path: Path):
           <div class="label">{html.escape(condition['label'])}</div>
           <div class="sublabel">{metric['accuracy']['pct_correct']:.1f}% correct · {metric['avg_elapsed_s']:.1f}s avg</div>
           <div class="sublabel">{tok_prefix}{tok:,.0f} tokens/question{tok_delta_text}</div>
+          <div class="sublabel">Tier-normalized: {metric['tier_normalized_avg_score']:.2f}/2 · {cost_per_correct_text}</div>
           {cost_text}
         </div>
         """
@@ -273,6 +322,37 @@ def generate_multi_condition_report(data: dict, output_path: Path):
     time_bars = ""
     accuracy_bars = ""
     token_bars = ""
+    tier_normalized_bars = ""
+    cost_per_correct_bars = ""
+    max_tier_score = 2
+    cost_values = []
+    for condition in conditions:
+        metric = summary[condition["key"]]
+        cost_per_correct = metric.get("tokens_per_correct_answer") if native_tokens else metric.get("tokens_per_correct_answer_est")
+        if cost_per_correct:
+            cost_values.append(cost_per_correct)
+    max_cost_per_correct = max(cost_values, default=1)
+    for index, condition in enumerate(conditions):
+        key = condition["key"]
+        metric = summary[key]
+        color = _condition_palette(index)
+        tier_score = metric.get("tier_normalized_avg_score", 0)
+        tier_score_pct = tier_score / max_tier_score * 100 if max_tier_score else 0
+        cost_per_correct = metric.get("tokens_per_correct_answer") if native_tokens else metric.get("tokens_per_correct_answer_est")
+        cost_pct = cost_per_correct / max_cost_per_correct * 100 if cost_per_correct else 0
+        cost_display = f"{'' if native_tokens else '~'}{cost_per_correct:,.0f} tok" if cost_per_correct else "n/a"
+        tier_normalized_bars += f"""
+        <div class="bar-container">
+          <div class="bar-label"><span class="name">{html.escape(condition['label'])}</span><span class="val">{tier_score:.2f}/2</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:{tier_score_pct:.1f}%; background:{color}"></div></div>
+        </div>
+        """
+        cost_per_correct_bars += f"""
+        <div class="bar-container">
+          <div class="bar-label"><span class="name">{html.escape(condition['label'])}</span><span class="val">{cost_display}</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:{cost_pct:.1f}%; background:{color}"></div></div>
+        </div>
+        """
     for tier in sorted(tier_data):
         if tier not in tier_data:
             continue
@@ -410,6 +490,10 @@ def generate_multi_condition_report(data: dict, output_path: Path):
     Each answer is scored independently against the same ground truth. Invalid rows are excluded from aggregates.
   </div>
   <div class="kpi-grid">{kpi_cards}</div>
+  <div class="comparison-grid">
+    <div class="metric-card"><h3>Tier-Normalized Score</h3>{tier_normalized_bars}<div class="muted" style="margin-top:12px;">Each tier contributes equally, so large tiers do not dominate the headline score.</div></div>
+    <div class="metric-card"><h3>Token Cost per Correct Answer</h3>{cost_per_correct_bars}<div class="muted" style="margin-top:12px;">Total condition tokens divided by fully correct answers. Lower is better.</div></div>
+  </div>
   <div class="comparison-grid">
     <div class="metric-card"><h3>Response Time by Tier</h3>{time_bars}</div>
     <div class="metric-card"><h3>Accuracy by Tier</h3>{accuracy_bars}</div>

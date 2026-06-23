@@ -25,7 +25,7 @@
 | Python | `pip install ringcentral python-dotenv` |
 | JavaScript | `npm install @ringcentral/sdk dotenv --save` |
 | PHP | `php composer.phar require ringcentral/ringcentral-php vlucas/phpdotenv` |
-| Ruby | `gem install ringcentral-sdk dotenv` |
+| Ruby | `gem install ringcentral_sdk dotenv` |
 | C# | NuGet: `RingCentral.Net` (6.2.0+) |
 
 ## Authentication setup

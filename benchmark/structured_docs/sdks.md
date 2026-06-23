@@ -202,14 +202,19 @@ var ext = await rc.Restapi().Account().Extension().Get();
 
 ---
 
-## Which SDKs Support Which Features?
+## REST SDKs vs. Dedicated Real-Time Libraries
 
-| Feature | Python | JS | PHP | Ruby | Java | Go | .NET |
-|---------|--------|-----|-----|------|------|-----|------|
-| JWT Auth | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Auth Code | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| WebSocket Subs | ✓ | ✓ | ✗ | ✗ | ✓ | ✓ | ✓ |
-| SMS | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Call Control | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+All major REST SDKs support JWT, Auth Code, SMS, call log, and other REST API calls. WebSocket subscriptions and SIP/WebRTC calling require dedicated real-time libraries beyond the standard REST SDKs.
+
+| Real-time need | Dedicated library |
+|----------------|-------------------|
+| WebSocket push subscriptions for Node.js | `@ringcentral/subscriptions` (`npm install @ringcentral/subscriptions`) |
+| Java WebSocket client | `ringcentral-websocket-java` |
+| SIP/WebRTC softphone for TypeScript | `ringcentral-softphone-ts` / `npm install ringcentral-softphone` |
+| SIP/WebRTC softphone for JavaScript | `ringcentral-softphone-js` |
+| SIP/WebRTC softphone for Go | `ringcentral-softphone-go` |
+| Full WebRTC browser phone SDK | `ringcentral-web-phone` |
+
+Do not add extra dedicated WebSocket libraries for Python, PHP, Ruby, .NET, or the standard Java REST SDK unless they are explicitly published and documented. The standard REST SDKs are for REST calls; use the dedicated libraries above for WebSocket subscriptions or SIP/WebRTC calling.
 
 → See also: [authentication](authentication.md) for JWT details, [webhooks](webhooks.md) for subscription setup

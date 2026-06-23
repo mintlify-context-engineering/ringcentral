@@ -10,10 +10,12 @@ the playground.
 
 ## Base URLs
 
-| Environment | Base URL |
-|-------------|----------|
-| Production  | `https://platform.ringcentral.com/restapi/v1.0/` |
-| Sandbox     | `https://platform.devtest.ringcentral.com/restapi/v1.0/` |
+Use the environment host as the SDK/server base URL, then call REST paths that begin with `/restapi/v1.0/`.
+
+| Environment | Host / SDK server URL | Full REST API prefix |
+|-------------|-----------------------|----------------------|
+| Production  | `https://platform.ringcentral.com` | `https://platform.ringcentral.com/restapi/v1.0/` |
+| Sandbox     | `https://platform.devtest.ringcentral.com` | `https://platform.devtest.ringcentral.com/restapi/v1.0/` |
 
 All REST paths begin with `/restapi/v1.0/`. For example:
 `https://platform.ringcentral.com/restapi/v1.0/account/~/extension/~/call-log`

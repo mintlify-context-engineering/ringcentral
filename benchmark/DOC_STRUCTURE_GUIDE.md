@@ -30,8 +30,10 @@ the standard endpoint for live traffic. The base URL for the production server i
 
 # GOOD — key fact is queryable in the first 80 chars
 ## Base URLs
-**Full production REST API base URL:** `https://platform.ringcentral.com/restapi/v1.0/`
-**Sandbox:** `https://platform.devtest.ringcentral.com/restapi/v1.0/`
+**Production host / SDK server URL:** `https://platform.ringcentral.com`
+**Sandbox host / SDK server URL:** `https://platform.devtest.ringcentral.com`
+**Full production REST API prefix:** `https://platform.ringcentral.com/restapi/v1.0/`
+**Full sandbox REST API prefix:** `https://platform.devtest.ringcentral.com/restapi/v1.0/`
 ```
 
 **Why it works:** When chunk_size=2500, a single search hit can now answer T1-level questions without a follow-up `read_doc` call.

@@ -188,7 +188,7 @@ Add-ins are ideal for notifying teams of external events (CI/CD failures, CRM up
 | JavaScript | `npm install @ringcentral/sdk dotenv` |
 | Python | `pip install ringcentral python-dotenv` |
 | PHP | `php composer.phar require ringcentral/ringcentral-php` |
-| Ruby | `gem install ringcentral-sdk dotenv` |
+| Ruby | `gem install ringcentral_sdk dotenv` |
 | Java | Add `com.ringcentral:ringcentral` to `build.gradle` |
 | C# | NuGet: `RingCentral.Net` |
 
