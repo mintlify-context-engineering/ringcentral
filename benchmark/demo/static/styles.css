@@ -1,15 +1,25 @@
 :root {
   color-scheme: light;
-  --ink: #141820;
-  --muted: #667085;
-  --line: #d7dde8;
-  --page: #eef2f6;
+  --ink: #15212b;
+  --muted: #5b6b7a;
+  --line: #e3dcd6;
+  --page: #f4f6f9;
   --panel: #ffffff;
-  --panel-2: #f8fafc;
-  --raw: #1769aa;
-  --mcp: #0b7f68;
+  --panel-2: #fbf8f5;
+
+  /* RingCentral brand */
+  --rc-orange: #ff7a00;
+  --rc-orange-deep: #f25c05;
+  --rc-orange-soft: rgba(255, 122, 0, 0.12);
+  --rc-blue: #0684bc;
+  --rc-blue-deep: #0a6a9e;
+  --rc-blue-soft: rgba(6, 132, 188, 0.12);
+
+  /* Pane accents: raw = Ring blue, mcp = Central orange */
+  --raw: var(--rc-blue);
+  --mcp: var(--rc-orange);
   --warn: #a85518;
-  --shadow: 0 16px 50px rgba(24, 31, 43, 0.12);
+  --shadow: 0 18px 50px rgba(36, 22, 8, 0.1);
 }
 
 * {
@@ -22,8 +32,9 @@ body {
   min-height: 100vh;
   color: var(--ink);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0) 260px),
-    var(--page);
+    radial-gradient(1100px 520px at 100% -8%, rgba(255, 122, 0, 0.16), transparent 58%),
+    radial-gradient(900px 520px at -8% 4%, rgba(6, 132, 188, 0.1), transparent 55%),
+    linear-gradient(180deg, #fff6ee 0%, #fbf4ee 220px, var(--page) 560px);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -37,7 +48,7 @@ textarea {
 .app-shell {
   width: min(1680px, calc(100vw - 32px));
   margin: 0 auto;
-  padding: 20px 0 28px;
+  padding: 22px 0 30px;
 }
 
 .topbar {
@@ -57,17 +68,30 @@ textarea {
 }
 
 .brand {
+  position: relative;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   gap: 14px;
-  align-items: center;
   min-height: 126px;
-  padding: 22px;
-  border-radius: 8px;
+  padding: 22px 24px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.brand img {
-  width: 44px;
-  height: 44px;
+/* Brand accent: RingCentral signature orange-to-blue bar */
+.brand::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--rc-blue) 0%, var(--rc-orange) 100%);
+}
+
+.brand-logo {
+  width: auto;
+  height: 30px;
+  max-width: 220px;
   object-fit: contain;
 }
 
@@ -80,9 +104,9 @@ textarea {
 }
 
 .brand h1 {
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.05;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
 }
 
 .brand p {
@@ -97,26 +121,28 @@ textarea {
   gap: 14px;
   align-items: end;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 label span {
   display: block;
   margin-bottom: 7px;
-  color: #364152;
+  color: #3a4a57;
   font-size: 12px;
   font-weight: 700;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
 textarea,
 input {
   width: 100%;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  border: 1px solid #d8d0c8;
+  border-radius: 8px;
   color: var(--ink);
   background: var(--panel-2);
   outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 textarea {
@@ -133,8 +159,8 @@ input {
 
 textarea:focus,
 input:focus {
-  border-color: var(--raw);
-  box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.14);
+  border-color: var(--rc-orange);
+  box-shadow: 0 0 0 3px var(--rc-orange-soft);
 }
 
 .button-row {
@@ -145,28 +171,42 @@ input:focus {
 
 button {
   height: 44px;
-  min-width: 86px;
+  min-width: 88px;
   border: 1px solid transparent;
-  border-radius: 6px;
-  padding: 0 18px;
+  border-radius: 8px;
+  padding: 0 20px;
   font-weight: 800;
+  letter-spacing: 0.01em;
   cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 #run {
   color: #fff;
-  background: var(--ink);
+  background: linear-gradient(180deg, var(--rc-orange) 0%, var(--rc-orange-deep) 100%);
+  box-shadow: 0 8px 18px rgba(242, 92, 5, 0.28);
+}
+
+#run:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(242, 92, 5, 0.34);
 }
 
 #stop {
-  color: #4b5563;
+  color: var(--rc-blue-deep);
   background: #fff;
-  border-color: #cbd5e1;
+  border-color: #cfdce5;
+}
+
+#stop:hover:not(:disabled) {
+  border-color: var(--rc-blue);
+  background: var(--rc-blue-soft);
 }
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.48;
+  opacity: 0.45;
+  box-shadow: none;
 }
 
 .comparison {
@@ -178,7 +218,7 @@ button:disabled {
 
 .run-pane {
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .run-pane[data-pane="raw"] {
@@ -198,19 +238,35 @@ button:disabled {
   border-bottom: 1px solid var(--line);
 }
 
+.run-pane[data-pane="mcp"] .pane-header {
+  background: linear-gradient(180deg, rgba(255, 122, 0, 0.06), transparent);
+}
+
+.run-pane[data-pane="raw"] .pane-header {
+  background: linear-gradient(180deg, rgba(6, 132, 188, 0.05), transparent);
+}
+
 .eyebrow {
   color: var(--muted);
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.run-pane[data-pane="mcp"] .eyebrow {
+  color: var(--rc-orange-deep);
+}
+
+.run-pane[data-pane="raw"] .eyebrow {
+  color: var(--rc-blue-deep);
 }
 
 .pane-header h2 {
   margin-top: 4px;
   font-size: 18px;
   line-height: 1.2;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
 }
 
 .status {
@@ -218,17 +274,17 @@ button:disabled {
   max-width: 170px;
   overflow-wrap: anywhere;
   border-radius: 999px;
-  padding: 6px 10px;
-  color: #344054;
-  background: #edf1f7;
+  padding: 6px 12px;
+  color: #44505b;
+  background: #eef1f4;
   text-align: center;
   font-size: 12px;
   font-weight: 800;
 }
 
 .status.running {
-  color: #0f5132;
-  background: #dff5ea;
+  color: var(--rc-orange-deep);
+  background: var(--rc-orange-soft);
 }
 
 .status.error {
@@ -258,6 +314,7 @@ button:disabled {
   color: var(--muted);
   font-size: 11px;
   font-weight: 800;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
@@ -286,9 +343,10 @@ button:disabled {
 
 .streams h3 {
   margin-bottom: 10px;
-  color: #364152;
+  color: #3a4a57;
   font-size: 12px;
   font-weight: 800;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
@@ -297,9 +355,9 @@ button:disabled {
   height: min(61vh, 650px);
   min-height: 420px;
   overflow: auto;
-  border: 1px solid #dce3ee;
-  border-radius: 6px;
-  background: #fbfdff;
+  border: 1px solid #e6ddd5;
+  border-radius: 8px;
+  background: #fffdfb;
 }
 
 .output {
@@ -312,7 +370,7 @@ button:disabled {
 
 .output:empty::before {
   content: "Waiting";
-  color: #98a2b3;
+  color: #a79e95;
 }
 
 .tool-log {
@@ -326,15 +384,15 @@ button:disabled {
 
 .tool-log:empty::before {
   content: "Waiting";
-  color: #98a2b3;
+  color: #a79e95;
   padding: 4px;
   font-size: 14px;
 }
 
 .tool-item {
-  border: 1px solid #dce3ee;
+  border: 1px solid #e6ddd5;
   border-left: 4px solid var(--raw);
-  border-radius: 6px;
+  border-radius: 8px;
   background: #fff;
   padding: 10px;
 }
@@ -364,7 +422,7 @@ button:disabled {
   overflow: auto;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  color: #475467;
+  color: #4b5b67;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 12px;
   line-height: 1.45;
@@ -373,7 +431,7 @@ button:disabled {
 .tool-preview {
   max-height: 150px;
   padding-top: 8px;
-  border-top: 1px solid #edf1f7;
+  border-top: 1px solid #efe7df;
 }
 
 @media (max-width: 1180px) {

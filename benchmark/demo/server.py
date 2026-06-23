@@ -17,7 +17,7 @@ import httpx
 BENCHMARK_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = BENCHMARK_ROOT.parent
 STATIC_ROOT = Path(__file__).resolve().parent / "static"
-RC_LOGO = REPO_ROOT / "embeddable/ringcentral-embeddable/src/assets/rc/icon.svg"
+RC_LOGO = REPO_ROOT / "docs/logo/ringcentral.png"
 
 sys.path.insert(0, str(BENCHMARK_ROOT))
 
@@ -47,6 +47,20 @@ OPENROUTER_BASE_URL = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.
 MAX_PREVIEW_CHARS = 1800
 
 Emit = Callable[[str, dict[str, Any]], None]
+
+# The MCP tool list is static for the lifetime of the server, but discovering it
+# costs three sequential round-trips to the remote Mintlify endpoint
+# (initialize -> notifications/initialized -> tools/list). Doing that on every
+# request adds fixed latency to each "With MCP" run, so cache it per URL.
+_MCP_TOOLS_CACHE: dict[str, tuple[list[dict[str, Any]], dict[str, Any]]] = {}
+
+
+def _cached_mcp_tools(mcp_url: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    cached = _MCP_TOOLS_CACHE.get(mcp_url)
+    if cached is None:
+        cached = _mcp_tools(mcp_url)
+        _MCP_TOOLS_CACHE[mcp_url] = cached
+    return cached
 
 
 def _chat_stream(payload: dict[str, Any]) -> Iterable[dict[str, Any]]:
@@ -174,15 +188,18 @@ def _run_tool_loop_stream(
                 "round": round_index + 1,
             },
         )
-        payload = {
+        payload: dict[str, Any] = {
             "model": model,
             "messages": messages,
-            "tools": tools,
-            "tool_choice": "none" if is_final_round else "auto",
             "temperature": 0,
             "stream": True,
             "stream_options": {"include_usage": True},
         }
+        # On the final round the model is forbidden from calling tools, so there
+        # is no reason to pay to re-send the (large, MCP-inflated) tool schema.
+        if not is_final_round:
+            payload["tools"] = tools
+            payload["tool_choice"] = "auto"
 
         call_acc: dict[int, dict[str, Any]] = {}
         round_content: list[str] = []
@@ -295,8 +312,9 @@ def _demo_prompt(user_prompt: str, mode: str) -> str:
             f"Question: {user_prompt}"
         )
     return (
-        "Use the RingCentral Mintlify MCP documentation tools to answer this developer question. "
-        "Prefer official documentation facts. Include exact package names, commands, endpoints, "
+        "Use the RingCentral Mintlify MCP documentation tools together with the local monorepo "
+        "tools to answer this developer question. Prefer official documentation facts, and back "
+        "them with local source when helpful. Include exact package names, commands, endpoints, "
         "status codes, and header names when they matter.\n\n"
         f"Question: {user_prompt}"
     )
@@ -320,11 +338,17 @@ def stream_demo_run(*, prompt: str, mode: str, model: str, emit: Emit) -> dict[s
                 "tool evidence is relevant."
             )
         else:
-            tools, functions = _mcp_tools(MCP_URL)
+            tempdir, workspace_tools, workspace_functions = _raw_tools()
+            mcp_tools, mcp_functions = _cached_mcp_tools(MCP_URL)
+            tools = [*mcp_tools, *workspace_tools]
+            functions = {**workspace_functions, **mcp_functions}
             system_prompt = (
-                "You are a read-only RingCentral docs agent. Use the live Mintlify MCP tools to "
-                "search and read the documentation portal, then answer accurately. Do not mention "
-                "tools unless the tool evidence is relevant."
+                "You are a read-only RingCentral docs agent. You have the live Mintlify MCP tools "
+                "for the documentation portal and local file tools over a sanitized copy of the "
+                "RingCentral monorepo. Prefer the documentation portal for API/documentation facts, "
+                "and use the local files for source, examples, package metadata, tests, or "
+                "repository details. Then answer accurately. Do not mention tools unless the tool "
+                "evidence is relevant."
             )
 
         emit(
@@ -397,7 +421,7 @@ class DemoHandler(BaseHTTPRequestHandler):
                 }
             )
             return
-        if self.path == "/assets/rc-logo.svg":
+        if self.path == "/assets/rc-logo.png":
             self._send_file(RC_LOGO)
             return
         if self.path.startswith("/static/"):
