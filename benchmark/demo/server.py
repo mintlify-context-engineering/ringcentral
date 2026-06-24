@@ -42,7 +42,7 @@ from agents.openrouter_agent import (
 )
 from agents.context_metrics import estimate_tokens
 
-DEFAULT_MODEL = os.environ.get("OPENROUTER_MODEL", "~openai/gpt-latest")
+DEFAULT_MODEL = os.environ.get("OPENROUTER_MODEL", "anthropic/claude-sonnet-4.6")
 OPENROUTER_BASE_URL = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
 MAX_PREVIEW_CHARS = 1800
 
